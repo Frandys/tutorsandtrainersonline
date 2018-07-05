@@ -24,14 +24,15 @@ class AdminSeed extends Seeder
         ));
 
         $credential = [
-            'email' => $data['email'],
-            'password' => $password,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'phone' => $phone,
+            'email' => 'admin@gmail.com',
+            'password' => '123456',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
+
         ];
         $user_act = Sentinel::registerAndActivate($credential);
         $role =  Sentinel::findRoleByName('admin');
         $role->users()->attach($user_act);
     }
 }
+
