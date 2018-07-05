@@ -12,16 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(array(
-            'slug' => 'admin',
-            'name' => 'admin',
-        ));
-
+        // DB::table('roles')->insert(array(
+        //     'slug' => 'tutor',
+        //     'name' => 'tutor',
+        // ));
+ 
         $credential = [
-            'email' => 'admin@gmail.com',
+            'email' => 'tutor4@gmail.com',
             'password' => '123456',
-            'first_name' => 'admin',
-            'last_name' => 'admin',
+            'first_name' => 'tutor4',
+            'last_name' => 'singh4',
 
         ];
         $user_act = \Sentinel::registerAndActivate($credential);
