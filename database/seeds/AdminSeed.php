@@ -18,11 +18,7 @@ class AdminSeed extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(array(
-            'slug' => 'admin',
-            'name' => 'admin',
-        ));
-
+  
         $credential = [
             'email' => 'admin@gmail.com',
             'password' => '123456',
@@ -30,8 +26,8 @@ class AdminSeed extends Seeder
             'last_name' => 'admin',
 
         ];
-        $user_act = Sentinel::registerAndActivate($credential);
-        $role =  Sentinel::findRoleByName('admin');
+        $user_act = \Sentinel::registerAndActivate($credential);
+        $role =  \Sentinel::findRoleByName('admin');
         $role->users()->attach($user_act);
     }
 }
