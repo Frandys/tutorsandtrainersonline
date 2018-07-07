@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('roles')->insert(array(
-        //     'slug' => 'tutor',
-        //     'name' => 'tutor',
-        // ));
- 
+//         DB::table('roles')->insert(array(
+//             'slug' => 'tutor',
+//             'name' => 'tutor',
+//         ));
+
         $credential = [
             'email' => 'tutor4@gmail.com',
             'password' => '123456',

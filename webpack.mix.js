@@ -23,9 +23,13 @@ mix.styles([
      'resources/css/dataTables.min.css'], 'public/assets/stylesheets/styles.css', './');
 mix.scripts([
     'resources/js/jquery.js',
+    'resources/js/dataTables.min.js',
     'resources/js/bootstrap.js',
+    'resources/js/common_admin.js',
     'resources/js/Chart.js',
     'resources/js/metisMenu.js',
     'resources/js/sb-admin-2.js',
-    'resources/js/frontend.js'
+    'resources/js/frontend.js',
+
 ], 'public/assets/scripts/frontend.js', './');
+
