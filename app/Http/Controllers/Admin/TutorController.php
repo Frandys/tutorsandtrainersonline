@@ -8,8 +8,14 @@ namespace App\Http\Controllers\Admin {
     use App\Http\Controllers\Controller;
     use View;
     use Yajra\DataTables\DataTables;
+
+    /**
+     * @property  dataTable
+     */
     class TutorController extends Controller
     {
+        private $dataTable;
+
         /**
          * Display a listing of the resource.
          *
@@ -17,29 +23,54 @@ namespace App\Http\Controllers\Admin {
          */
         public function index()
         {
+//            $users = User::with(['roles' => function ($query) {
+//                $query->where('slug', '=', 'tutor');
+//            }])->get();
+//
+//
+//            $users = json_decode(json_encode($users));
+//            print_r($users);  die;
+//
+//            foreach ($users as $user){
+//
+//            print_r($user);
+//
+//        }
+// die;
+        //    $query = User::with('roles')->selectRaw('distinct users.*')->get();
 
-            $user =  RoleUsers::get();
+          //  print_r($query); die;
 
-               print_r(json_decode(json_encode($user->user)));
-            die;
-          $user =   Role::find('1')->usersByRole()->get();
+          //  die;
 
-
-
-
-//              return $role->name;
-//          }
             return View::make('admin.tutor_view');
         }
 
+        /**
+         * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+         */
         public function viewTutors()
         {
-            $users = User::select(['id','email','created_at','updated_at']);
 
-            return  Datatables::of($users)->make();
+//            $users = User::with(['roles' => function ($query) {
+//                $query->where('slug', '=', 'tutor');
+//            }])->get();
+//
+//
+//            return  Datatables::of($users)
+//                ->addColumn('action', function ($user) {
+//                    return '<a href="#edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>'.$user['roles'].'</a>';
+//                })
+//                ->make();
 
+            $posts = User::with('roles')->select('users.*');
 
+            return Datatables::of($posts)
+                ->editColumn('name', '{!! str_limit($name, 60) !!}')
+                ->make(true);
         }
+
+
 
         /**
          * Show the form for creating a new resource.

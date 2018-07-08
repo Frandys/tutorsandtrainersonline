@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
 //         ));
 
         $credential = [
-            'email' => 'tutor4@gmail.com',
+            'email' => 'tutor3@gmail.com',
             'password' => '123456',
-            'first_name' => 'tutor4',
-            'last_name' => 'singh4',
+            'first_name' => 'tuto3',
+            'last_name' => 'tutor3',
 
         ];
         $user_act = \Sentinel::registerAndActivate($credential);

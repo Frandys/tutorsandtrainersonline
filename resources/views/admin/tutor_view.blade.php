@@ -13,7 +13,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Email</th>
-                            <th>Created At</th>
+                           <th>Created At</th>
+                            <th>Updated At</th>
                             <th>Updated At</th>
                         </tr>
                         </thead>
@@ -33,8 +34,10 @@
                     "columns": [
                         {data: 'id', name: 'id'},
                         {data: 'email', name: 'email'},
-                        {data: 'created_at', name: 'created_at'},
-                        {data: 'updated_at', name: 'updated_at'}
+                         {data: 'created_at', name: 'created_at'},
+                        {data: 'updated_at', name: 'updated_at'},
+                        {data: 'name', name: 'roles.name'},
+
 
                     ]
                 });
