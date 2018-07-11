@@ -55,11 +55,7 @@ namespace App\Http\Controllers\Admin {
                  */
                     'actions', function ($userd) {
                     $UsrActCkh = Activations::where('user_id', $userd->id)->first();
-                    if (empty($UsrActCkh) || $UsrActCkh['completed'] == '0') {
-                        return '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-lock"></i></button><button type="button" id="delSubs" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></button><a  href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>';
-                    } else {
-                        return '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth g_btn"><i class="fa fa-unlock"></i></button><button type="button" id="delSubs" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></button><a href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>';
-                    }
+                    return empty($UsrActCkh) || $UsrActCkh['completed'] == '0' ? '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-lock"></i></button><a   href="href="tutor/' . encrypt($userd->id) . '/edit"  class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></a><a  href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>' : '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth g_btn"><i class="fa fa-unlock"></i></button><a  href="tutor/' . encrypt($userd->id) . '/edit"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></a><a href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>';
                 })
                 ->rawColumns(['actions'])
                 ->addIndexColumn()
@@ -121,16 +117,17 @@ namespace App\Http\Controllers\Admin {
          */
         public function show($id)
         {
-
+            $ttrLan = '';  $ttrSkil = '';  $ttrSpecli = '';  $ttrDicpil = '';  $ttrCorse = '';
             $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
-
+            if(!empty($usersMeta->tutor_profile)) {
             $ttrLan = json_decode(json_encode(Language::whereIn('id', unserialize($usersMeta->tutor_profile->language_id))->get()));
             $ttrSkil = json_decode(json_encode(Skill::whereIn('id', unserialize($usersMeta->tutor_profile->skill_id))->get()));
             $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', unserialize($usersMeta->tutor_profile->specialization_id))->get()));
             $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', unserialize($usersMeta->tutor_profile->discipline_id))->get()));
             $ttrCorse = json_decode(json_encode(Course::whereIn('id', unserialize($usersMeta->tutor_profile->course_id))->get()));
 
-            return View('admin.tutor_view', compact('usersMeta', 'ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
+            }
+            return View('admin.tutor_view', compact('usersMeta','ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
         }
 
         /**
@@ -141,7 +138,7 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            //
+            return View::make('admin.tutors_edit');
         }
 
         /**

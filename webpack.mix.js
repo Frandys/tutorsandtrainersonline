@@ -20,11 +20,14 @@ mix.styles([
     'resources/css/sb-admin-2.css',
     'resources/css/timeline.css',
     'resources/css/custom-style.css',
-     'resources/css/dataTables.min.css'], 'public/assets/stylesheets/styles.css', './');
+    'resources/css/dataTables.min.css'], 'public/assets/stylesheets/styles.css', './');
 mix.scripts([
     'resources/js/jquery.js',
+    'resources/js/jquery.validate.min.js',
+    'resources/js/additional-methods.min.js',
     'resources/js/dataTables.min.js',
     'resources/js/bootstrap.js',
+    'resources/js/formtowizard.js',
     'resources/js/common_admin.js',
     'resources/js/Chart.js',
     'resources/js/metisMenu.js',
