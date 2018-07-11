@@ -11,20 +11,8 @@ class RoleUsers extends Model
     /**
      * {@inheritDoc}
      */
-    protected $fillable = array(
-        'user_id',
-        'role_id',
-    );
 
 
-public function user()
-{
-    return $this->belongsTo('App\User', 'id', 'user_id');
-}
 
-    public function roles()
-    {
-        return $this->belongsTo('App\Models\Category');
-    }
 
 }

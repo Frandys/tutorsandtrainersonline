@@ -1,47 +1,47 @@
 @extends('layouts.admin.dashboard')
-@section('page_heading','Tutor List')
+@section('page_heading','View Tutor')
 @section('section')
     @include('message.message')
-
     <div class="row">
-        <div class="col-sm-12">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
+        <div class="col-sm-4">
 
-                    <table class="table table-bordered" id="users-table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Email</th>
-                           <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Updated At</th>
-                        </tr>
-                        </thead>
-                    </table>
-
-                </div>
-            </div>
+            <h1>User Data</h1>
+            <h2>first_name</h2>
+            <p>{{$usersMeta->first_name}}</p>
+            <h2>last_name</h2>
+            <p>{{$usersMeta->last_name}}</p>
+            <img style="width: 30%" src="{{asset('images/users/'.$usersMeta->photo)}}">
+            <h2>phone</h2>
+            <p>{{$usersMeta->phone}}</p>
         </div>
+
+        <div class="col-sm-4">
+             <h1>Address</h1>
+            <p>{{$usersMeta->tutor_profile->address}}</p>
+            <h2>city</h2>
+            <p>{{$usersMeta->tutor_profile->city}}</p>
+            <h2>state</h2>
+            <p>{{$usersMeta->tutor_profile->state}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->certification_id}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->resume}}</p>
+        </div>
+
+        <div class="col-sm-4">
+            <?php print_r($usersMeta->tutor_profile); ?>
+            <h1>Address</h1>
+            <p>{{$usersMeta->tutor_profile->address}}</p>
+            <h2>city</h2>
+            <p>{{$usersMeta->tutor_profile->city}}</p>
+            <h2>state</h2>
+            <p>{{$usersMeta->tutor_profile->state}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->certification_id}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->resume}}</p>
+        </div>
+
     </div>
-    @push('scripts')
-        <script>
-            $(document).ready(function () {
-                oTable = $('#users-table').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "ajax": "{{ url('/admin/view_tutors') }}",
-                    "columns": [
-                        {data: 'id', name: 'id'},
-                        {data: 'email', name: 'email'},
-                         {data: 'created_at', name: 'created_at'},
-                        {data: 'updated_at', name: 'updated_at'},
-                        {data: 'name', name: 'roles.name'},
 
-
-                    ]
-                });
-            });
-        </script>
-    @endpush
 @stop

@@ -33,4 +33,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
      Route::post('change_password', 'UserController@changePassword');
      Route::resource('tutor', 'Admin\TutorController');
      Route::get('view_tutors', 'Admin\TutorController@viewTutors');
+     Route::post('activate_tutor', 'Admin\TutorController@activateTutor');
 });

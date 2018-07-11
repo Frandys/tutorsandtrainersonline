@@ -32,10 +32,30 @@ class User extends Authenticatable
 
     }
 
-    public function  roles(){
-
+    public function  roles()
+    {
      return   $this->belongsToMany('App\Model\Role','role_users','user_id','role_id');
     }
 
+
+    public function Country()
+    {
+        return $this->belongsToMany('App\Model\Country','tutor_profiles','user_id','country_id');
+    }
+
+
+    public function TutorProfile()
+    {
+        return $this->hasOne('App\Model\TutorProfile');
+    }
+    public function Educations()
+    {
+        return $this->hasMany('App\Model\Educations');
+    }
+
+    public function WorkExperiences()
+    {
+        return $this->hasMany('App\Model\WorkExperience');
+    }
 
 }

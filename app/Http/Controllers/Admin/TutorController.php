@@ -1,9 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\Admin {
 
+    use App\Model\Activations;
+    use App\Model\Course;
+    use App\Model\Discipline;
+    use App\Model\Language;
     use App\Model\Role;
     use App\Model\RoleUsers;
+    use App\Model\Skill;
+    use App\Model\Specialization;
     use App\User;
+    use Cartalyst\Sentinel\Laravel\Facades\Activation;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
     use View;
@@ -23,53 +31,65 @@ namespace App\Http\Controllers\Admin {
          */
         public function index()
         {
-//            $users = User::with(['roles' => function ($query) {
-//                $query->where('slug', '=', 'tutor');
-//            }])->get();
-//
-//
-//            $users = json_decode(json_encode($users));
-//            print_r($users);  die;
-//
-//            foreach ($users as $user){
-//
-//            print_r($user);
-//
-//        }
-// die;
-        //    $query = User::with('roles')->selectRaw('distinct users.*')->get();
 
-          //  print_r($query); die;
-
-          //  die;
-
-            return View::make('admin.tutor_view');
+            return View::make('admin.tutors_view');
         }
 
+
         /**
-         * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+         * @return mixed
+         * @throws \Exception
          */
         public function viewTutors()
         {
 
-//            $users = User::with(['roles' => function ($query) {
-//                $query->where('slug', '=', 'tutor');
-//            }])->get();
-//
-//
-//            return  Datatables::of($users)
-//                ->addColumn('action', function ($user) {
-//                    return '<a href="#edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i>'.$user['roles'].'</a>';
-//                })
-//                ->make();
 
-            $posts = User::with('roles')->select('users.*');
+            $users = User::whereHas('roles', function ($q) {
+                $q->whereIn('slug', ['tutor']);
+            })->get();
 
-            return Datatables::of($posts)
-                ->editColumn('name', '{!! str_limit($name, 60) !!}')
-                ->make(true);
+            return Datatables::of($users)
+                ->addColumn(/**
+                 * @param $userd
+                 * @return string
+                 */
+                    'actions', function ($userd) {
+                    $UsrActCkh = Activations::where('user_id', $userd->id)->first();
+                    if (empty($UsrActCkh) || $UsrActCkh['completed'] == '0') {
+                        return '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-lock"></i></button><button type="button" id="delSubs" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></button><a  href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>';
+                    } else {
+                        return '<button type="button" id="activateTutor" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth g_btn"><i class="fa fa-unlock"></i></button><button type="button" id="delSubs" value=' . encrypt($userd->id) . ' class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></button><a href="tutor/' . encrypt($userd->id) . '"   class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-eye"></i></a>';
+                    }
+                })
+                ->rawColumns(['actions'])
+                ->addIndexColumn()
+                ->make();
+
+
         }
 
+        /**
+         * @param Request $request
+         * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+         */
+        public function activateTutor(Request $request)
+        {
+            $data = $request->input();
+
+            $user = \Sentinel::findById(decrypt($data['id']));
+
+            $UsrActCkh = Activations::where('user_id', decrypt($data['id']))->first();
+            if (empty($UsrActCkh) || $UsrActCkh['completed'] == '0') {
+                $ActCode = \Activation::create($user);
+                \Activation::complete($user, $ActCode['code']);
+            } else {
+                \Activation::remove($user);
+            }
+
+            return Response(array('success' => '1', 'errors' => ''));
+
+
+        }
 
 
         /**
@@ -85,7 +105,7 @@ namespace App\Http\Controllers\Admin {
         /**
          * Store a newly created resource in storage.
          *
-         * @param  \Illuminate\Http\Request  $request
+         * @param  \Illuminate\Http\Request $request
          * @return \Illuminate\Http\Response
          */
         public function store(Request $request)
@@ -96,18 +116,27 @@ namespace App\Http\Controllers\Admin {
         /**
          * Display the specified resource.
          *
-         * @param  int  $id
+         * @param  int $id
          * @return \Illuminate\Http\Response
          */
         public function show($id)
         {
-            //
+
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
+
+            $ttrLan = json_decode(json_encode(Language::whereIn('id', unserialize($usersMeta->tutor_profile->language_id))->get()));
+            $ttrSkil = json_decode(json_encode(Skill::whereIn('id', unserialize($usersMeta->tutor_profile->skill_id))->get()));
+            $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', unserialize($usersMeta->tutor_profile->specialization_id))->get()));
+            $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', unserialize($usersMeta->tutor_profile->discipline_id))->get()));
+            $ttrCorse = json_decode(json_encode(Course::whereIn('id', unserialize($usersMeta->tutor_profile->course_id))->get()));
+
+            return View('admin.tutor_view', compact('usersMeta', 'ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
         }
 
         /**
          * Show the form for editing the specified resource.
          *
-         * @param  int  $id
+         * @param  int $id
          * @return \Illuminate\Http\Response
          */
         public function edit($id)
@@ -118,8 +147,8 @@ namespace App\Http\Controllers\Admin {
         /**
          * Update the specified resource in storage.
          *
-         * @param  \Illuminate\Http\Request  $request
-         * @param  int  $id
+         * @param  \Illuminate\Http\Request $request
+         * @param  int $id
          * @return \Illuminate\Http\Response
          */
         public function update(Request $request, $id)
@@ -130,7 +159,7 @@ namespace App\Http\Controllers\Admin {
         /**
          * Remove the specified resource from storage.
          *
-         * @param  int  $id
+         * @param  int $id
          * @return \Illuminate\Http\Response
          */
         public function destroy($id)

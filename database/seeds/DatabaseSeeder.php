@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $credential = [
             'email' => 'tutor3@gmail.com',
             'password' => '123456',
-            'first_name' => 'tuto3',
+            'first_name' => 'tutor3',
             'last_name' => 'tutor3',
 
         ];
