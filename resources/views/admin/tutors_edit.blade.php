@@ -7,7 +7,7 @@
         <div class="">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 col-md-offset-3 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <h1>Socio Professionista</h1>
                         <div id='progress'>
                             <div id='progress-complete'></div>
@@ -22,11 +22,126 @@
                                     </label>
                                     <input class="form-control" id="name1" name="name1" type="text"/>
                                 </div>
-                                <div class="form-group ">
-                                    <label class="control-label " for="name1s">
-                                        Cognome
-                                    </label>
-                                    <input class="form-control" id="name1s" name="name1s" type="text"/>
+
+
+                                <div class="well clearfix">
+
+                                    <div id="first">
+
+
+                                        @foreach($usersMeta->educations as $key=>$education)
+
+                                            <div class="recordsetParent" id="parntDiv{{$key}}">
+                                                <div class="fieldRow clearfix">
+                                                    <div class="col-md-5">
+                                                        <div id="div_education_title"  class="form-group">
+                                                            <label for="education_{{$key}}_title"
+                                                                   class="control-label  requiredField">
+                                                                Title<span class="asteriskField">*</span>
+                                                            </label>
+                                                            <div class="controls education_title">
+                                                                <input type="text" value="{{$education->title}}"
+                                                                       name="education_title[{{$key}}]"
+                                                                       id="education_{{$key}}_title"
+                                                                       class="textinput form-control length"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div id="div_education_university" class="form-group">
+                                                            <label for="education_{{$key}}_university"
+                                                                   class="control-label  requiredField">
+                                                                Education University<span class="asteriskField">*</span>
+                                                            </label>
+                                                            <div class="controls education_university">
+                                                                <input type="text" value="{{$education->university}}"
+                                                                       name="education_university[{{$key}}]"
+                                                                       id="education_{{$key}}_university"
+                                                                       class="textinput form-control length"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div id="div_education_complete" class="form-group">
+                                                            <label for="education_{{$key}}_complete"
+                                                                   class="control-label  requiredField">
+                                                                Education Complete<span class="asteriskField">*</span>
+                                                            </label>
+                                                            <div class="controls education_complete">
+                                                                <input type="text" value="{{$education->complete}}"
+                                                                       name="education_complete[{{$key}}]"
+                                                                       id="education_{{$key}}_complete"
+                                                                       class="textinput form-control length"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @if($key > '0')
+                                                        <div id="parntDiv{{$key}}" class="bunPare"
+                                                             onchange="enableTxt(this)"
+                                                             style="float: right; border: 0px; background-image: url(&quot;../../../images/icons/remove.png&quot;); background-position: center center; background-repeat: no-repeat; height: 25px; width: 25px; cursor: pointer;"></div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+
+                                        <div id="czContainer">
+
+                                            <div id="first">
+                                                <div class="recordset">
+                                                    <div class="fieldRow clearfix">
+
+                                                        <div class="col-md-5">
+                                                            <div id="div_education_title" class="form-group">
+                                                                <label for="education_1_title"
+                                                                       class="control-label  requiredField">
+                                                                    Title<span class="asteriskField">*</span>
+                                                                </label>
+                                                                <div class="controls education_title">
+                                                                    <input type="text" name="education_title[{{'2'}}]"
+                                                                           id="education_1_title"
+                                                                           class="textinput form-control length"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div id="div_education_university" class="form-group">
+                                                                <label for="education_1_university"
+                                                                       class="control-label  requiredField">
+                                                                    Education University<span
+                                                                            class="asteriskField">*</span>
+                                                                </label>
+                                                                <div class="controls education_university">
+                                                                    <input type="text" name="education_university[{{'2'}}]"
+                                                                           id="education_1_university"
+                                                                           class="textinput form-control length"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div id="div_education_complete" class="form-group">
+                                                                <label for="education_1_complete"
+                                                                       class="control-label  requiredField">
+                                                                    Education Complete<span
+                                                                            class="asteriskField">*</span>
+                                                                </label>
+                                                                <div class="controls education_complete">
+                                                                    <input type="text" name="education_complete[{{'2'}}]"
+                                                                           id="education_1_complete"
+                                                                           class="textinput form-control length"/>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -38,8 +153,8 @@
                                     <label class="control-label " for="text">
                                         Specializzazioni
                                     </label>
-                                    <input class="form-control" id="text" name="text" type="text"/>
-                                    <span class="help-block" id="hint_text">
+                                    <input class="form-control" id="name2" name="name2" type="text"/>
+                                    <span class="help-block" id="name2">
        es. Infermieristica, Analisi Cliniche, Fisioterapia
       </span>
                                 </div>
@@ -51,7 +166,7 @@
                                     <label class="control-label " for="text1">
                                         Disponibilità Geografica
                                     </label>
-                                    <input class="form-control" id="text1" name="text1" type="text"/>
+                                    <input class="form-control" id="name3" name="name3" type="text"/>
                                     <span class="help-block" id="hint_text1">
        Zona operativa prevalente
       </span>
@@ -83,27 +198,13 @@
     </div>
 
     @push('scripts')
-        <script>
 
+        <script src="{{ asset("js/admin/formtowizard.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("js/admin/jqueryCzMore.js") }}" type="text/javascript"></script>
 
-            $(document).ready(function () {
-                //Tutor Widget Form js
-                $("#msform").formToWizard({
-                    submitButton: 'submit',
-                    nextBtnName: 'Avanti >>',
-                    prevBtnName: '<< Indietro',
-                    nextBtnClass: 'btn btn-primary next',
-                    prevBtnClass: 'btn btn-default prev',
-                    buttonTag: 'button',
-                    progress: function (i, count) {
-                        $("#progress-complete").width('' + (i / count * 100) + '%');
-                    }
-                })
-            })
-
-            $("#step0Next").bind("click", function (e) {
-
-            });
+        <script type="text/javascript">
+            //One-to-many relationship plugin by Yasir O. Atabani. Copyrights Reserved.
+            $("#czContainer").czMore();
 
         </script>
     @endpush

@@ -359,11 +359,11 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">@yield('page_heading')</h1>
+                    <h2 class="page-header dashboard-header">@yield('page_heading')</h2>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <div class="row">
+            <div class="content-part ">
                 @yield('section')
 
             </div>

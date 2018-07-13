@@ -39,7 +39,7 @@
                 <h2>university</h2>
                 <p>{{$education->university}}</p>
                 <h2>complete</h2>
-                <p>{{$education->university}}</p>
+                <p>{{$education->complete}}</p>
                 <hr>
             @endforeach
 
