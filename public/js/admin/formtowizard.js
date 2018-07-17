@@ -173,44 +173,98 @@
             });
         }
 
+
         function vlidateForms() {
+
+            jQuery.validator.addMethod('phoneUK', function (phone_number, element) {
+                    return this.optional(element) || phone_number.length > 9 &&
+                        phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+                }, 'Please specify a valid uk phone number'
+            );
+
+            jQuery.validator.addMethod('selectCountry', function (value) {
+                return (value != '');
+            }, "Please select country");
 
             var form = $("#msform");
             form.validate({
 
                 rules: {
 
-                    name1: {
+                    first_name: {
                         required: true,
                         minlength: 2,
+                        lettersonly: true,
+                        maxlength: 32
+                    },
+                    last_name: {
+                        required: true,
+                        minlength: 2,
+                        lettersonly: true,
                         maxlength: 32
 
                     },
-                    name2: {
+                    phone: {
                         required: true,
-                        minlength: 2,
-                        maxlength: 32
-
+                        phoneUK: true
                     },
-                    name3: {
+                    city: {
                         required: true,
                         minlength: 2,
                         maxlength: 32
-
+                    },
+                    state: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    country: {
+                        selectCountry: true
+                    },
+                    address: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                    about: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                    certification_id: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    resume: {
+                        required: false,
+                        accept: "image/*,application/*,pdf"
                     },
                 },
                 messages: {
 
-                    name1: {
+                    first_name: {
                         required: "Please enter first name",
 
                     },
-                    name2: {
-                        required: "Please enter first name2",
+                    last_name: {
+                        required: "Please enter last name",
+                    },
+                    city: {
+                        required: "Please enter city",
 
                     },
-                    name3: {
-                        required: "Please enter first name3",
+                    state: {
+                        required: "Please enter state",
+
+                    },
+                    address: {
+                        required: "Please enter address",
+
+                    },
+                    resume: {
+                        required: "Please enter address",
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
 
                     },
                 },
@@ -296,7 +350,11 @@ $(document).ready(function () {
         buttonTag: 'button',
         progress: function (i, count) {
 
-            $("#progress-complete").width('' + ((i+1) / count * 100) + '%');
+            $("#progress-complete").width('' + ((i + 1) / count * 100) + '%');
         }
     })
+
+
 })
+
+

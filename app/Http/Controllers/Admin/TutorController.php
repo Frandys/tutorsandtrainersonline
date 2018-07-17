@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin {
 
     use App\Model\Activations;
+    use App\Model\Country;
     use App\Model\Course;
     use App\Model\Discipline;
     use App\Model\Language;
@@ -117,7 +118,16 @@ namespace App\Http\Controllers\Admin {
          */
         public function show($id)
         {
-            return $this->GetTutor($id, 'admin.tutor_view');
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
+            $array = array();
+            $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
+            $ttrSkil = json_decode(json_encode(Skill::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->skill_id) :$array)->get()));
+            $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->specialization_id) : $array)->get()));
+            $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->discipline_id) : $array)->get()));
+            $ttrCorse = json_decode(json_encode(Course::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->course_id) : $array)->get()));
+
+            return View('admin.tutor_view', compact('usersMeta', 'ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
+
         }
 
         /**
@@ -128,28 +138,16 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            return $this->GetTutor($id, 'admin.tutors_edit');
+
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
+
+            return View('admin.tutors_edit', compact('usersMeta'));
         }
 
 
         private function GetTutor($id, $view)
         {
 
-            $ttrLan = '';
-            $ttrSkil = '';
-            $ttrSpecli = '';
-            $ttrDicpil = '';
-            $ttrCorse = '';
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
-            if (!empty($usersMeta->tutor_profile)) {
-                $ttrLan = json_decode(json_encode(Language::whereIn('id', unserialize($usersMeta->tutor_profile->language_id))->get()));
-                $ttrSkil = json_decode(json_encode(Skill::whereIn('id', unserialize($usersMeta->tutor_profile->skill_id))->get()));
-                $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', unserialize($usersMeta->tutor_profile->specialization_id))->get()));
-                $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', unserialize($usersMeta->tutor_profile->discipline_id))->get()));
-                $ttrCorse = json_decode(json_encode(Course::whereIn('id', unserialize($usersMeta->tutor_profile->course_id))->get()));
-
-            }
-            return View($view, compact('usersMeta', 'ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
         }
 
         /**

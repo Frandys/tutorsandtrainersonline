@@ -4,7 +4,6 @@
     @include('message.message')
     <div class="row">
         <div class="col-sm-6">
-
             <h1>User Data</h1>
             <h2>first_name</h2>
             <p>{{$usersMeta->first_name}}</p>
@@ -16,18 +15,16 @@
         </div>
 
         <div class="col-sm-6">
-            @if(isset($usersMeta->tutor_profile))
-                <h1>Address</h1>
-                <p>{{$usersMeta->tutor_profile->address}}</p>
-                <h2>city</h2>
-                <p>{{$usersMeta->tutor_profile->city}}</p>
-                <h2>state</h2>
-                <p>{{$usersMeta->tutor_profile->state}}</p>
-                <h2>certification_id</h2>
-                <p>{{$usersMeta->tutor_profile->certification_id}}</p>
-                <h2>certification_id</h2>
-                <p>{{$usersMeta->tutor_profile->resume}}</p>
-            @endif
+            <h1>Address</h1>
+            <p>{{$usersMeta->tutor_profile->address}}</p>
+            <h2>city</h2>
+            <p>{{$usersMeta->tutor_profile->city}}</p>
+            <h2>state</h2>
+            <p>{{$usersMeta->tutor_profile->state}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->certification_id}}</p>
+            <h2>certification_id</h2>
+            <p>{{$usersMeta->tutor_profile->resume}}</p>
         </div>
     </div>
     <div class="row">
@@ -68,22 +65,18 @@
     <div class="row">
         <div class="col-sm-6">
             <h1>Language
-                @if($ttrLan != '')
-                    @foreach($ttrLan as $lang)
-                        <p>{{$lang->name}}</p>
-                        <hr>
+                @foreach($ttrLan as $lang)
+                    <p>{{$lang->name}}</p>
+                    <hr>
             @endforeach
-            @endif
         </div>
 
         <div class="col-sm-6">
             <h1>Skil</h1>
-            @if($ttrSkil != '')
-                @foreach($ttrSkil as $skill)
-                    <p>{{$skill->name}}</p>
-                    <hr>
-                @endforeach
-            @endif
+            @foreach($ttrSkil as $skill)
+                <p>{{$skill->name}}</p>
+                <hr>
+            @endforeach
         </div>
 
 @stop
