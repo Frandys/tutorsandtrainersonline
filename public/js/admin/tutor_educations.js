@@ -1,12 +1,3 @@
-/*
-Title: Cozeit More plugin by Yasir Atabani
-Documentation: na
-Author: Yasir O. Atabani
-Website: http://www.cozeit.com
-Twitter: @yatabani
-
-MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
-*/
 
 (function ($, undefined) {
     $.fn.czMore = function (options) {
@@ -15,9 +6,9 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
         var defaults = {
             max: 5,
             min: 0,
-            onLoad: true,
-            onAdd: true,
-            onDelete: true
+            onLoad: false,
+            onAdd: false,
+            onDelete: false
         };
         //Update unset options with defaults if needed
         var options = $.extend(defaults, options);
@@ -97,19 +88,19 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
                 //});
             }
 
-            function resetNumbering() {
-                $(obj).children(".recordset").each(function (index, element) {
-                    $(element).find('input:text, input:password, input:file, select, textarea').each(function () {
-                        old_name = this.name;
-                        new_name = old_name.replace(/\_([0-9]\d{0})\_/g, "_" + (index + 1) + "_");
-                        this.id = this.name = new_name;
-                        //alert(this.name);
-                    });
-                    index++
-
-                    minusClick(element);
-                });
-            }
+            // function resetNumbering() {
+            //     $(obj).children(".recordset").each(function (index, element) {
+            //         $(element).find('input:text, input:password, input:file, select, textarea').each(function () {
+            //             old_name = this.name;
+            //             new_name = old_name.replace(/\_([0-9]\d{0})\_/g, "_" + (index + 1) + "_");
+            //             this.id = this.name = new_name;
+            //
+            //         });
+            //         index++
+            //
+            //         minusClick(element);
+            //     });
+            // }
 
             function loadMinus(recordset) {
                 var divMinus = '<div id="btnMinus" />';
@@ -134,7 +125,8 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
 
                     var id = $(recordset).attr("data-id");
                     $(recordset).remove();
-                    resetNumbering();
+               //     resetNumbering();
+                    ResetFieldsIndex();
                     obj.siblings("input[name$='czMore_txtCount']").val(obj.children(".recordset").size());
                     i--;
                     if (options.onDelete != null) {
@@ -142,7 +134,7 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
                             obj.trigger("onDelete", id);
                     }
                 });
-                ResetFieldsIndex();
+
             }
         });
     };
@@ -165,10 +157,9 @@ function ResetFieldsIndex() {
         $(this).attr("id", "education_"+index+"_university");
     });
 
-
     $('.education_complete').find(".length").each(function (index) {
         $(this).attr("name", "education_complete[" + index + "]");
         $(this).attr("id", "education_"+index+"_complete");
     });
-    index++;
+   index++;
 }

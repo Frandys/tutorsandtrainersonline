@@ -121,7 +121,7 @@ namespace App\Http\Controllers\Admin {
             $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
             $array = array();
             $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
-            $ttrSkil = json_decode(json_encode(Skill::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->skill_id) :$array)->get()));
+            $ttrSkil = json_decode(json_encode(Skill::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->skill_id) : $array)->get()));
             $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->specialization_id) : $array)->get()));
             $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->discipline_id) : $array)->get()));
             $ttrCorse = json_decode(json_encode(Course::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->course_id) : $array)->get()));
@@ -138,10 +138,10 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-
             $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
+            $educations = empty($usersMeta->educations) ? json_decode(json_encode(array(array('title' => '', 'university' => '', 'complete' => ''))), false) : $usersMeta->educations;
+            return View('admin.tutors_edit', compact('usersMeta', 'educations'));
 
-            return View('admin.tutors_edit', compact('usersMeta'));
         }
 
 
@@ -174,3 +174,5 @@ namespace App\Http\Controllers\Admin {
         }
     }
 }
+
+//

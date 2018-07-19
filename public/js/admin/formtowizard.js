@@ -158,11 +158,9 @@
                 '</' + options.buttonTag + '>');
 
             $("#" + stepName + "Next").bind("click", function (e) {
+                 vlidateForms();
 
-                vlidateForms();
-
-
-                if (options.validateBeforeNext(element, $("#" + stepName)) === true) {
+            if (options.validateBeforeNext(element, $("#" + stepName)) === true) {
                     $("#" + stepName).hide();
                     $("#step" + (i + 1)).show();
                     //if (i + 2 == count)
@@ -173,6 +171,11 @@
             });
         }
 
+
+
+        $("#sads").click(function () {
+            vlidateForms();
+        });
 
         function vlidateForms() {
 
@@ -272,15 +275,6 @@
             });
 
             $("[name^=education_title]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
-
-                });
-            });
-
-            $("[name^=education_university]").each(function () {
                 $(this).rules("add", {
                     required: true,
                     minlength: 2,
