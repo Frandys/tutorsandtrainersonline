@@ -57,7 +57,7 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
             var iParnt = '';
             if (recordset.length) {
                 obj.siblings("#btnPlusWork").click(function () {
-                    iParnt = $('.recordsetWorkParent').length - 1;
+                    iParnt = $('.recordsetWork').length - 1;
                     var i = obj.children(".recordsetWork").size() + iParnt;
 
                     var item = recordset.clone().html();
@@ -126,13 +126,13 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
                 });
             }
 
-            function minusClick(recordset) {
-                $(recordset).children("#btnMinusWork").click(function () {
+            function minusClick(recordsetWork) {
+                $(recordsetWork).children("#btnMinusWork").click(function () {
 
                     var i = obj.children(".recordsetWork").size();
 
-                    var id = $(recordset).attr("data-id");
-                    $(recordset).remove();
+                    var id = $(recordsetWork).attr("data-id");
+                    $(recordsetWork).remove();
                     resetNumbering();
                     obj.siblings("input[name$='czMore_txtCount']").val(obj.children(".recordsetWork").size());
                     i--;
@@ -141,7 +141,7 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
                             obj.trigger("onDelete", id);
                     }
                 });
-            //    ResetFieldsIndex();
+                 ResetFieldsIndex();
             }
         });
     };
@@ -149,3 +149,37 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
 })(jQuery);
 
 
+
+$(".bunPareWork").click(function () {
+    $("#" + $(this).attr("id")).remove();
+    ResetFieldsIndex();
+});
+
+function ResetFieldsIndex() {
+
+    $('.organization_work').find(".length").each(function (index) {
+        $(this).attr("name", "organization_work[" + index + "]");
+        $(this).attr("id", "organization_"+index+"_work");
+    });
+
+    $('.designation_work').find(".length").each(function (index) {
+        $(this).attr("name", "designation_work[" + index + "]");
+        $(this).attr("id", "designation_"+index+"_work");
+    });
+
+    $('.from_work').find(".length").each(function (index) {
+        $(this).attr("name", "from_work[" + index + "]");
+        $(this).attr("id", "from_"+index+"_work");
+    });
+
+    $('.to_work').find(".length").each(function (index) {
+        $(this).attr("name", "to_work[" + index + "]");
+        $(this).attr("id", "to_"+index+"_work");
+    });
+
+    $('.location_work').find(".length").each(function (index) {
+        $(this).attr("name", "location_work[" + index + "]");
+        $(this).attr("id", "location_"+index+"_work");
+    });
+    index++;
+}

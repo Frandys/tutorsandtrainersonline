@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin {
 
+    use App\Http\Requests\ValidationRequest;
     use App\Model\Activations;
-    use App\Model\Country;
     use App\Model\Course;
     use App\Model\Discipline;
     use App\Model\Language;
-    use App\Model\Role;
-    use App\Model\RoleUsers;
     use App\Model\Skill;
     use App\Model\Specialization;
+    use App\model\TutorProfile;
     use App\User;
-    use Cartalyst\Sentinel\Laravel\Facades\Activation;
+    use Illuminate\Support\Facades\Redirect;
+    use Illuminate\Support\Facades\Validator;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
     use View;
@@ -43,8 +43,6 @@ namespace App\Http\Controllers\Admin {
          */
         public function viewTutors()
         {
-
-
             $users = User::whereHas('roles', function ($q) {
                 $q->whereIn('slug', ['tutor']);
             })->get();
@@ -140,7 +138,8 @@ namespace App\Http\Controllers\Admin {
         {
             $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
             $educations = empty($usersMeta->educations) ? json_decode(json_encode(array(array('title' => '', 'university' => '', 'complete' => ''))), false) : $usersMeta->educations;
-            return View('admin.tutors_edit', compact('usersMeta', 'educations'));
+            $work_experiences = empty($usersMeta->work_experiences) ? json_decode(json_encode(array(array('organization' => '', 'designation' => '', 'from' => '', 'to' => '', 'location' => ''))), false) : $usersMeta->work_experiences;
+            return View('admin.tutors_edit', compact('usersMeta', 'educations', 'work_experiences'));
 
         }
 
@@ -159,8 +158,81 @@ namespace App\Http\Controllers\Admin {
          */
         public function update(Request $request, $id)
         {
-            //
+            try {
+                $data = $request->input();
+                $validation = Validator::make($request->all(), ValidationRequest::$userValid);
+                if ($validation->fails()) {
+                    $errors = $validation->messages();
+                    return Redirect::back()->with('errors', $errors);
+                }
+
+                $user = User::find(decrypt($id));
+
+                $user->first_name = $data['first_name'];
+                $user->last_name = $data['last_name'];
+                $user->phone = $data['phone'];
+
+
+                //Check User Photo
+                if (!empty($request->file())) {
+                    $file = $request->file();
+                    if (isset($file['photo'])) {
+                        $namefile = $this->UploadFile($file, 'users', $user->photo);
+                        $user->photo = $namefile;
+
+                    }
+                }
+                if ($user->save()) {
+                    $tutrPro = $user->TutorProfile()->whereUserId(decrypt($id))->first();
+                    $tutrPro->city = $data['city'];
+                    $tutrPro->state = $data['state'];
+                    $tutrPro->country_id = $data['country'];
+                    $tutrPro->address = $data['address'];
+                    $tutrPro->about = $data['about'];
+                    $tutrPro->language_id = serialize($data['language']);
+                    $tutrPro->skill_id = serialize($data['skill']);
+                    $tutrPro->specialization_id = serialize($data['specialization']);
+                    $tutrPro->discipline_id = serialize($data['discipline']);
+                    $tutrPro->course_id = serialize($data['course']);
+                    $tutrPro->certification_id = $data['certification_id'];
+
+                    //Check User Photo
+                    if (!empty($request->file())) {
+                        $file = $request->file();
+                        if (isset($file['resume'])) {
+                            $namefile = $this->UploadFile($file, 'resume', $user->photo);
+                            $tutrPro->resume = $namefile;
+                        }
+                    }
+
+                    $tutrPro->save();
+                }
+
+                die;
+//          $user->TutorProfile()->update(['address'=>'myadder']);
+            } catch (Exception $ex) {
+                return View::make('errors.exception')->with('Message', $ex->getMessage());
+            }
         }
+
+
+        private function UploadFile($file, $path, $name)
+        {
+
+            //     $namefile = $file['photo']->getClientOriginalName();
+            $time = time();
+            $namefile = $time . '.' . $file[$path]->getClientOriginalExtension();
+            $destinationPath = 'images/' . $path;
+            $file[$path]->move($destinationPath, $namefile);
+            //Delete old image
+            $profileImg = $destinationPath . '/' . $name;
+
+            if (\File::exists(public_path($profileImg))) {
+                \File::delete(public_path($profileImg));
+            }
+            return $namefile;
+        }
+
 
         /**
          * Remove the specified resource from storage.
@@ -168,7 +240,8 @@ namespace App\Http\Controllers\Admin {
          * @param  int $id
          * @return \Illuminate\Http\Response
          */
-        public function destroy($id)
+        public
+        function destroy($id)
         {
             //
         }

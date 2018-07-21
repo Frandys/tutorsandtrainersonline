@@ -26,11 +26,29 @@ class ValidationRequest extends FormRequest
         'password' => 'required|confirmed|min:6',
     );
 
-    public static $change_pass = [
+    public static $change_pass = array(
         'old_password' => 'required|min:6',
         'password' => 'required|min:6',
         'confirm_password' => 'required|same:password|min:6',
-    ];
+    );
+
+    public static $userValid = array(
+        'first_name' => 'required|min:2|max:32',
+        'last_name' => 'required|min:2|max:32',
+        'phone' => 'required',
+        'photo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
+        'city' => 'required|min:2|max:32',
+        'state' => 'required|min:2|max:32',
+        'country' => 'required',
+        'address' => 'min:2|max:32',
+        'about ' => 'min:2|max:500',
+        'certification_id ' => 'min:2|max:32',
+     );
+
+//    public static $photo = array(
+//        'photo' => 'required|max:5000000|mimes:jpg,jpeg,png',
+//    );
+
 
     public function authorize()
     {

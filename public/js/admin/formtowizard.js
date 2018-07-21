@@ -189,6 +189,18 @@
                 return (value != '');
             }, "Please select country");
 
+
+            jQuery.validator.addMethod('ProImage', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload image less then 5 MB'
+            );
+
+            jQuery.validator.addMethod('ProResume', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+
+
             var form = $("#msform");
             form.validate({
 
@@ -239,10 +251,19 @@
                         minlength: 2,
                         maxlength: 32
                     },
+
                     resume: {
                         required: false,
+                        // ProResume: true,
                         accept: "image/*,application/*,pdf"
                     },
+                    photo: {
+                        required: false,
+                        ProImage: true,
+                        accept: "image/*",
+
+                    },
+
                 },
                 messages: {
 
@@ -266,8 +287,11 @@
 
                     },
                     resume: {
-                        required: "Please enter address",
-                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                          accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+
+                    },
+                    photo: {
+                        accept: "Please enter valid extension.(IMAGE)",
 
                     },
                 },
@@ -301,6 +325,50 @@
                 });
             });
 
+            $("[name^=organization_work]").each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 500
+
+                });
+            });
+
+            $("[name^=designation_work]").each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 500
+
+                });
+            });
+
+            $("[name^=from_work]").each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 500
+
+                });
+            });
+
+            $("[name^=to_work]").each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 500
+
+                });
+            });
+
+            $("[name^=location_work]").each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 500
+
+                });
+            });
 
             if (form.valid() === true) {
                 return true;
