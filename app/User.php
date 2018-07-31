@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Category;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -48,14 +49,24 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Model\TutorProfile');
     }
-    public function Educations()
+
+    public function OrganisationsWork()
     {
-        return $this->hasMany('App\Model\Educations');
+        return $this->hasMany('App\Model\Organisations');
     }
 
-    public function WorkExperiences()
+    public function Categories()
     {
-        return $this->hasMany('App\Model\WorkExperience');
+        return $this->belongsToMany('App\Model\Category')->withPivot(['level']);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo('App\Model\Category', 'sub_category_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Model\Category', 'sub_category_id');
+    }
 }

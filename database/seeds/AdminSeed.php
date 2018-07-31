@@ -18,17 +18,17 @@ class AdminSeed extends Seeder
      */
     public function run()
     {
-  
-        $credential = [
-            'email' => 'admin@gmail.com',
-            'password' => '123456',
-            'first_name' => 'admin',
-            'last_name' => 'admin',
-
-        ];
-        $user_act = \Sentinel::registerAndActivate($credential);
-        $role =  \Sentinel::findRoleByName('admin');
-        $role->users()->attach($user_act);
+//
+//        $credential = [
+//            'email' => 'admin@gmail.com',
+//            'password' => '123456',
+//            'first_name' => 'admin',
+//            'last_name' => 'admin',
+//
+//        ];
+//        $user_act = \Sentinel::registerAndActivate($credential);
+//        $role =  \Sentinel::findRoleByName('admin');
+//        $role->users()->attach($user_act);
     }
 }
 

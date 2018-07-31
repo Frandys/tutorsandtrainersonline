@@ -4,16 +4,15 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Organisations extends Model
 {
-    protected $table = 'courses';
+    protected $table = 'organisations';
 
     /**
      * {@inheritDoc}
      */
     protected $fillable = array(
-        'name',
-      );
-
-
+        'company_name',
+        'registration',
+     );
 }

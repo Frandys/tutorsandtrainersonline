@@ -16,6 +16,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.styles([
     'resources/css/bootstrap.css',
+    'resources/css/bootstrap-datetimepicker.min.css',
     'resources/css/font-awesome.css',
     'resources/css/sb-admin-2.css',
     'resources/css/timeline.css',
@@ -27,12 +28,12 @@ mix.scripts([
     'resources/js/additional-methods.min.js',
     'resources/js/dataTables.min.js',
     'resources/js/bootstrap.js',
+    'resources/js/bootstrap-datetimepicker.min.js',
     'resources/js/formtowizard.js',
     'resources/js/common_admin.js',
     'resources/js/Chart.js',
     'resources/js/metisMenu.js',
     'resources/js/sb-admin-2.js',
     'resources/js/frontend.js',
-
 ], 'public/assets/scripts/frontend.js', './');
 

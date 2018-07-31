@@ -41,6 +41,7 @@ class ValidationRequest extends FormRequest
         'state' => 'required|min:2|max:32',
         'country' => 'required',
         'address' => 'min:2|max:32',
+        'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
         'about ' => 'min:2|max:500',
         'certification_id ' => 'min:2|max:32',
      );

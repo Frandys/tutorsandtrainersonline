@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEducationsTable extends Migration
+class CreateEmployerProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateEducationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('educations', function (Blueprint $table) {
+        Schema::create('employer_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title', 255)->nullable();
-            $table->string('university', 255)->nullable();
-            $table->string('complete', 255)->nullable();
+            $table->string('company_logo', 255)->nullable();
+            $table->string('company_name', 255);
+            $table->string('company_address', 255);
+            $table->string('contact_tel', 255);
+            $table->string('head_office_address', 255);
+            $table->string('authorised_user', 255);
+            $table->string('authorised_user_second', 255)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +35,6 @@ class CreateEducationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('educations');
+        Schema::dropIfExists('employer_profiles');
     }
 }

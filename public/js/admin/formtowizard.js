@@ -158,9 +158,9 @@
                 '</' + options.buttonTag + '>');
 
             $("#" + stepName + "Next").bind("click", function (e) {
-                 vlidateForms();
+                vlidateForms();
 
-            if (options.validateBeforeNext(element, $("#" + stepName)) === true) {
+                if (options.validateBeforeNext(element, $("#" + stepName)) === true) {
                     $("#" + stepName).hide();
                     $("#step" + (i + 1)).show();
                     //if (i + 2 == count)
@@ -170,7 +170,6 @@
                 return false;
             });
         }
-
 
 
         $("#sads").click(function () {
@@ -188,7 +187,9 @@
             jQuery.validator.addMethod('selectCountry', function (value) {
                 return (value != '');
             }, "Please select country");
-
+            jQuery.validator.addMethod('selectCategorie', function (value) {
+                return (value != '');
+            }, "Please select Categorie");
 
             jQuery.validator.addMethod('ProImage', function (phone_number, element) {
                     return this.optional(element) || element.files[0].size <= 5000000;
@@ -199,7 +200,9 @@
                     return this.optional(element) || element.files[0].size <= 5000000;
                 }, 'Please upload resume less then 5 MB'
             );
-
+            jQuery.validator.addMethod("postcodeUK", function (value, element) {
+                return this.optional(element) || /[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i.test(value);
+            }, "Please specify a valid Postcode");
 
             var form = $("#msform");
             form.validate({
@@ -246,12 +249,11 @@
                         minlength: 2,
                         maxlength: 500
                     },
-                    certification_id: {
-                        required: false,
-                        minlength: 2,
-                        maxlength: 32
-                    },
 
+                    zip: {
+                        postcodeUK: true,
+                        required: true,
+                    },
                     resume: {
                         required: false,
                         // ProResume: true,
@@ -261,9 +263,12 @@
                         required: false,
                         ProImage: true,
                         accept: "image/*",
-
                     },
-
+                    dbs_certificate_no: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
                 },
                 messages: {
 
@@ -286,8 +291,12 @@
                         required: "Please enter address",
 
                     },
+                    zip: {
+                        required: "Please enter zip",
+
+                    },
                     resume: {
-                          accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
 
                     },
                     photo: {
@@ -298,7 +307,13 @@
 
             });
 
-            $("[name^=education_title]").each(function () {
+            $("[name^=certificates_categorie]").each(function () {
+                $(this).rules("add", {
+                    selectCategorie: true
+                  });
+            });
+
+            $("[name^=certificates_level]").each(function () {
                 $(this).rules("add", {
                     required: true,
                     minlength: 2,
@@ -307,7 +322,9 @@
                 });
             });
 
-            $("[name^=education_university]").each(function () {
+
+
+            $("[name^=company_name]").each(function () {
                 $(this).rules("add", {
                     required: true,
                     minlength: 2,
@@ -316,7 +333,7 @@
                 });
             });
 
-            $("[name^=education_complete]").each(function () {
+            $("[name^=organization_registration]").each(function () {
                 $(this).rules("add", {
                     required: true,
                     minlength: 2,
@@ -325,50 +342,9 @@
                 });
             });
 
-            $("[name^=organization_work]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
 
-                });
-            });
 
-            $("[name^=designation_work]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
 
-                });
-            });
-
-            $("[name^=from_work]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
-
-                });
-            });
-
-            $("[name^=to_work]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
-
-                });
-            });
-
-            $("[name^=location_work]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
-
-                });
-            });
 
             if (form.valid() === true) {
                 return true;
@@ -416,7 +392,52 @@ $(document).ready(function () {
         }
     })
 
-
 })
 
+//Dynimic change other languages
+// $('input:radio[name="speak_languages"]').change(
+//     function () {
+//         if ($(this).is(':checked') && $(this).val() == '1') {
+//             alert('ye');
+//         } else {
+//             alert('no');
+//         }
+//     });
 
+$(document).ready(function () {
+
+    $('#certificate_issued').datepicker();
+    $('#cert_issued').datepicker();
+});
+
+
+$(document).ready(function () {
+    $('#language').multiselect({
+        nonSelectedText: 'Select Language',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '500px'
+    });
+
+    $('#travel_location').multiselect({
+        nonSelectedText: 'Select Country',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '500px'
+    });
+
+    $('#travel_location').multiselect({
+        nonSelectedText: 'Select Country',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '500px'
+    });
+    $('.education_university').find(".length").each(function (index) {
+        $('#level').multiselect({
+        nonSelectedText: 'Select level',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '500px'
+    });
+    });
+});

@@ -157,29 +157,17 @@ $(".bunPareWork").click(function () {
 
 function ResetFieldsIndex() {
 
-    $('.organization_work').find(".length").each(function (index) {
-        $(this).attr("name", "organization_work[" + index + "]");
-        $(this).attr("id", "organization_"+index+"_work");
+    $('.company_name').find(".length").each(function (index) {
+        $(this).attr("name", "company_name[" + index + "]");
+        $(this).attr("id", "company_"+index+"_name");
     });
 
-    $('.designation_work').find(".length").each(function (index) {
-        $(this).attr("name", "designation_work[" + index + "]");
-        $(this).attr("id", "designation_"+index+"_work");
+    $('.organization_registration').find(".length").each(function (index) {
+        $(this).attr("name", "organization_registration[" + index + "]");
+        $(this).attr("id", "organization_"+index+"_registration");
     });
 
-    $('.from_work').find(".length").each(function (index) {
-        $(this).attr("name", "from_work[" + index + "]");
-        $(this).attr("id", "from_"+index+"_work");
-    });
 
-    $('.to_work').find(".length").each(function (index) {
-        $(this).attr("name", "to_work[" + index + "]");
-        $(this).attr("id", "to_"+index+"_work");
-    });
 
-    $('.location_work').find(".length").each(function (index) {
-        $(this).attr("name", "location_work[" + index + "]");
-        $(this).attr("id", "location_"+index+"_work");
-    });
     index++;
 }

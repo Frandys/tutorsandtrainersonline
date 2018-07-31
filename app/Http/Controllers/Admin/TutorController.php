@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Admin {
 
     use App\Http\Requests\ValidationRequest;
     use App\Model\Activations;
+    use App\Model\Category;
+    use App\Model\CategoryUser;
+    use App\Model\Country;
     use App\Model\Course;
     use App\Model\Discipline;
+    use App\model\Educations;
     use App\Model\Language;
+    use App\Model\Organisations;
     use App\Model\Skill;
     use App\Model\Specialization;
     use App\model\TutorProfile;
+    use App\model\WorkExperience;
     use App\User;
     use Illuminate\Support\Facades\Redirect;
     use Illuminate\Support\Facades\Validator;
@@ -116,16 +122,12 @@ namespace App\Http\Controllers\Admin {
          */
         public function show($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork'])->find(decrypt($id))));
             $array = array();
             $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
-            $ttrSkil = json_decode(json_encode(Skill::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->skill_id) : $array)->get()));
-            $ttrSpecli = json_decode(json_encode(Specialization::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->specialization_id) : $array)->get()));
-            $ttrDicpil = json_decode(json_encode(Discipline::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->discipline_id) : $array)->get()));
-            $ttrCorse = json_decode(json_encode(Course::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->course_id) : $array)->get()));
-
-            return View('admin.tutor_view', compact('usersMeta', 'ttrLan', 'ttrSkil', 'ttrSpecli', 'ttrDicpil', 'ttrCorse'));
-
+            $ttrLocaWill = json_decode(json_encode(Country::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->travel_location) : $array)->get()));
+            $categories = Category::with('children')->get();
+            return View('admin.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill'));
         }
 
         /**
@@ -136,10 +138,11 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Educations', 'WorkExperiences'])->find(decrypt($id))));
-            $educations = empty($usersMeta->educations) ? json_decode(json_encode(array(array('title' => '', 'university' => '', 'complete' => ''))), false) : $usersMeta->educations;
-            $work_experiences = empty($usersMeta->work_experiences) ? json_decode(json_encode(array(array('organization' => '', 'designation' => '', 'from' => '', 'to' => '', 'location' => ''))), false) : $usersMeta->work_experiences;
-            return View('admin.tutors_edit', compact('usersMeta', 'educations', 'work_experiences'));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork'])->find(decrypt($id))));
+            $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
+            $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
+            $categories = Category::with('children')->get();
+            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations'));
 
         }
 
@@ -167,11 +170,9 @@ namespace App\Http\Controllers\Admin {
                 }
 
                 $user = User::find(decrypt($id));
-
                 $user->first_name = $data['first_name'];
                 $user->last_name = $data['last_name'];
                 $user->phone = $data['phone'];
-
 
                 //Check User Photo
                 if (!empty($request->file())) {
@@ -188,14 +189,20 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->state = $data['state'];
                     $tutrPro->country_id = $data['country'];
                     $tutrPro->address = $data['address'];
+                    $tutrPro->zip = $data['zip'];
                     $tutrPro->about = $data['about'];
-                    $tutrPro->language_id = serialize($data['language']);
-                    $tutrPro->skill_id = serialize($data['skill']);
-                    $tutrPro->specialization_id = serialize($data['specialization']);
-                    $tutrPro->discipline_id = serialize($data['discipline']);
-                    $tutrPro->course_id = serialize($data['course']);
-                    $tutrPro->certification_id = $data['certification_id'];
-
+                    $tutrPro->driving_license = $data['driving_license'];
+                    $tutrPro->work_in_uk = $data['work_in_uk'];
+                    $tutrPro->certificates = $data['certificates'];
+                    $tutrPro->dbs_cert = $data['dbs_cert'];
+                    $tutrPro->internet_update_service = $data['internet_update_service'];
+                    $tutrPro->disabilities = $data['disabilities'];
+                    $tutrPro->medical_conditions = $data['medical_conditions'];
+                    $tutrPro->level_of_fluency = $data['level_of_fluency'];
+                    $tutrPro->willing_travel = $data['willing_travel'];
+                    $tutrPro->travel_location = $data['willing_travel'] == '1' && isset($data['travel_location']) ? serialize($data['travel_location']) : '';
+                    $tutrPro->speak_languages = $data['speak_languages'];
+                    $tutrPro->language_id = $data['speak_languages'] == '1' && isset($data['language']) ? serialize($data['language']) : '';
                     //Check User Photo
                     if (!empty($request->file())) {
                         $file = $request->file();
@@ -208,6 +215,29 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->save();
                 }
 
+                if ($data['certificates_id']) {
+                    CategoryUser::whereUserId(decrypt($id))->delete();
+                    $sync_data = array();
+                    for ($i = 0; $i < count($data['certificates_id']); $i++) {
+                        $sync_data[$data['certificates_categorie'][$i]] = array('level' => $data['certificates_level'][$i]);
+                    }
+                    $user->Categories()->attach($sync_data);
+                }
+
+                if ($data['work_id']) {
+                    for ($i = 0; $i < count($data['work_id']); $i++) {
+                        $user->OrganisationsWork()->whereUserId(decrypt($id))->delete();
+                        for ($i = 0; $i < count($data['work_id']); $i++) {
+                            $user->OrganisationsWork()->save(
+                                new Organisations([
+                                    'company_name' => $data['company_name'][$i],
+                                    'registration' => $data['organization_registration'][$i],
+                                ]));
+                        }
+                    }
+                }
+
+
                 die;
 //          $user->TutorProfile()->update(['address'=>'myadder']);
             } catch (Exception $ex) {
@@ -219,7 +249,6 @@ namespace App\Http\Controllers\Admin {
         private function UploadFile($file, $path, $name)
         {
 
-            //     $namefile = $file['photo']->getClientOriginalName();
             $time = time();
             $namefile = $time . '.' . $file[$path]->getClientOriginalExtension();
             $destinationPath = 'images/' . $path;

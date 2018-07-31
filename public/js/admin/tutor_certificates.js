@@ -147,19 +147,20 @@ $(".bunPare").click(function () {
 
 function ResetFieldsIndex() {
 
-    $('.education_title').find(".length").each(function (index) {
-        $(this).attr("name", "education_title[" + index + "]");
-        $(this).attr("id", "education_"+index+"_title");
+    $('.certificates_categorie').find(".length").each(function (index) {
+
+        $(this).attr("name", "certificates_categorie[" + index + "]");
+        $(this).attr("id", "certificates_"+index+"_categorie");
     });
 
-    $('.education_university').find(".length").each(function (index) {
+    $('.certificates_level').find(".length").each(function (index) {
         $(this).attr("name", "education_university[" + index + "]");
         $(this).attr("id", "education_"+index+"_university");
     });
 
-    $('.education_complete').find(".length").each(function (index) {
-        $(this).attr("name", "education_complete[" + index + "]");
-        $(this).attr("id", "education_"+index+"_complete");
-    });
+    // $('.education_complete').find(".length").each(function (index) {
+    //     $(this).attr("name", "education_complete[" + index + "]");
+    //     $(this).attr("id", "education_"+index+"_complete");
+    // });
    index++;
 }
