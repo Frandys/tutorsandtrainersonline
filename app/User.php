@@ -44,10 +44,20 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Model\Country','tutor_profiles','user_id','country_id');
     }
 
+    public function CountryEmployer()
+    {
+        return $this->belongsToMany('App\Model\Country','employer_profiles','user_id','country_id');
+    }
 
     public function TutorProfile()
     {
         return $this->hasOne('App\Model\TutorProfile');
+    }
+
+
+    public function EmployerProfile()
+    {
+        return $this->hasOne('App\Model\EmployerProfile');
     }
 
     public function OrganisationsWork()
@@ -57,7 +67,13 @@ class User extends Authenticatable
 
     public function Categories()
     {
-        return $this->belongsToMany('App\Model\Category')->withPivot(['level']);
+        return $this->belongsToMany('App\Model\Category')->withPivot(['qualified_levels_id']);
+    }
+
+    public function QualifiedLevel()
+    {
+//        return $this->belongsToMany('App\Model\QualifiedLevel');
+        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id');
     }
 
     public function parent()

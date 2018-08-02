@@ -75,12 +75,12 @@
 
                 <h2>Passport </h2>
                 <p>Permit No: {{$usersMeta->tutor_profile->passport_no}}</p>
-                <p>Permit Start Date: {{$usersMeta->tutor_profile->pass_start_Date}}</p>
+                <p>Permit Start Date: {{$usersMeta->tutor_profile->pass_start_date}}</p>
                 <p>Permit Expiry Date: {{$usersMeta->tutor_profile->pass_expiry_date}}</p>
 
                 <h2>Work Permit</h2>
                 <p>Permit No: {{$usersMeta->tutor_profile->permit_no}}</p>
-                <p>Permit Start Date: {{$usersMeta->tutor_profile->permit_start_Date}}</p>
+                <p>Permit Start Date: {{$usersMeta->tutor_profile->permit_start_date}}</p>
                 <p>Permit Expiry Date: {{$usersMeta->tutor_profile->permit_expiry_date}}</p>
                 <h2>Can you provide the certificates?</h2>
                 <p>{{$usersMeta->tutor_profile->certificates == '1' ? 'YES' : 'NO'}}</p>
@@ -150,17 +150,17 @@
             @endforeach
              @endif
         </div>
-
         <div class="col-sm-6">
             <h1>Skills</h1>
 
-            @foreach($usersMeta->categories as $categorie)
+            @foreach($usersMeta->categories as $keyCat=>$categorie)
                 <h2>Skills name</h2>
                 <p>{{$categorie->name}}</p>
                 <h2>Qualified </h2>
-                <p>{{$categorie->pivot->level}}</p>
+                <p>{{$usersMeta->qualified_level[$keyCat]->level}}</p>
                 <hr>
-            @endforeach
+             @endforeach
+
         </div>
     </div>
 

@@ -9,5 +9,6 @@ return [
         'PAS_RESET' => 'Password reset successfully .',
         'VALID_PASS_MAIL' => 'Enter valid old password.',
         'PAS_CHNGE' => 'Password has been changed.',
+        'UPDATE_SUCCESS' => 'User updated successfully.',
     ]
 ];

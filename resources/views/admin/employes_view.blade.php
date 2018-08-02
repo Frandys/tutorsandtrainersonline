@@ -1,5 +1,5 @@
 @extends('layouts.admin.dashboard')
-@section('page_heading','Tutor List')
+@section('page_heading','Employer List')
 @section('section')
     @include('message.message')
 
@@ -32,7 +32,7 @@
                 oTable = $('#users-table').DataTable({
                     "processing": true,
                     "serverSide": true,
-                    "ajax": "{{ url('/admin/view_tutors') }}",
+                    "ajax": "{{ url('/admin/view_employer') }}",
                     "columns": [
                         { data: 'DT_Row_Index', name: 'DT_Row_Index' },
                         {data: 'email', name: 'email'},

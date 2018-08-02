@@ -200,6 +200,36 @@
                     return this.optional(element) || element.files[0].size <= 5000000;
                 }, 'Please upload resume less then 5 MB'
             );
+
+            jQuery.validator.addMethod('ProCert', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProCertificates', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProQual', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProCert', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProPassport', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProPermit', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+            jQuery.validator.addMethod('ProBirth', function (phone_number, element) {
+                    return this.optional(element) || element.files[0].size <= 5000000;
+                }, 'Please upload resume less then 5 MB'
+            );
+
             jQuery.validator.addMethod("postcodeUK", function (value, element) {
                 return this.optional(element) || /[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i.test(value);
             }, "Please specify a valid Postcode");
@@ -254,7 +284,7 @@
                         postcodeUK: true,
                         required: true,
                     },
-                    resume: {
+                    cv: {
                         required: false,
                         // ProResume: true,
                         accept: "image/*,application/*,pdf"
@@ -264,10 +294,68 @@
                         ProImage: true,
                         accept: "image/*",
                     },
+                    dbs_cert_upload: {
+                        required: false,
+                        ProCert: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+                    teaching_qual: {
+                        required: false,
+                        ProQual: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+                    teaching_cert: {
+                        required: false,
+                        ProCert: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+
+                    certificates_upload: {
+                        required: false,
+                        ProCertificates: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+                    passport: {
+                        required: false,
+                        ProPassport: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+                    work_permit: {
+                        required: false,
+                        ProPermit: true,
+                        accept: "image/*,application/*,pdf"
+                    },
+                    birth_certificate: {
+                        required: false,
+                        ProBirth: true,
+                        accept: "image/*,application/*,pdf"
+                    },
                     dbs_certificate_no: {
                         required: false,
                         minlength: 2,
                         maxlength: 32
+                    },
+                    pass_start_date: {
+                        required: true,
+                    },
+                    pass_expiry_date: {
+                        required: true,
+                    },
+                    passport_no: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                    permit_start_date: {
+                        required: true,
+                    },
+                    permit_expiry_date: {
+                        required: true,
+                    },
+                    permit_no: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 500
                     },
                 },
                 messages: {
@@ -295,13 +383,34 @@
                         required: "Please enter zip",
 
                     },
-                    resume: {
+                    cv: {
                         accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
 
+                    },
+                    dbs_cert_upload: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                    },
+                    teaching_qual: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                    },
+                    teaching_cert: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
                     },
                     photo: {
                         accept: "Please enter valid extension.(IMAGE)",
 
+                    },
+                    certificates_upload: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                    },
+                    passport: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                    },
+                    work_permit: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
+                    },
+                    birth_certificate: {
+                        accept: "Please enter valid extension.(DOC,IMAGE,PDF)",
                     },
                 },
 
@@ -310,18 +419,17 @@
             $("[name^=certificates_categorie]").each(function () {
                 $(this).rules("add", {
                     selectCategorie: true
-                  });
-            });
-
-            $("[name^=certificates_level]").each(function () {
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 500
-
                 });
             });
 
+            // $("[name^=certificates_level]").each(function () {
+            //     $(this).rules("add", {
+            //         required: true,
+            //         minlength: 2,
+            //         maxlength: 500
+            //
+            //     });
+            // });
 
 
             $("[name^=company_name]").each(function () {
@@ -341,9 +449,6 @@
 
                 });
             });
-
-
-
 
 
             if (form.valid() === true) {
@@ -394,20 +499,52 @@ $(document).ready(function () {
 
 })
 
-//Dynimic change other languages
-// $('input:radio[name="speak_languages"]').change(
-//     function () {
-//         if ($(this).is(':checked') && $(this).val() == '1') {
-//             alert('ye');
-//         } else {
-//             alert('no');
-//         }
-//     });
+$(document).ready(function(){
+
+    $(".passStartDates").datepicker({
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+        var startDate = new Date(selected.date.valueOf());
+        $('.passEndDates').datepicker('setStartDate', startDate);
+    }).on('clearDate', function (selected) {
+        $('.passEndDates').datepicker('setStartDate', null);
+    });
+
+    $("#passEndDates").datepicker({
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+        var endDate = new Date(selected.date.valueOf());
+        $('.passStartDates').datepicker('setEndDate', endDate);
+    }).on('clearDate', function (selected) {
+        $('.passStartDates').datepicker('setEndDate', null);
+    });
+
+    $(".permitStartDates").datepicker({
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+        var startDate = new Date(selected.date.valueOf());
+        $('.permitEndDates').datepicker('setStartDate', startDate);
+    }).on('clearDate', function (selected) {
+        $('.passEndDates').datepicker('setStartDate', null);
+    });
+
+    $("#permitEndDates").datepicker({
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+        var endDate = new Date(selected.date.valueOf());
+        $('.permitStartDates').datepicker('setEndDate', endDate);
+    }).on('clearDate', function (selected) {
+        $('.permitStartDates').datepicker('setEndDate', null);
+    });
+});
 
 $(document).ready(function () {
-
-    $('#certificate_issued').datepicker();
-    $('#cert_issued').datepicker();
+    //
+    // $('#certificate_issued').datepicker();
+    // $('#certificate_issued').datepicker({
+    //     format: 'yyyy-mm-dd'
+    // });
+    //  $('#cert_issued').datepicker();
 });
 
 
@@ -434,10 +571,10 @@ $(document).ready(function () {
     });
     $('.education_university').find(".length").each(function (index) {
         $('#level').multiselect({
-        nonSelectedText: 'Select level',
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
-        buttonWidth: '500px'
-    });
+            nonSelectedText: 'Select level',
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            buttonWidth: '500px'
+        });
     });
 });

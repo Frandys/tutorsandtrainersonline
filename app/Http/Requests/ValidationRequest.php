@@ -44,6 +44,20 @@ class ValidationRequest extends FormRequest
         'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
         'about ' => 'min:2|max:500',
         'certification_id ' => 'min:2|max:32',
+        'cv' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'dbs_cert_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'certificates_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'teaching_qual' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'teaching_cert' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'passport' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'work_permit' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'birth_certificate' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'pass_start_date' => 'required',
+        'pass_expiry_date' => 'required',
+        'passport_no' => 'required|min:2|max:32',
+        'permit_start_date' => 'required',
+        'permit_expiry_date' => 'required',
+        'permit_no' => 'required|min:2|max:32',
      );
 
 //    public static $photo = array(

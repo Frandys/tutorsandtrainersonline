@@ -18,8 +18,8 @@ class CreateCategoryUserPivotTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('category_id');
-            $table->string('level', 255);
-          });
+            $table->integer('qualified_levels_id');
+        });
     }
 
     /**

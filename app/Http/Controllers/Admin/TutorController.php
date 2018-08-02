@@ -14,15 +14,15 @@ namespace App\Http\Controllers\Admin {
     use App\Model\Organisations;
     use App\Model\Skill;
     use App\Model\Specialization;
-    use App\model\TutorProfile;
-    use App\model\WorkExperience;
     use App\User;
+    use Illuminate\Support\Facades\Config;
     use Illuminate\Support\Facades\Redirect;
     use Illuminate\Support\Facades\Validator;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
     use View;
     use Yajra\DataTables\DataTables;
+    use Illuminate\Support\Facades\Session;
 
     /**
      * @property  dataTable
@@ -38,7 +38,6 @@ namespace App\Http\Controllers\Admin {
          */
         public function index()
         {
-
             return View::make('admin.tutors_view');
         }
 
@@ -66,32 +65,7 @@ namespace App\Http\Controllers\Admin {
                 ->addIndexColumn()
                 ->make();
 
-
         }
-
-        /**
-         * @param Request $request
-         * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-         */
-        public function activateTutor(Request $request)
-        {
-            $data = $request->input();
-
-            $user = \Sentinel::findById(decrypt($data['id']));
-
-            $UsrActCkh = Activations::where('user_id', decrypt($data['id']))->first();
-            if (empty($UsrActCkh) || $UsrActCkh['completed'] == '0') {
-                $ActCode = \Activation::create($user);
-                \Activation::complete($user, $ActCode['code']);
-            } else {
-                \Activation::remove($user);
-            }
-
-            return Response(array('success' => '1', 'errors' => ''));
-
-
-        }
-
 
         /**
          * Show the form for creating a new resource.
@@ -122,7 +96,7 @@ namespace App\Http\Controllers\Admin {
          */
         public function show($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel'])->find(decrypt($id))));
             $array = array();
             $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
             $ttrLocaWill = json_decode(json_encode(Country::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->travel_location) : $array)->get()));
@@ -138,11 +112,11 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel'])->find(decrypt($id))));
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
             $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
             $categories = Category::with('children')->get();
-            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations'));
+           return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations'));
 
         }
 
@@ -161,6 +135,7 @@ namespace App\Http\Controllers\Admin {
          */
         public function update(Request $request, $id)
         {
+
             try {
                 $data = $request->input();
                 $validation = Validator::make($request->all(), ValidationRequest::$userValid);
@@ -178,11 +153,12 @@ namespace App\Http\Controllers\Admin {
                 if (!empty($request->file())) {
                     $file = $request->file();
                     if (isset($file['photo'])) {
-                        $namefile = $this->UploadFile($file, 'users', $user->photo);
-                        $user->photo = $namefile;
-
+                        $user->photo = $this->UploadFile($file, 'photo', $user->photo);
                     }
                 }
+
+                // convert seconds into a specific format
+
                 if ($user->save()) {
                     $tutrPro = $user->TutorProfile()->whereUserId(decrypt($id))->first();
                     $tutrPro->city = $data['city'];
@@ -194,6 +170,15 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->driving_license = $data['driving_license'];
                     $tutrPro->work_in_uk = $data['work_in_uk'];
                     $tutrPro->certificates = $data['certificates'];
+                    $tutrPro->certificate_issued = $data['certificate_issued'];
+                    $tutrPro->cert_issued = $data['cert_issued'];
+                    $tutrPro->pass_start_date = $data['pass_start_date'];
+                    $tutrPro->pass_expiry_date = $data['pass_expiry_date'];
+                    $tutrPro->passport_no = $data['passport_no'];
+                    $tutrPro->permit_start_date = $data['permit_start_date'];
+                    $tutrPro->permit_expiry_date = $data['permit_expiry_date'];
+                    $tutrPro->permit_no = $data['permit_no'];
+                    $tutrPro->dbs_certificate_no = $data['dbs_certificate_no'];
                     $tutrPro->dbs_cert = $data['dbs_cert'];
                     $tutrPro->internet_update_service = $data['internet_update_service'];
                     $tutrPro->disabilities = $data['disabilities'];
@@ -206,12 +191,31 @@ namespace App\Http\Controllers\Admin {
                     //Check User Photo
                     if (!empty($request->file())) {
                         $file = $request->file();
-                        if (isset($file['resume'])) {
-                            $namefile = $this->UploadFile($file, 'resume', $user->photo);
-                            $tutrPro->resume = $namefile;
+                        if (isset($file['cv'])) {
+                            $tutrPro->cv = $this->UploadFile($file, 'cv', $tutrPro->cv);
+                        }
+                        if (isset($file['dbs_cert_upload'])) {
+                            $tutrPro->dbs_cert_upload = $this->UploadFile($file, 'dbs_cert_upload', $tutrPro->dbs_cert_upload);
+                        }
+                        if (isset($file['certificates_upload'])) {
+                            $tutrPro->certificates_upload = $this->UploadFile($file, 'certificates_upload', $tutrPro->certificates_upload);
+                        }
+                        if (isset($file['teaching_qual'])) {
+                            $tutrPro->teaching_qual = $this->UploadFile($file, 'teaching_qual', $tutrPro->teaching_qual);
+                        }
+                        if (isset($file['teaching_cert'])) {
+                            $tutrPro->teaching_cert = $this->UploadFile($file, 'teaching_cert', $tutrPro->teaching_cert);
+                        }
+                        if (isset($file['passport'])) {
+                            $tutrPro->passport = $this->UploadFile($file, 'passport', $tutrPro->passport);
+                        }
+                        if (isset($file['work_permit'])) {
+                            $tutrPro->work_permit = $this->UploadFile($file, 'work_permit', $tutrPro->work_permit);
+                        }
+                        if (isset($file['birth_certificate'])) {
+                            $tutrPro->birth_certificate = $this->UploadFile($file, 'birth_certificate', $tutrPro->birth_certificate);
                         }
                     }
-
                     $tutrPro->save();
                 }
 
@@ -219,7 +223,7 @@ namespace App\Http\Controllers\Admin {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();
                     for ($i = 0; $i < count($data['certificates_id']); $i++) {
-                        $sync_data[$data['certificates_categorie'][$i]] = array('level' => $data['certificates_level'][$i]);
+                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i]);
                     }
                     $user->Categories()->attach($sync_data);
                 }
@@ -236,10 +240,8 @@ namespace App\Http\Controllers\Admin {
                         }
                     }
                 }
-
-
-                die;
-//          $user->TutorProfile()->update(['address'=>'myadder']);
+                Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
+                return Redirect::back();
             } catch (Exception $ex) {
                 return View::make('errors.exception')->with('Message', $ex->getMessage());
             }
@@ -248,7 +250,6 @@ namespace App\Http\Controllers\Admin {
 
         private function UploadFile($file, $path, $name)
         {
-
             $time = time();
             $namefile = $time . '.' . $file[$path]->getClientOriginalExtension();
             $destinationPath = 'images/' . $path;

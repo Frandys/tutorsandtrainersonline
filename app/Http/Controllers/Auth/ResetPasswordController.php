@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
-use Cartalyst\Sentinel\Laravel\Facades\Reminder;
-use Cartalyst\Sentinel\Sentinel;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Exception;
-use Cartalyst\Sentinel\Users\UserInterface;
 use App\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;

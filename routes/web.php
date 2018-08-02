@@ -30,8 +30,10 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/change_password', function () {
         return View::make('admin.change_password');
     });
-     Route::post('change_password', 'UserController@changePassword');
-     Route::resource('tutor', 'Admin\TutorController');
-     Route::get('view_tutors', 'Admin\TutorController@viewTutors');
-     Route::post('activate_tutor', 'Admin\TutorController@activateTutor');
+    Route::post('change_password', 'UserController@changePassword');
+    Route::post('activate_users', 'UserController@activateUsers');
+    Route::resource('tutor', 'Admin\TutorController');
+    Route::get('view_tutors', 'Admin\TutorController@viewTutors');
+    Route::resource('employer', 'Admin\EmployerController');
+    Route::get('view_employer', 'Admin\EmployerController@viewEmployer');
 });

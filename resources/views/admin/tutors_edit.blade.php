@@ -1,7 +1,7 @@
 @extends('layouts.admin.dashboard')
 @section('page_heading','View Tutor')
 @section('section')
-    @include('message.message')
+
     <div class="row">
         <div class="container-fluid">
             <div class="row">
@@ -307,10 +307,11 @@
                                         Enter the date the Certificate was issued?
                                     </label>
 
-                                    <div class="input-group date" data-provide="datepicker">
-                                        <input type="text" class="form-control" name="certificate_issued"
+                                    <div data-date-format="yyyy-mm-dd" class="input-group date"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" class="form-control" name="certificate_issued"
                                                value="{{$usersMeta->tutor_profile->certificate_issued}}"
-                                               data-date-format="dd-mm-yyyy" id="certificate_issued">
+                                               id="certificate_issued">
                                         <div class="input-group-addon">
                                             <span class="glyphicon glyphicon-th"></span>
                                         </div>
@@ -342,8 +343,9 @@
                                         Enter the date the Certificate dbs cert?
                                     </label>
 
-                                    <div class="input-group date" data-provide="datepicker">
-                                        <input type="text" value="{{$usersMeta->tutor_profile->cert_issued}}"
+                                    <div data-date-format="yyyy-mm-dd" class="input-group date"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" value="{{$usersMeta->tutor_profile->cert_issued}}"
                                                class="form-control" name="cert_issued"
                                                id="cert_issued">
                                         <div class="input-group-addon">
@@ -372,7 +374,7 @@
 
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
-                                    <label class="control-label show" for="certificate_issued">
+                                    <label class="control-label show" for="travel_location">
                                         Please select the location willing to travel to below...
                                     </label>
 
@@ -436,42 +438,6 @@
 
                         </div>
 
-
-                        {{--<div class="row">--}}
-                        {{--<div class="col-md-6 col-sm-6">--}}
-                        {{--<div class="form-group">--}}
-                        {{--<label class="control-label" for="photo">--}}
-                        {{--Profile Image--}}
-                        {{--</label>--}}
-                        {{--<input name="photo" id="photo" type="file">--}}
-                        {{--<a download="{{$usersMeta->photo}}"--}}
-                        {{--href="{{asset('images/users').'/'.$usersMeta->photo}}"--}}
-                        {{--title="User photo">--}}
-
-                        {{--{{($usersMeta->photo != '') ? 'Download' : ''}}--}}
-                        {{--</a>--}}
-                        {{--@if ($errors->has('photo'))--}}
-                        {{--<span class="help-block">--}}
-                        {{--<strong>{{ $errors->first('photo') }}</strong>--}}
-                        {{--</span>--}}
-                        {{--@endif--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-md-6 col-sm-6">--}}
-                        {{--<div class="form-group">--}}
-                        {{--<label class="control-label" for="resume">--}}
-                        {{--Resume--}}
-                        {{--</label>--}}
-                        {{--<input name="resume" id="resume" type="file">--}}
-                        {{--<a download="{{$usersMeta->tutor_profile->resume}}"--}}
-                        {{--href="{{asset('images/resume').'/'.$usersMeta->tutor_profile->resume}}"--}}
-                        {{--title="ImageName">--}}
-                        {{--{{($usersMeta->tutor_profile->resume != '') ? 'Download' : ''}}--}}
-                        {{--</a>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-
                     </fieldset>
                     <fieldset>
                         <legend>Disponibilità</legend>
@@ -520,203 +486,489 @@
                                                                         class="asteriskField">*</span>
                                                             </label>
                                                             <div class="controls certificates_level">
-                                                                <input type="text"
-                                                                       value="{{$categorie->pivot->level}}"
-                                                                       name="certificates_level[{{$keyCerti}}]"
-                                                                       id="certificates_{{$keyCerti}}_level"
-                                                                       class="textinput form-control length"/>
+                                                                <select name="certificates_level[{{$keyCerti}}]"
+                                                                        id="certificates_{{$keyCerti}}_level"
+                                                                        class="length">
+
+                                                                    @foreach(\App\Model\QualifiedLevel::all() as   $qualified)
+                                                                        <option value="{{$qualified->id}}"  <?php echo ( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $qualified->id) ? 'selected' : '' ;?>  >{{$qualified->level}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                              </div>
+                                                        </div>
+                                                        @if($keyCerti > '0')
+                                                            <div id="parntDiv{{$keyCerti}}" class="bunPare"
+                                                                 onchange="enableTxt(this)"
+                                                                 style="float: right; border: 0px; background-image: url(&quot;../../../images/icons/remove.png&quot;); background-position: center center; background-repeat: no-repeat; height: 25px; width: 25px; cursor: pointer;"></div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                @endforeach
+
+
+                                                <div id="czContainer">
+                                                    <div id="first">
+                                                        <div class="recordset">
+                                                            <div class="fieldRow clearfix">
+                                                                <input type="text" value=""
+                                                                       hidden name="certificates_id[{{'2'}}]">
+                                                                <div class="col-md-5">
+                                                                    <div id="div_certificates_categorie"
+                                                                         class="form-group">
+                                                                        <label for="certificates_1_categorie"
+                                                                               class="control-label  requiredField">
+                                                                            Categorie<span
+                                                                                    class="asteriskField">*</span>
+                                                                        </label>
+                                                                        <div class="controls certificates_categorie">
+
+                                                                            <select name="certificates_categorie[{{'2'}}]"
+                                                                                    id="certificates_1_categorie"
+                                                                                    class="selectpicker length">
+                                                                                @foreach($categories as  $categorieItem)
+                                                                                    @if(!empty($categorieItem->children))
+                                                                                        <optgroup
+                                                                                                label="{{$categorieItem->name}}"
+                                                                                                data-max-options="1">
+                                                                                            @foreach($categorieItem->children as  $categorieChild)
+                                                                                                <option value="{{$categorieChild->id}}" {{isset($categorie->id) ==  $categorieChild->id  ? ' selected="selected" ' : ''}} >{{$categorieChild->name}}</option>
+                                                                                            @endforeach
+                                                                                            @endif
+                                                                                            @endforeach
+                                                                                        </optgroup>
+                                                                            </select>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3">
+                                                                    <div id="div_certificates_level" class="form-group">
+                                                                        <label for="certificates_1_level"
+                                                                               class="control-label  requiredField">
+                                                                            Level<span
+                                                                                    class="asteriskField">*</span>
+                                                                        </label>
+                                                                        <div class="controls certificates_level">
+                                                                            <div class="controls certificates_level">
+                                                                                <select name="certificates_level[{{$keyCerti}}]"
+                                                                                        id="certificates_{{$keyCerti}}_level"
+                                                                                        class="length">
+
+                                                                                    @foreach(\App\Model\QualifiedLevel::all() as   $qualified)
+                                                                                        <option value="{{$qualified->id}}"> {{$qualified->level}}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @if($keyCerti > '0')
-                                                        <div id="parntDiv{{$keyCerti}}" class="bunPare"
-                                                             onchange="enableTxt(this)"
-                                                             style="float: right; border: 0px; background-image: url(&quot;../../../images/icons/remove.png&quot;); background-position: center center; background-repeat: no-repeat; height: 25px; width: 25px; cursor: pointer;"></div>
-                                                    @endif
                                                 </div>
                                             </div>
-                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
 
 
-                                        <div id="czContainer">
-                                            <div id="first">
-                                                <div class="recordset">
+                            <p>Work experence </p>
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="well clearfix">
+                                        <div id="second">
+                                            @foreach($organisations as $keyWork=>$work_experience)
+                                                <div class="recordsetWork" id="parntDivWork{{$keyWork}}">
+                                                    <input type="text"
+                                                           value="{{isset($work_experience->id) ? encrypt($work_experience->id) : ''}}"
+                                                           hidden name="work_id[{{$keyWork}}]">
                                                     <div class="fieldRow clearfix">
-                                                        <input type="text" value=""
-                                                               hidden name="certificates_id[{{'2'}}]">
-                                                        <div class="col-md-5">
-                                                            <div id="div_certificates_categorie" class="form-group">
-                                                                <label for="certificates_1_categorie"
+                                                        <div class="col-md-3">
+                                                            <div id="div_company_name" class="form-group">
+                                                                <label for="company_{{$keyWork}}_name"
                                                                        class="control-label  requiredField">
-                                                                    Categorie<span class="asteriskField">*</span>
+                                                                    Company Name<span class="asteriskField">*</span>
                                                                 </label>
-                                                                <div class="controls certificates_categorie">
-
-                                                                    <select name="certificates_categorie[{{'2'}}]"
-                                                                            id="certificates_1_categorie"
-                                                                            class="selectpicker length">
-                                                                        @foreach($categories as  $categorieItem)
-                                                                            @if(!empty($categorieItem->children))
-                                                                                <optgroup
-                                                                                        label="{{$categorieItem->name}}"
-                                                                                        data-max-options="1">
-                                                                                    @foreach($categorieItem->children as  $categorieChild)
-                                                                                        <option value="{{$categorieChild->id}}" {{isset($categorie->id) ==  $categorieChild->id  ? ' selected="selected" ' : ''}} >{{$categorieChild->name}}</option>
-                                                                                    @endforeach
-                                                                                    @endif
-                                                                                    @endforeach
-                                                                                </optgroup>
-                                                                    </select>
-
+                                                                <div class="controls company_name">
+                                                                    <input type="text"
+                                                                           name="company_name[{{$keyWork}}]"
+                                                                           value="{{$work_experience->company_name}}"
+                                                                           id="company_{{$keyWork}}_name"
+                                                                           class="textinput form-control length"/>
                                                                 </div>
+
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3">
-                                                            <div id="div_certificates_level" class="form-group">
-                                                                <label for="certificates_1_level"
+
+                                                        <div class="col-md-2">
+                                                            <div id="div_organization_registration" class="form-group">
+                                                                <label for="organization_1_registration"
                                                                        class="control-label  requiredField">
-                                                                    Level<span
-                                                                            class="asteriskField">*</span>
+                                                                    Registration<span class="asteriskField">*</span>
                                                                 </label>
-                                                                <div class="controls certificates_level">
+                                                                <div class="controls organization_registration">
                                                                     <input type="text"
-                                                                           name="certificates_level[{{'2'}}]"
-                                                                           id="certificates_1_level"
+                                                                           name="organization_registration[{{$keyWork}}]"
+                                                                           value="{{$work_experience->registration}}"
+                                                                           id="organization_{{$keyWork}}_registration"
                                                                            class="textinput form-control length"/>
                                                                 </div>
                                                             </div>
                                                         </div>
 
 
+                                                        @if($keyWork > '0')
+                                                            <div id="parntDivWork{{$keyWork}}" class="bunPareWork"
+                                                                 onchange="enableTxt(this)"
+                                                                 style="float: right; border: 0px; background-image: url(&quot;../../../images/icons/remove.png&quot;); background-position: center center; background-repeat: no-repeat; height: 25px; width: 25px; cursor: pointer;"></div>
+                                                        @endif
                                                     </div>
                                                 </div>
+                                            @endforeach
+                                        </div>
+
+
+                                        <div id="czContainerWork">
+                                            <div id="second">
+                                                <div class="recordsetWork">
+                                                    <input type="text" value=""
+                                                           hidden name="work_id[{{'2'}}]">
+                                                    <div class="fieldRow clearfix">
+                                                        <div class="col-md-3">
+                                                            <div id="div_company_name" class="form-group">
+                                                                <label for="company_1_name"
+                                                                       class="control-label  requiredField">
+                                                                    Company Name<span class="asteriskField">*</span>
+                                                                </label>
+                                                                <div class="controls company_name">
+                                                                    <input type="text"
+                                                                           name="company_name[{{'2'}}]"
+                                                                           id="company_1_name"
+                                                                           class="textinput form-control length"/>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div id="div_organization_registration" class="form-group">
+                                                                <label for="organization_1_registration"
+                                                                       class="control-label  requiredField">
+                                                                    Registration<span class="asteriskField">*</span>
+                                                                </label>
+                                                                <div class="controls organization_registration">
+                                                                    <input type="text"
+                                                                           name="organization_registration[{{'2'}}]"
+                                                                           id="organization_1_registration"
+                                                                           class="textinput form-control length"/>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="row">
+                                <p>Passport</p>
+                                <div class="col-md-4">
+                                    <label for="pass_start_date"
+                                           class="control-label">
+                                        Start Date: <span class="asteriskField">*</span>
+                                    </label>
 
-                        <p>Work experence </p>
-
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="well clearfix">
-                                    <div id="second">
-                                        @foreach($organisations as $keyWork=>$work_experience)
-                                            <div class="recordsetWork" id="parntDivWork{{$keyWork}}">
-                                                <input type="text"
-                                                       value="{{isset($work_experience->id) ? encrypt($work_experience->id) : ''}}"
-                                                       hidden name="work_id[{{$keyWork}}]">
-                                                <div class="fieldRow clearfix">
-                                                    <div class="col-md-3">
-                                                        <div id="div_company_name" class="form-group">
-                                                            <label for="company_{{$keyWork}}_name"
-                                                                   class="control-label  requiredField">
-                                                                Company Name<span class="asteriskField">*</span>
-                                                            </label>
-                                                            <div class="controls company_name">
-                                                                <input type="text"
-                                                                       name="company_name[{{$keyWork}}]"
-                                                                       value="{{$work_experience->company_name}}"
-                                                                       id="company_{{$keyWork}}_name"
-                                                                       class="textinput form-control length"/>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-2">
-                                                        <div id="div_organization_registration" class="form-group">
-                                                            <label for="organization_1_registration"
-                                                                   class="control-label  requiredField">
-                                                                Registration<span class="asteriskField">*</span>
-                                                            </label>
-                                                            <div class="controls organization_registration">
-                                                                <input type="text"
-                                                                       name="organization_registration[{{$keyWork}}]"
-                                                                       value="{{$work_experience->registration}}"
-                                                                       id="organization_{{$keyWork}}_registration"
-                                                                       class="textinput form-control length"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    @if($keyWork > '0')
-                                                        <div id="parntDivWork{{$keyWork}}" class="bunPareWork"
-                                                             onchange="enableTxt(this)"
-                                                             style="float: right; border: 0px; background-image: url(&quot;../../../images/icons/remove.png&quot;); background-position: center center; background-repeat: no-repeat; height: 25px; width: 25px; cursor: pointer;"></div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-
-                                    <div id="czContainerWork">
-                                        <div id="second">
-                                            <div class="recordsetWork">
-                                                <input type="text" value=""
-                                                       hidden name="work_id[{{'2'}}]">
-                                                <div class="fieldRow clearfix">
-                                                    <div class="col-md-3">
-                                                        <div id="div_company_name" class="form-group">
-                                                            <label for="company_1_name"
-                                                                   class="control-label  requiredField">
-                                                                Company Name<span class="asteriskField">*</span>
-                                                            </label>
-                                                            <div class="controls company_name">
-                                                                <input type="text"
-                                                                       name="company_name[{{'2'}}]"
-                                                                       id="company_1_name"
-                                                                       class="textinput form-control length"/>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <div id="div_organization_registration" class="form-group">
-                                                            <label for="organization_1_registration"
-                                                                   class="control-label  requiredField">
-                                                                Registration<span class="asteriskField">*</span>
-                                                            </label>
-                                                            <div class="controls organization_registration">
-                                                                <input type="text"
-                                                                       name="organization_registration[{{'2'}}]"
-                                                                       id="organization_1_registration"
-                                                                       class="textinput form-control length"/>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
+                                    <div data-date-format="yyyy-mm-dd" class="input-group  date  passStartDates"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" class="form-control valid" name="pass_start_date"
+                                               value="{{$usersMeta->tutor_profile->pass_start_date}}"
+                                               id="pass_start_date">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
                                         </div>
                                     </div>
 
                                 </div>
+
+                                <div class="col-md-4">
+                                    <label for="pass_expiry_date"
+                                           class="control-label">
+                                        Expiry Date: <span class="asteriskField">*</span>
+                                    </label>
+                                    <div data-date-format="yyyy-mm-dd" class="input-group passEndDates date"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" class="form-control valid" name="pass_expiry_date"
+                                               value="{{$usersMeta->tutor_profile->pass_expiry_date}}"
+                                               id="pass_expiry_date">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="passport_no"
+                                           class="control-label">
+                                        Passport No: <span class="asteriskField">*</span>
+                                    </label>
+                                    <input type="text" value="{{$usersMeta->tutor_profile->passport_no}}"
+                                           name="passport_no"
+                                           id="passport_no"
+                                           class="form-control"/>
+                                </div>
+
                             </div>
-                        </div>
 
-                        <div class="form-group" id="div_checkbox">
+                            <div class="row">
+                                <p>Work Permit</p>
+                                <div class="col-md-4">
+                                    <label for="permit_start_date"
+                                           class="control-label">
+                                        Start Date: <span class="asteriskField">*</span>
+                                    </label>
 
-                            <div class="form-group">
-                                <div>
-                                    <button class="btn btn-success" id="sads" name="submit" type="submit">
-                                        Invi
-                                    </button>
+                                    <div data-date-format="yyyy-mm-dd" class="input-group date permitStartDates"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" class="form-control valid" name="permit_start_date"
+                                               value="{{$usersMeta->tutor_profile->permit_start_date}}"
+                                               id="permit_start_date">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="permit_expiry_date"
+                                           class="control-label">
+                                        Expiry Date: <span class="asteriskField">*</span>
+                                    </label>
+                                    <div data-date-format="yyyy-mm-dd" class="input-group date permitEndDates"
+                                         data-provide="datepicker">
+                                        <input readonly type="text" readonly class="form-control valid" name="permit_expiry_date"
+                                               value="{{$usersMeta->tutor_profile->permit_expiry_date}}"
+                                               id="permit_expiry_date">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="permit_no"
+                                           class="control-label">
+                                        Work Permit: <span class="asteriskField">*</span>
+                                    </label>
+                                    <input type="text" value="{{$usersMeta->tutor_profile->permit_no}}" name="permit_no"
+                                           id="permit_no"
+                                           class="form-control"/>
                                 </div>
                             </div>
-                        </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="photo">
+                                            Profile Image
+                                        </label>
+                                        <input name="photo" id="photo" type="file">
+                                        <a download="{{$usersMeta->photo}}"
+                                           href="{{asset('images/photo').'/'.$usersMeta->photo}}"
+                                           title="User photo">
+                                            {{($usersMeta->photo != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('photo'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('photo') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="cv">
+                                            Resume
+                                        </label>
+                                        <input name="cv" id="cv" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->cv}}"
+                                           href="{{asset('images/cv').'/'.$usersMeta->tutor_profile->cv}}"
+                                           title="cv">
+                                            {{($usersMeta->tutor_profile->cv != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('cv'))
+                                            <span class="help-block">
+                                   <strong>{{ $errors->first('cv') }}</strong>
+                                 </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="dbs_cert_upload">
+                                            Dbs Cert
+                                        </label>
+                                        <input name="dbs_cert_upload" id="dbs_cert_upload" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->dbs_cert_upload}}"
+                                           href="{{asset('images/dbs_cert_upload').'/'.$usersMeta->tutor_profile->dbs_cert_upload}}"
+                                           title="User photo">
+
+                                            {{($usersMeta->tutor_profile->dbs_cert_upload != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('dbs_cert_upload'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('dbs_cert_upload') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="certificates_upload">
+                                            Certificates
+                                        </label>
+                                        <input name="certificates_upload" id="certificates_upload" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->certificates_upload}}"
+                                           href="{{asset('images/certificates_upload').'/'.$usersMeta->tutor_profile->certificates_upload}}"
+                                           title="ImageName">
+                                            {{($usersMeta->tutor_profile->certificates_upload != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('certificates_upload'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('certificates_upload') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="teaching_qual">
+                                            Teaching Qual
+                                        </label>
+                                        <input name="teaching_qual" id="teaching_qual" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->teaching_qual}}"
+                                           href="{{asset('images/teaching_qual').'/'.$usersMeta->tutor_profile->teaching_qual}}"
+                                           title="User photo">
+
+                                            {{($usersMeta->tutor_profile->teaching_qual != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('teaching_qual'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('teaching_qual') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="teaching_cert">
+                                            Teaching Cert
+                                        </label>
+                                        <input name="teaching_cert" id="teaching_cert" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->teaching_cert}}"
+                                           href="{{asset('images/teaching_cert').'/'.$usersMeta->tutor_profile->teaching_cert}}"
+                                           title="ImageName">
+                                            {{($usersMeta->tutor_profile->teaching_cert != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('teaching_cert'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('teaching_cert') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="passport">
+                                            Passport
+                                        </label>
+                                        <input name="passport" id="passport" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->passport}}"
+                                           href="{{asset('images/passport').'/'.$usersMeta->tutor_profile->passport}}"
+                                           title="Passport">
+
+                                            {{($usersMeta->tutor_profile->passport != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('passport'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('passport') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="work_permit">
+                                            Work Permit
+                                        </label>
+                                        <input name="work_permit" id="work_permit" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->work_permit}}"
+                                           href="{{asset('images/work_permit').'/'.$usersMeta->tutor_profile->work_permit}}"
+                                           title="ImageName">
+                                            {{($usersMeta->tutor_profile->work_permit != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('work_permit'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('work_permit') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label" for="birth_certificate">
+                                            Birth Certificate
+                                        </label>
+                                        <input name="birth_certificate" id="birth_certificate" type="file">
+                                        <a download="{{$usersMeta->tutor_profile->birth_certificate}}"
+                                           href="{{asset('images/birth_certificate').'/'.$usersMeta->tutor_profile->birth_certificate}}"
+                                           title="ImageName">
+                                            {{($usersMeta->tutor_profile->birth_certificate != '') ? 'Download' : ''}}
+                                        </a>
+                                        @if ($errors->has('birth_certificate'))
+                                            <span class="help-block">
+                        <strong>{{ $errors->first('birth_certificate') }}</strong>
+                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" id="div_checkbox">
+
+                                <div class="form-group">
+                                    <div>
+                                        <button class="btn btn-success" id="sads" name="submit" type="submit">
+                                            Invi
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                     </fieldset>
                     {{--</form>--}}
                     {{ Form::close() }}
