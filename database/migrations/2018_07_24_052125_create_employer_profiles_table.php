@@ -19,7 +19,7 @@ class CreateEmployerProfilesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('company_logo', 255)->nullable();
             $table->string('company_name', 255)->nullable();
-            $table->string('company_address', 255)->nullable();
+            $table->text('company_address')->nullable();
             $table->string('contact_tel', 255)->nullable();
             $table->string('head_office_address', 255)->nullable();
             $table->string('authorised_user', 255)->nullable();

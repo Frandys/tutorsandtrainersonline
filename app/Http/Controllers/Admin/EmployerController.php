@@ -100,7 +100,9 @@ class EmployerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usersMeta = json_decode(json_encode(User::with(['CountryEmployer', 'EmployerProfile'])->find(decrypt($id))));
+        return View('admin.employer_edit',compact('usersMeta'));
+
     }
 
     /**

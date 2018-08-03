@@ -578,3 +578,19 @@ $(document).ready(function () {
         });
     });
 });
+
+//Employer section
+function different_locations() {
+    var $radios = $("input[type=radio][name='different_locations']:checked").val();
+    if ($radios == 0) {
+   //     $("#disable_different_locations").prop("disabled", true);
+        $(".disable_different_locations").prop("disabled", true);
+    } else {
+        $(".disable_different_locations").prop("disabled", false);
+    }
+}
+different_locations();
+$('input:radio[name="different_locations"]').change(
+    function () {
+        different_locations();
+    });
