@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <h1>Socio Professionista</h1>
+                    <h1>Professional Partner</h1>
                     <div id='progress'>
                         <div id='progress-complete'></div>
                     </div>
@@ -15,7 +15,7 @@
 
                     @include('message.message')
                     <fieldset>
-                        <legend>Informazioni Generali</legend>
+                        <legend>General Information</legend>
 
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
@@ -134,7 +134,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label class="control-label " for="zip">
-                                        Zip
+                                        Post Code
                                     </label>
                                     <input class="form-control"
                                            value="{{$usersMeta->tutor_profile->zip}}"
@@ -375,7 +375,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label class="control-label show" for="travel_location">
-                                        Please select the location willing to travel to below...
+                                        Please select the locations willing to travel to below...
                                     </label>
 
                                     <select name="travel_location[]" id="travel_location" multiple=""
@@ -463,7 +463,7 @@
                                                                         id="certificates_{{$keyCerti}}_categorie"
                                                                         class="selectpicker length">
                                                                     @foreach($categories as  $categorieItem)
-                                                                        @if(!empty($categorieItem->children))
+                                                                        @if(isset($categorieItem->children['0']))
                                                                             <optgroup label="{{$categorieItem->name}}"
                                                                                       data-max-options="1">
                                                                                 @foreach($categorieItem->children as  $categorieChild)
@@ -490,11 +490,19 @@
                                                                         id="certificates_{{$keyCerti}}_level"
                                                                         class="length">
 
-                                                                    @foreach(\App\Model\QualifiedLevel::all() as   $qualified)
-                                                                        <option value="{{$qualified->id}}"  <?php echo ( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $qualified->id) ? 'selected' : '' ;?>  >{{$qualified->level}}</option>
+                                                                    @foreach($levels as  $level)
+                                                                        @if(isset($level->childrenLevels['0']))
+                                                                            <optgroup label="{{$level->level}}"
+                                                                                      data-max-options="1">
+                                                                                @foreach($level->childrenLevels as  $levelChild)
+                                                                                    <option value="{{$levelChild->id}}" {{( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $levelChild->id) ? 'selected' : '' }} >{{$levelChild->level}}</option>                                                                            @endforeach
+                                                                        @endif
                                                                     @endforeach
+                                                                    {{--@foreach(\App\Model\QualifiedLevel::all() as   $qualified)--}}
+                                                                    {{--<option value="{{$qualified->id}}" {{( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $qualified->id) ? 'selected' : '' }}  >{{$qualified->level}}</option>--}}
+                                                                    {{--@endforeach--}}
                                                                 </select>
-                                                              </div>
+                                                            </div>
                                                         </div>
                                                         @if($keyCerti > '0')
                                                             <div id="parntDiv{{$keyCerti}}" class="bunPare"
@@ -526,16 +534,17 @@
                                                                                     id="certificates_1_categorie"
                                                                                     class="selectpicker length">
                                                                                 @foreach($categories as  $categorieItem)
-                                                                                    @if(!empty($categorieItem->children))
+                                                                                    @if(isset($categorieItem->children['0']))
                                                                                         <optgroup
                                                                                                 label="{{$categorieItem->name}}"
                                                                                                 data-max-options="1">
                                                                                             @foreach($categorieItem->children as  $categorieChild)
-                                                                                                <option value="{{$categorieChild->id}}" {{isset($categorie->id) ==  $categorieChild->id  ? ' selected="selected" ' : ''}} >{{$categorieChild->name}}</option>
+                                                                                                <option value="{{$categorieChild->id}}">{{$categorieChild->name}}</option>
                                                                                             @endforeach
-                                                                                            @endif
-                                                                                            @endforeach
+
                                                                                         </optgroup>
+                                                                                    @endif
+                                                                                @endforeach
                                                                             </select>
 
                                                                         </div>
@@ -551,13 +560,23 @@
                                                                         </label>
                                                                         <div class="controls certificates_level">
                                                                             <div class="controls certificates_level">
-                                                                                <select name="certificates_level[{{$keyCerti}}]"
-                                                                                        id="certificates_{{$keyCerti}}_level"
+                                                                                <select name="certificates_level[{{'2'}}]"
+                                                                                        id="certificates_1_level"
                                                                                         class="length">
 
-                                                                                    @foreach(\App\Model\QualifiedLevel::all() as   $qualified)
-                                                                                        <option value="{{$qualified->id}}"> {{$qualified->level}}</option>
+                                                                                    @foreach($levels as  $levelVal)
+                                                                                        @if(isset($levelVal->childrenLevels['0']) && $levelVal->childrenLevels != '')
+                                                                                            <optgroup
+                                                                                                    label="{{$levelVal->level}}"
+                                                                                                    data-max-options="1">
+                                                                                                @foreach($levelVal->childrenLevels as  $levelChild)
+                                                                                                    <option value="{{$levelChild->id}}">{{$levelChild->level}}</option>
+                                                                                                @endforeach
+
+                                                                                            </optgroup>
+                                                                                        @endif
                                                                                     @endforeach
+
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -758,7 +777,8 @@
                                     </label>
                                     <div data-date-format="yyyy-mm-dd" class="input-group date permitEndDates"
                                          data-provide="datepicker">
-                                        <input readonly type="text" readonly class="form-control valid" name="permit_expiry_date"
+                                        <input readonly type="text" readonly class="form-control valid"
+                                               name="permit_expiry_date"
                                                value="{{$usersMeta->tutor_profile->permit_expiry_date}}"
                                                id="permit_expiry_date">
                                         <div class="input-group-addon">

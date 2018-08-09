@@ -114,7 +114,91 @@ class EmployerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->input();
+            $validation = Validator::make($request->all(), ValidationRequest::$EmpValid);
+            if ($validation->fails()) {
+                $errors = $validation->messages();
+                return Redirect::back()->with('errors', $errors);
+            }
+
+            $user = User::find(decrypt($id));
+            $user->first_name = $data['first_name'];
+            $user->last_name = $data['last_name'];
+            $user->phone = $data['phone'];
+
+            //Check User Photo
+            if (!empty($request->file())) {
+                $file = $request->file();
+                if (isset($file['company_logo'])) {
+                    $user->photo = $this->UploadFile($file, 'company_logo', $user->photo);
+                }
+            }
+
+             if ($user->save()) {
+                $empPro = $user->EmployerProfile()->whereUserId(decrypt($id))->first();
+                 $empPro->company_name = $data['company_name'];
+                 $empPro->company_address = $data['company_address'];
+                 $empPro->contact_tel = $data['contact_tel'];
+                 $empPro->head_office_address = $data['head_office_address'];
+                 $empPro->authorised_user = $data['authorised_user'];
+                 $empPro->authorised_user_second = $data['authorised_user_second'];
+                 $empPro->contact_person = $data['contact_person'];
+                 $empPro->head_office_contact_person = $data['head_office_contact_person'];
+                 $empPro->contact_person_second = $data['contact_person_second'];
+                 $empPro->head_office_contact_person_second = $data['head_office_contact_person_second'];
+                 $empPro->dept = $data['dept'];
+                 $empPro->dept_second = $data['dept_second'];
+                 $empPro->contact_no = $data['contact_no'];
+                 $empPro->contact_no_second = $data['contact_no_second'];
+                 $empPro->email = $data['email'];
+                 $empPro->email_second = $data['email_second'];
+                 $empPro->company_vat_reg_no = $data['company_vat_reg_no'];
+                 $empPro->company_reg_no = $data['company_reg_no'];
+                 $empPro->different_locations = $data['different_locations'];
+                 $empPro->city = $data['city'];
+                 $empPro->state = $data['state'];
+                 $empPro->country_id = $data['country'];
+                 $empPro->address = $data['address'];
+                 $empPro->zip = $data['zip'];
+                 $empPro->address = $data['address'];
+                 $empPro->onsite_projector = $data['onsite_projector'];
+                 $empPro->wipe_board = $data['wipe_board'];
+                 $empPro->flip_chart_and_stand = $data['flip_chart_and_stand'];
+                 $empPro->disabilities = $data['disabilities'];
+                 $empPro->equipment_available = $data['equipment_available'];
+                 $empPro->equipment_available_onsite = $data['equipment_available_onsite'];
+                 $empPro->report_name = $data['report_name'];
+                 $empPro->report_department = $data['report_department'];
+                 $empPro->additional_information = $data['additional_information'];
+                 $empPro->additional_details = $data['additional_details'];
+                 $empPro->save();
+              }
+
+
+
+            Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
+            return Redirect::back();
+        } catch (Exception $ex) {
+            return View::make('errors.exception')->with('Message', $ex->getMessage());
+        }
+    }
+
+
+    private function UploadFile($file, $path, $name)
+    {
+
+        $time = time();
+        $namefile = $time . '.' . $file[$path]->getClientOriginalExtension();
+        $destinationPath = 'images/' . $path;
+        $file[$path]->move($destinationPath, $namefile);
+        //Delete old image
+        $profileImg = $destinationPath . '/' . $name;
+
+        if (\File::exists(public_path($profileImg))) {
+            \File::delete(public_path($profileImg));
+        }
+        return $namefile;
     }
 
     /**

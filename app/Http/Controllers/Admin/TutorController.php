@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Admin {
     use App\model\Educations;
     use App\Model\Language;
     use App\Model\Organisations;
+    use App\Model\QualifiedLevel;
     use App\Model\Skill;
     use App\Model\Specialization;
     use App\User;
@@ -114,9 +115,10 @@ namespace App\Http\Controllers\Admin {
         {
             $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel'])->find(decrypt($id))));
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
-            $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
             $categories = Category::with('children')->get();
-           return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations'));
+            $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
+            $levels = QualifiedLevel::with('childrenLevels')->get();
+             return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels'));
 
         }
 

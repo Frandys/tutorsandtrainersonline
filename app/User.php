@@ -73,16 +73,26 @@ class User extends Authenticatable
     public function QualifiedLevel()
     {
 //        return $this->belongsToMany('App\Model\QualifiedLevel');
-        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id');
+        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id')->withPivot(['category_id']);
     }
 
     public function parent()
     {
-        return $this->belongsTo('App\Model\Category', 'sub_category_id');
+        return $this->belongsTo('App\Model\Category','sub_category_id');
     }
 
     public function children()
     {
-        return $this->hasMany('App\Model\Category', 'sub_category_id');
+        return $this->hasMany('App\Model\Category','sub_category_id');
+    }
+
+    public function parentLevels()
+    {
+        return $this->belongsTo('App\Model\QualifiedLevel','sub_level_id');
+    }
+
+    public function childrenLevels()
+    {
+        return $this->hasMany('App\Model\QualifiedLevel','sub_level_id');
     }
 }

@@ -15,6 +15,7 @@
                 submitButton: '',
                 showProgress: true,
                 showStepNo: true,
+                validCheck: true,
                 validateBeforeNext: true,
                 select: null,
                 progress: null,
@@ -158,7 +159,13 @@
                 '</' + options.buttonTag + '>');
 
             $("#" + stepName + "Next").bind("click", function (e) {
-                vlidateForms();
+                if (options.validCheck == '1') {
+                    vlidateForms();
+                }
+                if (options.validCheck == '2') {
+                    vlidateFormsTutor();
+                }
+
 
                 if (options.validateBeforeNext(element, $("#" + stepName)) === true) {
                     $("#" + stepName).hide();
@@ -173,16 +180,258 @@
 
 
         $("#sads").click(function () {
+
             vlidateForms();
         });
 
-        function vlidateForms() {
+        jQuery.validator.addMethod('phoneUK', function (phone_number, element) {
+                return this.optional(element) || phone_number.length > 9 &&
+                    phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+            }, 'Please specify a valid uk phone number'
+        );
 
-            jQuery.validator.addMethod('phoneUK', function (phone_number, element) {
-                    return this.optional(element) || phone_number.length > 9 &&
-                        phone_number.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
-                }, 'Please specify a valid uk phone number'
-            );
+        jQuery.validator.addMethod("postcodeUK", function (value, element) {
+            return this.optional(element) || /[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i.test(value);
+        }, "Please specify a valid Postcode");
+
+        jQuery.validator.addMethod('ProImage', function (phone_number, element) {
+                return this.optional(element) || element.files[0].size <= 5000000;
+            }, 'Please upload image less then 5 MB'
+        );
+
+        function vlidateFormsTutor() {
+
+            var form = $("#employerForm");
+            form.validate({
+                rules: {
+
+                    first_name: {
+                        required: true,
+                        minlength: 2,
+                        lettersonly: true,
+                        maxlength: 32
+                    },
+                    last_name: {
+                        required: true,
+                        minlength: 2,
+                        lettersonly: true,
+                        maxlength: 32
+
+                    },
+                    city: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    state: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+
+                    address: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                    zip: {
+                        postcodeUK: true,
+                        required: true,
+                    },
+                    company_name: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    company_address: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    contact_tel: {
+                        required: true,
+                        phoneUK: true
+                    },
+                    head_office_address: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    authorised_user: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    authorised_user_second: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    contact_person: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    head_office_contact_person: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    contact_person_second: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    head_office_contact_person_second: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    dept: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    dept_second: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    contact_no: {
+                        required: true,
+                        phoneUK: true
+                    },
+                    contact_no_second: {
+                        required: true,
+                        phoneUK: true
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    email_second: {
+                        required: true,
+                        email: true,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    company_vat_reg_no: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 50
+                    },
+                    company_reg_no: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 50
+                    },
+                    phone: {
+                        required: true,
+                        phoneUK: true
+                    },
+                    company_logo: {
+                        required: false,
+                        ProImage: true,
+                        accept: "image/*",
+                    },
+                    report_name: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    report_department: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 32
+                    },
+                    dept: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 300
+                    },
+                    additional_information: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                    additional_details: {
+                        required: false,
+                        minlength: 2,
+                        maxlength: 500
+                    },
+                },
+                messages: {
+                    first_name: {
+                        required: "Please enter first name",
+                    },
+                    last_name: {
+                        required: "Please enter last name",
+                    },
+                    phone: {
+                        required: "Please enter phone",
+                    },
+                    company_name: {
+                        required: "Please enter company name",
+                    },
+                    company_address: {
+                        required: "Please enter company address",
+                    },
+                    contact_tel: {
+                        required: "Please enter company tel",
+                    },
+                    head_office_address: {
+                        required: "Please enter head office address",
+                    },
+                    authorised_user: {
+                        required: "Please enter head office address",
+                    },
+                    contact_person: {
+                        required: "Please enter contact person",
+                    },
+                    head_office_contact_person: {
+                        required: "Please enter head office address",
+                    },
+                    contact_person_second: {
+                        required: "Please enter contact person",
+                    },
+                    head_office_contact_person_second: {
+                        required: "Please enter head office address",
+                    },
+                    contact_no: {
+                        required: "Please enter contact no",
+                    },
+                    contact_no_second: {
+                        required: "Please enter contact no",
+                    },
+                    email: {
+                        required: "Please enter email",
+                    },
+                    email_second: {
+                        required: "Please enter email",
+                    },
+                    company_vat_reg_no: {
+                        required: "Please enter company vat reg no",
+                    },
+                    company_reg_no: {
+                        required: "Please enter company vat reg no",
+                    },
+                    photo: {
+                        accept: "Please enter valid extension.(IMAGE)",
+
+                    },
+                },
+            });
+
+            if (form.valid() === true) {
+                return true;
+            } else {
+                Stop();
+            }
+        }
+
+        function vlidateForms() {
 
             jQuery.validator.addMethod('selectCountry', function (value) {
                 return (value != '');
@@ -191,10 +440,7 @@
                 return (value != '');
             }, "Please select Categorie");
 
-            jQuery.validator.addMethod('ProImage', function (phone_number, element) {
-                    return this.optional(element) || element.files[0].size <= 5000000;
-                }, 'Please upload image less then 5 MB'
-            );
+
 
             jQuery.validator.addMethod('ProResume', function (phone_number, element) {
                     return this.optional(element) || element.files[0].size <= 5000000;
@@ -230,9 +476,8 @@
                 }, 'Please upload resume less then 5 MB'
             );
 
-            jQuery.validator.addMethod("postcodeUK", function (value, element) {
-                return this.optional(element) || /[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i.test(value);
-            }, "Please specify a valid Postcode");
+
+
 
             var form = $("#msform");
             form.validate({
@@ -491,6 +736,7 @@ $(document).ready(function () {
         nextBtnClass: 'btn btn-primary next',
         prevBtnClass: 'btn btn-default prev',
         buttonTag: 'button',
+        validCheck: '1',
         progress: function (i, count) {
 
             $("#progress-complete").width('' + ((i + 1) / count * 100) + '%');
@@ -499,7 +745,25 @@ $(document).ready(function () {
 
 })
 
-$(document).ready(function(){
+$(document).ready(function () {
+    //Tutor Widget Form js
+    $("#employerForm").formToWizard({
+        submitButton: 'submit',
+        nextBtnName: 'Next >>',
+        prevBtnName: '<< Back',
+        nextBtnClass: 'btn btn-primary next',
+        prevBtnClass: 'btn btn-default prev',
+        buttonTag: 'button',
+        validCheck: '2',
+        progress: function (i, count) {
+
+            $("#progress-complete").width('' + ((i + 1) / count * 100) + '%');
+        }
+    })
+
+})
+
+$(document).ready(function () {
 
     $(".passStartDates").datepicker({
         autoclose: true,
@@ -583,12 +847,13 @@ $(document).ready(function () {
 function different_locations() {
     var $radios = $("input[type=radio][name='different_locations']:checked").val();
     if ($radios == 0) {
-   //     $("#disable_different_locations").prop("disabled", true);
+
         $(".disable_different_locations").prop("disabled", true);
     } else {
         $(".disable_different_locations").prop("disabled", false);
     }
 }
+
 different_locations();
 $('input:radio[name="different_locations"]').change(
     function () {

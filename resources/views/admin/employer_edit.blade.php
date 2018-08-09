@@ -11,7 +11,7 @@
                         <div id='progress-complete'></div>
                     </div>
 
-                    {{ Form::model($usersMeta, array('route' => array('tutor.update', \encrypt($usersMeta->id)),'id' => 'msform','enctype'=>'multipart/form-data','files' => true,'method' => 'PUT') ) }}
+                    {{ Form::model($usersMeta, array('route' => array('employer.update', \encrypt($usersMeta->id)),'id' => 'employerForm','enctype'=>'multipart/form-data','files' => true,'method' => 'PUT') ) }}
 
                     @include('message.message')
                     <fieldset>
@@ -63,7 +63,7 @@
 
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
-                                    <label class="control-label " for="company_name">
+                                    <label class="control-label" for="company_name">
                                         Company Name
                                     </label>
                                     <input class="form-control" id="company_name"
@@ -101,7 +101,7 @@
                                     <label class="control-label " for="contact_tel">
                                         Contact tel
                                     </label>
-                                    <input class="form-control" id="company_name"
+                                    <input class="form-control" id="contact_tel"
                                            value="{{$usersMeta->employer_profile->contact_tel}}"
                                            name="contact_tel" type="text"/>
                                     @if ($errors->has('contact_tel'))
@@ -312,15 +312,15 @@
 
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
-                                    <label class="control-label" for="email_second">
-                                        Email Second
+                                    <label class="control-label" for="email">
+                                        Email
                                     </label>
-                                    <input class="form-control" id="email_second"
-                                           value="{{$usersMeta->employer_profile->email_second}}"
-                                           name="email_second" type="text"/>
-                                    @if ($errors->has('email_second'))
+                                    <input class="form-control" id="email"
+                                           value="{{$usersMeta->employer_profile->email}}"
+                                           name="email" type="text"/>
+                                    @if ($errors->has('email'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('email_second') }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -331,15 +331,15 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
-                                    <label class="control-label " for="company_reg_no">
-                                        Company Reg No
+                                    <label class="control-label" for="email_second">
+                                        Email Second
                                     </label>
-                                    <input class="form-control" id="company_reg_no"
-                                           value="{{$usersMeta->employer_profile->company_reg_no}}"
-                                           name="company_reg_no" type="text"/>
-                                    @if ($errors->has('company_reg_no'))
+                                    <input class="form-control" id="email_second"
+                                           value="{{$usersMeta->employer_profile->email_second}}"
+                                           name="email_second" type="text"/>
+                                    @if ($errors->has('email_second'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('company_reg_no') }}</strong>
+                                        <strong>{{ $errors->first('email_second') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -362,7 +362,23 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                    <label class="control-label " for="company_reg_no">
+                                        Company Reg No
+                                    </label>
+                                    <input class="form-control" id="company_reg_no"
+                                           value="{{$usersMeta->employer_profile->company_reg_no}}"
+                                           name="company_reg_no" type="text"/>
+                                    @if ($errors->has('company_reg_no'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('company_reg_no') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
 
                     </fieldset>
 
@@ -509,18 +525,20 @@
 
 
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Do you have a wipe board?
-                                </label>
-                                <div class="radio">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
                                     <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        Do you have a wipe board?
                                     </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                   value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
+                                        </label> <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                   value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -543,20 +561,22 @@
                         </div>
 
 
-
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Do any of the Audience have any learning difficulties or disabilities that we need to be aware of?
-                                </label>
-                                <div class="radio">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
                                     <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        Do any of the Audience have any learning difficulties or disabilities that we
+                                        need to be aware of?
                                     </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="disabilities" id="disabilities"
+                                                   value="0" {{ $usersMeta->employer_profile->disabilities == '0' ?  "checked" : '' }} >No
+                                        </label> <label>
+                                            <input type="radio" name="disabilities" id="disabilities"
+                                                   value="1" {{ $usersMeta->employer_profile->disabilities == '1' ?  "checked" : '' }} >Yes
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -579,57 +599,115 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Is there any equipment available onsite to be used? , if not, please tell us what you would like provided?
-                                </label>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
-                                               value="0" {{ $usersMeta->employer_profile->equipment_available_onsite == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
-                                               value="1" {{ $usersMeta->employer_profile->equipment_available_onsite == '1' ?  "checked" : '' }} >Yes
-                                    </label>
-                                </div>
-                            </div>
-
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label>
-                                        Who should they report to on the day?
+                                        Is there any equipment available onsite to be used? , if not, please tell us
+                                        what you would like provided?
                                     </label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="equipment_available" id="equipment_available"
-                                                   value="0" {{ $usersMeta->employer_profile->equipment_available == '0' ?  "checked" : '' }} >No
+                                            <input type="radio" name="equipment_available_onsite"
+                                                   id="equipment_available_onsite"
+                                                   value="0" {{ $usersMeta->employer_profile->equipment_available_onsite == '0' ?  "checked" : '' }} >No
                                         </label> <label>
-                                            <input type="radio" name="equipment_available" id="equipment_available"
-                                                   value="1" {{ $usersMeta->employer_profile->equipment_available == '1' ?  "checked" : '' }} >Yes
+                                            <input type="radio" name="equipment_available_onsite"
+                                                   id="equipment_available_onsite"
+                                                   value="1" {{ $usersMeta->employer_profile->equipment_available_onsite == '1' ?  "checked" : '' }} >Yes
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="company_logo">
+                                    Company Logo
+                                </label>
+                                <input name="company_logo" id="company_logo" type="file">
+                                <a download="{{$usersMeta->photo}}"
+                                   href="{{asset('images/company_logo').'/'.$usersMeta->photo}}"
+                                   title="User photo">
+                                    {{($usersMeta->photo != '') ? 'Download' : ''}}
+                                </a>
+                                @if ($errors->has('company_logo'))
+                                    <span class="help-block">
+                        <strong>{{ $errors->first('company_logo') }}</strong>
+                        </span>
+                                @endif
+                            </div>
                         </div>
-                    </fieldset>
+
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>
+                                        Who should they report to on the day?
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                <label class="control-label " for="report_name">
+                                    Name
+                                </label>
+                          <input class="form-control valid" id="report_name"   value="{{$usersMeta->employer_profile->report_name}}"
+                                 name="report_name" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                <label class="control-label " for="report_department">
+                                  Department
+                                </label>
+                                 <input class="form-control valid" id="report_department"
+                                        value="{{$usersMeta->employer_profile->report_department}}"  name="report_department" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                    <label class="control-label " for="additional_information">
+                                        Additional  Information
+                                    </label>
+                                    <textarea name="additional_information" id="additional_information" class="form-control valid" rows="3" >{{$usersMeta->employer_profile->additional_information}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                    <label class="control-label " for="additional_details">
+                                        Enter Additional Details:
+                                    </label>
+                                    <textarea name="additional_details" id="additional_details" class="form-control valid" rows="3" >{{$usersMeta->employer_profile->additional_details}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    {{--</fieldset>--}}
                     {{--<fieldset>--}}
                     {{--<legend>Disponibilità</legend>--}}
 
 
 
 
-                    {{--<div class="form-group" id="div_checkbox">--}}
+                    <div class="form-group" id="div_checkbox">
 
-                    {{--<div class="form-group">--}}
-                    {{--<div>--}}
-                    {{--<button class="btn btn-success" id="sads" name="submit" type="submit">--}}
-                    {{--Invi--}}
-                    {{--</button>--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
-                    {{--</fieldset>--}}
-                    {{--</form>--}}
+                    <div class="form-group">
+                    <div>
+                    <button class="btn btn-success" id="sads" name="submit" type="submit">
+                    Submit
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    </fieldset>
+                    </form>
                     {{ Form::close() }}
                 </div>
             </div>
