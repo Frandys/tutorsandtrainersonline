@@ -45,15 +45,10 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
             var btnPlus = obj.siblings("#btnPlusWork");
 
             btnPlus.css({
-                'float': 'right',
-                'border': '0px',
-                'background-image': 'url("../../../images/icons/add.png")',
-                'background-position': 'center center',
-                'background-repeat': 'no-repeat',
-                'height': '25px',
-                'width': '25px',
                 'cursor': 'pointer'
             });
+            btnPlus.html("<i class='fa fa-plus-circle' aria-hidden='true'></i>");
+           
             var iParnt = '';
             if (recordset.length) {
                 obj.siblings("#btnPlusWork").click(function () {
@@ -115,15 +110,10 @@ MIT License, https://github.com/cozeit/czMore/blob/master/LICENSE.md
                 $(recordset).children().first().before(divMinus);
                 var btnMinus = $(recordset).children("#btnMinusWork");
                 btnMinus.css({
-                    'float': 'right',
-                    'border': '0px',
-                    'background-image': 'url("../../../images/icons/remove.png")',
-                    'background-position': 'center center',
-                    'background-repeat': 'no-repeat',
-                    'height': '25px',
-                    'width': '25px',
                     'cursor': 'poitnter'
                 });
+                btnMinus.html("<i class='fa fa-trash-o' aria-hidden='true'></i>");
+           
             }
 
             function minusClick(recordsetWork) {

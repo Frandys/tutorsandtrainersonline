@@ -1,5 +1,5 @@
 @extends('layouts.admin.dashboard')
-@section('page_heading','View Tutor')
+@section('page_heading','Edit Employee')
 @section('section')
 
     <div class="row">
@@ -395,8 +395,8 @@
                                            name="phone" type="text"/>
                                     @if ($errors->has('phone'))
                                         <span class="help-block">
-                        <strong>{{ $errors->first('phone') }}</strong>
-                        </span>
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                         </span>
                                     @endif
                                 </div>
                             </div>
@@ -509,18 +509,20 @@
 
 
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Do you have a wipe board?
-                                </label>
-                                <div class="radio">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
                                     <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        Do you have a wipe board?
                                     </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
+                                        </label> <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -543,20 +545,22 @@
                         </div>
 
 
-
+                        
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Do any of the Audience have any learning difficulties or disabilities that we need to be aware of?
-                                </label>
-                                <div class="radio">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
                                     <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="wipe_board" id="wipe_board"
-                                               value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        Do any of the Audience have any learning difficulties or disabilities that we need to be aware of?
                                     </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
+                                        </label> <label>
+                                            <input type="radio" name="wipe_board" id="wipe_board"
+                                                value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -579,18 +583,20 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group">
-                                <label>
-                                    Is there any equipment available onsite to be used? , if not, please tell us what you would like provided?
-                                </label>
-                                <div class="radio">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
                                     <label>
-                                        <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
-                                               value="0" {{ $usersMeta->employer_profile->equipment_available_onsite == '0' ?  "checked" : '' }} >No
-                                    </label> <label>
-                                        <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
-                                               value="1" {{ $usersMeta->employer_profile->equipment_available_onsite == '1' ?  "checked" : '' }} >Yes
+                                        Is there any equipment available onsite to be used? , if not, please tell us what you would like provided?
                                     </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
+                                                value="0" {{ $usersMeta->employer_profile->equipment_available_onsite == '0' ?  "checked" : '' }} >No
+                                        </label> <label>
+                                            <input type="radio" name="equipment_available_onsite" id="equipment_available_onsite"
+                                                value="1" {{ $usersMeta->employer_profile->equipment_available_onsite == '1' ?  "checked" : '' }} >Yes
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 

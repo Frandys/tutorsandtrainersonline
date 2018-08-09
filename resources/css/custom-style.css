@@ -3,14 +3,14 @@
     border-radius: 0;
 }
 
-#progress { position: relative; height: 5px; background-color: #eee; margin-bottom: 20px; }
-#progress-complete { border: 0; position: absolute; height: 5px; min-width: 10px; background-color: #337ab7; transition: width .2s ease-in-out; }
+#progress { position: relative; height: 2px; background-color: #eee; margin-bottom: 20px; }
+#progress-complete { border: 0; position: absolute; height: 2px; min-width: 10px; background-color: #007bff; transition: width .2s ease-in-out; }
 .commands { overflow: hidden; margin-top: 30px; }
 .prev {float:left}
 
 .next, .submit,.btn-success {float:right}
 fieldset {
-    border: 1px groove #ddd !important;
+    border: 1px groove #007bff !important;
     padding: 0 1.4em 1.4em 1.4em !important;
     margin: 0 0 1.5em 0 !important;
     -webkit-box-shadow:  0px 0px 0px 0px #000;
@@ -32,8 +32,8 @@ legend {
 .content-part button[type="submit"] {
     padding: 8px 30px;
     border-radius: 0;
-    background: #337ab7;
-    border-color: #337ab7;
+    background: #007bff;
+    border-color: #007bff;
 }
 .content-part .form-wrap .form-group .help-block {
     margin: 0;
@@ -68,7 +68,7 @@ legend {
     outline: none;
 }
 .content-part .table .btn {
-    background: #337ab7;
+    background: #007bff;
     margin: 0 2px;
     color: #ffffff;
     outline: none;
@@ -76,12 +76,141 @@ legend {
 }
 .content-part .dataTables_wrapper .dataTables_paginate .paginate_button.current, .content-part .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     color: #fff !important;
-    border: 1px solid #337ab7;
-    background: #337ab7;
+    border: 1px solid #007bff;
+    background: #007bff;
     border-radius: 0;
     outline: none;
 }
 .navbar-top-links .dropdown .dropdown-toggle {
-    background: #337ab7 !important;
+    background: #007bff !important;
     color: #fff !important;
  }
+
+ 
+#side-menu li ul li a::before {
+    content: "\f105";
+    font-family: fontawesome;
+    margin: 0 5px 0 0;
+  }
+  #side-menu li a {
+      color: #fff;
+      background: transparent;
+      outline: none;
+  }
+  .navbar-default.sidebar {
+    background: #007bff;
+    min-height: calc(100vh - 50px);
+  }
+  .navbar-default.sidebar ul {
+    background: transparent;
+  }
+  
+  page-header {
+      border-bottom: 1px solid #007bff;
+  }
+  .navbar-default .navbar-brand {
+      color: #007bff;
+  }
+  #page-wrapper .content-part .panel {
+    margin: 0;
+}
+#page-wrapper .content-part h1 {
+    margin: 0 0 1rem 0;
+}
+.content-part .btn {
+    background: #007bff;
+    margin: 0 2px;
+    color: #ffffff;
+    outline: none;
+    border-radius: 0;
+}
+.navbar-top-links .dropdown-user {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 2px 9px rgba(0, 123, 255,.24);
+}
+#page-wrapper .content-part .data-part h2 {
+    font-size: 20px;
+    color: #000;
+    margin: 0 0 .5rem 0;
+}
+.step-form label {
+    display: block;
+}
+.content-part .step-form .btn-group {
+    width: 100% !important;
+}
+.content-part .step-form .btn-group .multiselect {
+    background: #fff;
+    width: 100% !important;
+    display: block;
+    color: #101010;
+    text-align: left;
+}
+.recordsetParent {
+    position: relative;
+}
+
+.recordsetParent .bunPare {
+    position: absolute;
+    right: 0;
+    background: #007bff;
+    padding: 5px 9px;
+    display: inline-block;
+    color: #fff;
+    top: 25px;
+}
+.recordset,.recordsetWork {
+    position: relative;
+}
+
+.recordset div#btnMinus,.recordsetWork #btnMinusWork {
+    position: absolute;
+    right: 0;
+    background: #007bff;
+    padding: 5px 9px;
+    display: inline-block;
+    color: #fff;
+    top: 25px;
+}
+.well #first #btnPlus,.well #second #btnPlusWork {
+    position: absolute;
+    right: 35px;
+    background: #007bff;
+    padding: 5px 9px;
+    display: inline-block;
+    color: #fff;
+    bottom: 19px;
+}
+
+.well.first-well #first,.well.second-well #second {
+    position: relative;
+}
+
+.well.first-well #first #btnPlus, .well.second-well #second #btnPlusWork {
+    position: absolute;
+    right: 35px;
+    background: #007bff;
+    padding: 5px 9px;
+    display: inline-block;
+    color: #fff;
+    bottom: 19px;
+}
+.well .bunPareWork {
+    position: absolute;
+    right: 0;
+    background: #007bff;
+    padding: 5px 9px;
+    display: inline-block;
+    color: #fff;
+    top: 25px;
+}
+.well.second-well, .well.first-well, .well.third-well, .well.other-well.v,.well.fourth-well {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0px 12px rgba(0, 123, 255,.14);
+    background: #fff;
+}
+#wrapper {
+    background: #007bff;
+}

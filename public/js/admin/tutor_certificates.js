@@ -36,15 +36,10 @@
             var btnPlus = obj.siblings("#btnPlus");
 
             btnPlus.css({
-                'float': 'right',
-                'border': '0px',
-                'background-image': 'url("../../../images/icons/add.png")',
-                'background-position': 'center center',
-                'background-repeat': 'no-repeat',
-                'height': '25px',
-                'width': '25px',
                 'cursor': 'pointer'
             });
+            btnPlus.html("<i class='fa fa-plus-circle' aria-hidden='true'></i>");
+           
             var iParnt = '';
             if (recordset.length) {
                 obj.siblings("#btnPlus").click(function () {
@@ -107,15 +102,10 @@
                 $(recordset).children().first().before(divMinus);
                 var btnMinus = $(recordset).children("#btnMinus");
                 btnMinus.css({
-                    'float': 'right',
-                    'border': '0px',
-                    'background-image': 'url("../../../images/icons/remove.png")',
-                    'background-position': 'center center',
-                    'background-repeat': 'no-repeat',
-                    'height': '25px',
-                    'width': '25px',
                     'cursor': 'poitnter'
                 });
+                btnMinus.html("<i class='fa fa-trash-o' aria-hidden='true'></i>");
+           
             }
 
             function minusClick(recordset) {
