@@ -319,7 +319,7 @@
             </div>
 
             @foreach($usersMeta->categories as $keyCat=>$categorie)
-            <div class="row mb1">
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="out-wrap">
                         <p><strong>Skills name:</strong>
@@ -335,63 +335,76 @@
             </div>
             @endforeach
         </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="data-part">
-                    <div class="out-wrap">
-                    <h2>Birth Certificate</h2>
-                    <a download="{{$usersMeta->tutor_profile->birth_certificate}}"
-                    href="{{asset('images/birth_certificate').'/'.$usersMeta->tutor_profile->birth_certificate}}"
-                    title="ImageName">
-                        {{($usersMeta->tutor_profile->birth_certificate != '') ? 'Download' : ''}}
-                    </a>
-
-                    
+        <div class="text-wrap  mb2">
+            <div class="heading">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2>Certificates</h2>
+                    </div>
+                    <div class="col-md-4 text-right">
                         
                     </div>
-                    
-
-                    <h2>CV</h2>
-                    <a download="{{$usersMeta->tutor_profile->cv}}"
-                    href="{{asset('images/cv').'/'.$usersMeta->tutor_profile->cv}}"
-                    title="ImageName">
-                        {{($usersMeta->tutor_profile->cv != '') ? 'Download' : ''}}
-                    </a>
-
-                    
-
-                    <h2>Certificates</h2>
-                    <a download="{{$usersMeta->tutor_profile->certificates_upload}}"
-                    href="{{asset('images/certificates').'/'.$usersMeta->tutor_profile->certificates_upload}}"
-                    title="ImageName">
-                        {{($usersMeta->tutor_profile->certificates_upload != '') ? 'Download' : ''}}
-                    </a>
-
-                    <h2>Teaching Qual</h2>
-                    <a download="{{$usersMeta->tutor_profile->teaching_qual}}"
-                    href="{{asset('images/teaching_qual').'/'.$usersMeta->tutor_profile->teaching_qual}}"
-                    title="ImageName">
-                        {{($usersMeta->tutor_profile->teaching_qual != '') ? 'Download' : ''}}
-                    </a>
-
-                    <h2>Certificates</h2>
-                    <a download="{{$usersMeta->tutor_profile->teaching_cert}}"
+                </div>
+            </div>
+            <div class="row mb1">
+                <div class="col-sm-6">
+                    <div class="out-wrap">
+                        <p><strong>Birth Certificate:</strong>
+                        <span class=""><a download="{{$usersMeta->tutor_profile->birth_certificate}}" href="{{asset('images/birth_certificate').'/'.$usersMeta->tutor_profile->birth_certificate}}"
+                            title="ImageName">
+                            {{($usersMeta->tutor_profile->birth_certificate != '') ? 'Download' : ''}}
+                         </a></span></p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="out-wrap">
+                        <p><strong>CV:</strong>
+                        <span class=""><a download="{{$usersMeta->tutor_profile->cv}}"
+                            href="{{asset('images/cv').'/'.$usersMeta->tutor_profile->cv}}"
+                            title="ImageName">
+                                {{($usersMeta->tutor_profile->cv != '') ? 'Download' : ''}}
+                            </a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb1">
+                <div class="col-sm-6">
+                    <div class="out-wrap">
+                        <p><strong>Certificates:</strong>
+                        <span class=""><a download="{{$usersMeta->tutor_profile->birth_certificate}}" href="{{asset('images/birth_certificate').'/'.$usersMeta->tutor_profile->birth_certificate}}"
+                            title="ImageName">
+                            {{($usersMeta->tutor_profile->birth_certificate != '') ? 'Download' : ''}}
+                         </a></span></p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="out-wrap">
+                        <p><strong>Teaching Qualifications:</strong>
+                            <span class="">
+                                <a download="{{$usersMeta->tutor_profile->teaching_qual}}"
+                                href="{{asset('images/teaching_qual').'/'.$usersMeta->tutor_profile->teaching_qual}}"
+                                title="ImageName">
+                                {{($usersMeta->tutor_profile->teaching_qual != '') ? 'Download' : ''}}
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="out-wrap">
+                        <p><strong>Teaching Certificates:</strong>
+                        <span class=""><a download="{{$usersMeta->tutor_profile->teaching_cert}}"
                     href="{{asset('images/teaching_cert').'/'.$usersMeta->tutor_profile->teaching_cert}}"
                     title="ImageName">
-                        {{($usersMeta->tutor_profile->teaching_cert != '') ? 'Download' : ''}}
-                    </a>
+                     {{ ($usersMeta->tutor_profile->teaching_cert != '') ? '<i class="fa fa-download" aria-hidden="true"></i>' : '' }}
+                    </a></span></p>
+                    </div>
                 </div>
             </div>
         </div>
-        
     </div>
-    <div class="col-sm-6">
-        <h1>Willing Location</h1>
-            @foreach($ttrLocaWill as $LocaWill)
-                <p>{{$LocaWill->name}}</p>
-                <hr>
-        @endforeach
-    </div>
-    </div>
+</div>
 @stop
