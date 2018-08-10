@@ -623,25 +623,25 @@
                                 </div>
                             </div>
 
-
-                            <div class="form-group">
-                                <label class="control-label" for="company_logo">
-                                    Company Logo
-                                </label>
-                                <input name="company_logo" id="company_logo" type="file">
-                                <a download="{{$usersMeta->photo}}"
-                                   href="{{asset('images/company_logo').'/'.$usersMeta->photo}}"
-                                   title="User photo">
-                                    {{($usersMeta->photo != '') ? 'Download' : ''}}
-                                </a>
-                                @if ($errors->has('company_logo'))
-                                    <span class="help-block">
-                        <strong>{{ $errors->first('company_logo') }}</strong>
-                        </span>
-                                @endif
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="company_logo">
+                                        Company Logo
+                                    </label>
+                                    <input name="company_logo" id="company_logo" type="file">
+                                    <a download="{{$usersMeta->photo}}"
+                                    href="{{asset('images/company_logo').'/'.$usersMeta->photo}}"
+                                    title="User photo">
+                                        {{($usersMeta->photo != '') ? 'Download' : ''}}
+                                    </a>
+                                    @if ($errors->has('company_logo'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('company_logo') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-
 
                         <div class="row">
                             <div class="col-md-12 col-sm-12">

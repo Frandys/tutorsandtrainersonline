@@ -1,5 +1,5 @@
 @extends('layouts.admin.dashboard')
-@section('page_heading','Edit Tutor')
+@section('page_heading','View Tutor')
 @section('section')
     @include('message.message')
     <div class="view-page">
