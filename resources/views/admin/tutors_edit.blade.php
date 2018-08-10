@@ -230,28 +230,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group ">
-                                    <label> Level of Fluency </label>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
-                                                   value="0" {{ $usersMeta->tutor_profile->level_of_fluency == '0' ?  "checked" : '' }} >Basic
-                                            understanding
-                                        </label> <label>
-                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
-                                                   value="1" {{ $usersMeta->tutor_profile->level_of_fluency == '1' ?  "checked" : '' }} >Semi-Fluent
-                                        </label> <label>
-                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
-                                                   value="2" {{ $usersMeta->tutor_profile->level_of_fluency == '2' ?  "checked" : '' }} >Fluent
-                                        </label></div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="row">
+                           
 
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
@@ -269,6 +248,10 @@
                                 </div>
                             </div>
 
+                        </div>
+
+
+                        <div class="row">       
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label class="control-label " for="language">
@@ -281,9 +264,32 @@
                                     </select>
                                 </div>
                             </div>
+                             <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                    <label> Level of Fluency </label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
+                                                   value="0" {{ $usersMeta->tutor_profile->level_of_fluency == '0' ?  "checked" : '' }} >Basic
+                                            understanding
+                                        </label> 
+                                        <label>
+                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
+                                                   value="1" {{ $usersMeta->tutor_profile->level_of_fluency == '1' ?  "checked" : '' }} >Semi-Fluent
+                                        </label> 
+                                        <label>
+                                            <input type="radio" name="level_of_fluency" id="level_of_fluency"
+                                                   value="2" {{ $usersMeta->tutor_profile->level_of_fluency == '2' ?  "checked" : '' }} >Fluent
+                                        </label></div>
+                                </div>
+                            </div>
+
+                            
+
+                            
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label>
@@ -317,7 +323,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
@@ -335,7 +341,19 @@
                                         </label></div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="dbs_certificate_no">
+                                        If entered yes, please enter your DBS certificate no.
+                                    </label>
+                                    <input class="form-control valid"
+                                           value="{{$usersMeta->tutor_profile->dbs_certificate_no}}"
+                                           id="dbs_certificate_no" name="dbs_certificate_no" type="text"
+                                           aria-invalid="false">
+                                </div>
+                            </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label class="control-label show" for="cert_issued">
@@ -353,6 +371,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="row">
@@ -406,17 +425,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label" for="dbs_certificate_no">
-                                        If entered yes, please enter your DBS certificate no.
-                                    </label>
-                                    <input class="form-control valid"
-                                           value="{{$usersMeta->tutor_profile->dbs_certificate_no}}"
-                                           id="dbs_certificate_no" name="dbs_certificate_no" type="text"
-                                           aria-invalid="false">
-                                </div>
-                            </div>
+                            
 
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
@@ -439,6 +448,9 @@
                     <fieldset>
                         <legend>Disponibilità</legend>
                         <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <h2>Certifications</h2>
+                            </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="well clearfix first-well">
                                     <div id="first">
@@ -509,66 +521,67 @@
                                             <div id="first">
                                                 <div class="recordset">
                                                     <div class="fieldRow clearfix">
-                                                        <input type="text" value=""
-                                                               hidden name="certificates_id[{{'2'}}]">
-                                                        <div class="col-md-5">
-                                                            <div id="div_certificates_categorie"
-                                                                 class="form-group">
-                                                                <label for="certificates_1_categorie"
-                                                                       class="control-label  requiredField">
-                                                                    Categorie<span
-                                                                            class="asteriskField">*</span>
-                                                                </label>
-                                                                <div class="controls certificates_categorie">
+                                                        <div class="row">
+                                                            <input type="text" value="" hidden name="certificates_id[{{'2'}}]">
+                                                            <div class="col-md-5">
+                                                                <div id="div_certificates_categorie"
+                                                                    class="form-group">
+                                                                    <label for="certificates_1_categorie"
+                                                                        class="control-label  requiredField">
+                                                                        Categorie<span
+                                                                                class="asteriskField">*</span>
+                                                                    </label>
+                                                                    <div class="controls certificates_categorie">
 
-                                                                    <select name="certificates_categorie[{{'2'}}]"
-                                                                            id="certificates_1_categorie"
-                                                                            class="selectpicker length">
-                                                                        @foreach($categories as  $categorieItem)
-                                                                            @if(isset($categorieItem->children['0']))
-                                                                                <optgroup
-                                                                                        label="{{$categorieItem->name}}"
-                                                                                        data-max-options="1">
-                                                                                    @foreach($categorieItem->children as  $categorieChild)
-                                                                                        <option value="{{$categorieChild->id}}">{{$categorieChild->name}}</option>
-                                                                                    @endforeach
-
-                                                                                </optgroup>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div id="div_certificates_level" class="form-group">
-                                                                <label for="certificates_1_level"
-                                                                       class="control-label  requiredField">
-                                                                    Level<span
-                                                                            class="asteriskField">*</span>
-                                                                </label>
-                                                                <div class="controls certificates_level">
-                                                                    <div class="controls certificates_level">
-                                                                        <select name="certificates_level[{{'2'}}]"
-                                                                                id="certificates_1_level"
-                                                                                class="length">
-
-                                                                            @foreach($levels as  $levelVal)
-                                                                                @if(isset($levelVal->childrenLevels['0']) && $levelVal->childrenLevels != '')
+                                                                        <select name="certificates_categorie[{{'2'}}]"
+                                                                                id="certificates_1_categorie"
+                                                                                class="selectpicker length form-control">
+                                                                            @foreach($categories as  $categorieItem)
+                                                                                @if(isset($categorieItem->children['0']))
                                                                                     <optgroup
-                                                                                            label="{{$levelVal->level}}"
+                                                                                            label="{{$categorieItem->name}}"
                                                                                             data-max-options="1">
-                                                                                        @foreach($levelVal->childrenLevels as  $levelChild)
-                                                                                            <option value="{{$levelChild->id}}">{{$levelChild->level}}</option>
+                                                                                        @foreach($categorieItem->children as  $categorieChild)
+                                                                                            <option value="{{$categorieChild->id}}">{{$categorieChild->name}}</option>
                                                                                         @endforeach
 
                                                                                     </optgroup>
                                                                                 @endif
                                                                             @endforeach
-
                                                                         </select>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div id="div_certificates_level" class="form-group">
+                                                                    <label for="certificates_1_level"
+                                                                        class="control-label  requiredField">
+                                                                        Level<span
+                                                                                class="asteriskField">*</span>
+                                                                    </label>
+                                                                    <div class="controls certificates_level">
+                                                                        <div class="controls certificates_level">
+                                                                            <select name="certificates_level[{{'2'}}]"
+                                                                                    id="certificates_1_level"
+                                                                                    class="length form-control">
+
+                                                                                @foreach($levels as  $levelVal)
+                                                                                    @if(isset($levelVal->childrenLevels['0']) && $levelVal->childrenLevels != '')
+                                                                                        <optgroup
+                                                                                                label="{{$levelVal->level}}"
+                                                                                                data-max-options="1">
+                                                                                            @foreach($levelVal->childrenLevels as  $levelChild)
+                                                                                                <option value="{{$levelChild->id}}">{{$levelChild->level}}</option>
+                                                                                            @endforeach
+
+                                                                                        </optgroup>
+                                                                                    @endif
+                                                                                @endforeach
+
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -583,32 +596,23 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
-                                <h2>Work experence </h2>
+                                <h2>Work Experience </h2>
                             </div>
                             <div class="col-md-12 col-sm-12">
                                 <div class="well clearfix second-well">
                                     <div id="second">
                                         @foreach($organisations as $keyWork=>$work_experience)
                                             <div class="recordsetWork" id="parntDivWork{{$keyWork}}">
-                                                <input type="text"
-                                                        value="{{isset($work_experience->id) ? encrypt($work_experience->id) : ''}}"
-                                                        hidden name="work_id[{{$keyWork}}]">
+                                                <input type="text" value="{{isset($work_experience->id) ? encrypt($work_experience->id) : ''}}" hidden name="work_id[{{$keyWork}}]">
                                                 <div class="fieldRow clearfix">
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <div id="div_company_name" class="form-group">
-                                                                <label for="company_{{$keyWork}}_name"
-                                                                        class="control-label  requiredField">
-                                                                    Company Name<span class="asteriskField">*</span>
+                                                                <label for="company_{{$keyWork}}_name" class="control-label  requiredField">Company Name<span class="asteriskField">*</span>
                                                                 </label>
                                                                 <div class="controls company_name">
-                                                                    <input type="text"
-                                                                            name="company_name[{{$keyWork}}]"
-                                                                            value="{{$work_experience->company_name}}"
-                                                                            id="company_{{$keyWork}}_name"
-                                                                            class="textinput form-control length"/>
+                                                                    <input type="text" name="company_name[{{$keyWork}}]"  value="{{$work_experience->company_name}}" id="company_{{$keyWork}}_name" class="textinput form-control length"/>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -635,55 +639,52 @@
                                                 </div>
                                             </div> 
                                         @endforeach
-                                    </div>
+                                        <div id="czContainerWork">
+                                            <div id="second">
+                                                <div class="recordsetWork">
+                                                    <input type="text" value=""
+                                                            hidden name="work_id[{{'2'}}]">
+                                                    <div class="fieldRow clearfix">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <div id="div_company_name" class="form-group">
+                                                                    <label for="company_1_name"
+                                                                        class="control-label  requiredField">
+                                                                        Company Name<span class="asteriskField">*</span>
+                                                                    </label>
+                                                                    <div class="controls company_name">
+                                                                        <input type="text"
+                                                                            name="company_name[{{'2'}}]"
+                                                                            id="company_1_name"
+                                                                            class="textinput form-control length"/>
+                                                                    </div>
 
-
-                                    <div id="czContainerWork">
-                                        <div id="second">
-                                            <div class="recordsetWork">
-                                                <input type="text" value=""
-                                                        hidden name="work_id[{{'2'}}]">
-                                                <div class="fieldRow clearfix">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <div id="div_company_name" class="form-group">
-                                                                <label for="company_1_name"
-                                                                    class="control-label  requiredField">
-                                                                    Company Name<span class="asteriskField">*</span>
-                                                                </label>
-                                                                <div class="controls company_name">
-                                                                    <input type="text"
-                                                                        name="company_name[{{'2'}}]"
-                                                                        id="company_1_name"
-                                                                        class="textinput form-control length"/>
                                                                 </div>
-
                                                             </div>
-                                                        </div>
 
-                                                        <div class="col-md-3">
-                                                            <div id="div_organization_registration" class="form-group">
-                                                                <label for="organization_1_registration"
-                                                                    class="control-label  requiredField">
-                                                                    Registration<span class="asteriskField">*</span>
-                                                                </label>
-                                                                <div class="controls organization_registration">
-                                                                    <input type="text"
-                                                                        name="organization_registration[{{'2'}}]"
-                                                                        id="organization_1_registration"
-                                                                        class="textinput form-control length"/>
+                                                            <div class="col-md-3">
+                                                                <div id="div_organization_registration" class="form-group">
+                                                                    <label for="organization_1_registration"
+                                                                        class="control-label  requiredField">
+                                                                        Registration<span class="asteriskField">*</span>
+                                                                    </label>
+                                                                    <div class="controls organization_registration">
+                                                                        <input type="text"
+                                                                            name="organization_registration[{{'2'}}]"
+                                                                            id="organization_1_registration"
+                                                                            class="textinput form-control length"/>
+                                                                    </div>
+
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
 
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -694,54 +695,51 @@
                             <div class="col-md-12">
                                 <div class="well third-well">
                                     <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="pass_start_date"
-                                            class="control-label">
-                                            Start Date: <span class="asteriskField">*</span>
-                                        </label>
+                                        <div class="col-md-4">
+                                            <label for="pass_start_date"
+                                                class="control-label">
+                                                Start Date: <span class="asteriskField">*</span>
+                                            </label>
 
-                                        <div data-date-format="yyyy-mm-dd" class="input-group  date  passStartDates"
-                                            data-provide="datepicker">
-                                            <input readonly type="text" class="form-control valid" name="pass_start_date"
-                                                value="{{$usersMeta->tutor_profile->pass_start_date}}"
-                                                id="pass_start_date">
-                                            <div class="input-group-addon">
-                                                <span class="glyphicon glyphicon-th"></span>
+                                            <div data-date-format="yyyy-mm-dd" class="input-group  date  passStartDates"
+                                                data-provide="datepicker">
+                                                <input readonly type="text" class="form-control valid" name="pass_start_date"
+                                                    value="{{$usersMeta->tutor_profile->pass_start_date}}"
+                                                    id="pass_start_date">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="permit_expiry_date"
+                                                class="control-label">
+                                                Expiry Date: <span class="asteriskField">*</span>
+                                            </label>
+                                            <div data-date-format="yyyy-mm-dd" class="input-group date permitEndDates"
+                                                data-provide="datepicker">
+                                                <input readonly type="text" readonly class="form-control valid"
+                                                    name="permit_expiry_date"
+                                                    value="{{$usersMeta->tutor_profile->permit_expiry_date}}"
+                                                    id="permit_expiry_date">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
                                             </div>
                                         </div>
 
 
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="permit_expiry_date"
-                                           class="control-label">
-                                        Expiry Date: <span class="asteriskField">*</span>
-                                    </label>
-                                    <div data-date-format="yyyy-mm-dd" class="input-group date permitEndDates"
-                                         data-provide="datepicker">
-                                        <input readonly type="text" readonly class="form-control valid"
-                                               name="permit_expiry_date"
-                                               value="{{$usersMeta->tutor_profile->permit_expiry_date}}"
-                                               id="permit_expiry_date">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
+                                        <div class="col-md-4">
+                                            <label for="passport_no"
+                                                class="control-label">
+                                                Passport No: <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" value="{{$usersMeta->tutor_profile->passport_no}}"
+                                                name="passport_no"
+                                                id="passport_no"
+                                                class="form-control"/>
                                         </div>
-
                                     </div>
-
-
-                                    <div class="col-md-4">
-                                        <label for="passport_no"
-                                            class="control-label">
-                                            Passport No: <span class="asteriskField">*</span>
-                                        </label>
-                                        <input type="text" value="{{$usersMeta->tutor_profile->passport_no}}"
-                                            name="passport_no"
-                                            id="passport_no"
-                                            class="form-control"/>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -802,6 +800,9 @@
                             
                         </div> 
                         <div class="row">
+                            <div class="col-md-12">
+                                <h2>Upload Documents</h2>
+                            </div>
                             <div class="col-md-12">
                                 <div class="well other-well v">
                                     <div class="row">

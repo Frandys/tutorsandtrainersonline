@@ -214,3 +214,55 @@ legend {
 #wrapper {
     background: #007bff;
 }
+.recordsetWork .form-group .controls label.error {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff0000;
+}
+
+
+.view-page .text-wrap {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0px 12px rgba(0, 123, 255,.14);
+    background: #fff;
+    padding: 20px;
+}
+
+.view-page .text-wrap .img-wrap {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 0 0 1rem 0;
+}
+
+.view-page .text-wrap .img-wrap img {
+    margin: 0 auto;
+    max-width: 170px;
+}
+.view-page .text-wrap .out-wrap p span {
+    float: right;
+}
+.view-page .mb1 {
+    margin-bottom: .5rem;
+}
+.view-page  .mb2 {
+    margin-bottom: 2rem;
+}
+.view-page .text-wrap .out-wrap p {
+    margin: 0;
+    font-size: 16px;
+}
+.view-page .text-wrap h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 30px;
+}
+.view-page .text-wrap .heading{
+    border-bottom: 1px solid #007bff;
+    margin: 0 0 2rem 0;
+}
+.radio label, .checkbox label {
+    display: inline-block;
+}
