@@ -583,9 +583,9 @@
                     pass_start_date: {
                         required: true,
                     },
-                    pass_expiry_date: {
-                        required: true,
-                    },
+                    // pass_expiry_date: {
+                    //     required: true,
+                    // },
                     passport_no: {
                         required: true,
                         minlength: 2,

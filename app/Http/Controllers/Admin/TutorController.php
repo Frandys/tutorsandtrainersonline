@@ -175,7 +175,7 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->certificate_issued = $data['certificate_issued'];
                     $tutrPro->cert_issued = $data['cert_issued'];
                     $tutrPro->pass_start_date = $data['pass_start_date'];
-                    $tutrPro->pass_expiry_date = $data['pass_expiry_date'];
+                   // $tutrPro->pass_expiry_date = $data['pass_expiry_date'];
                     $tutrPro->passport_no = $data['passport_no'];
                     $tutrPro->permit_start_date = $data['permit_start_date'];
                     $tutrPro->permit_expiry_date = $data['permit_expiry_date'];
@@ -254,6 +254,7 @@ namespace App\Http\Controllers\Admin {
         {
             $time = time();
             $namefile = $time . '.' . $file[$path]->getClientOriginalExtension();
+
             $destinationPath = 'images/' . $path;
             $file[$path]->move($destinationPath, $namefile);
             //Delete old image

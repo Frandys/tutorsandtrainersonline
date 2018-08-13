@@ -53,7 +53,7 @@ class ValidationRequest extends FormRequest
     'work_permit' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
     'birth_certificate' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
     'pass_start_date' => 'required',
-    'pass_expiry_date' => 'required',
+//    'pass_expiry_date' => 'required',
     'passport_no' => 'required|min:2|max:32',
     'permit_start_date' => 'required',
     'permit_expiry_date' => 'required',
@@ -98,9 +98,9 @@ class ValidationRequest extends FormRequest
 
     );
 
-//    public static $photo = array(
-//        'photo' => 'required|max:5000000|mimes:jpg,jpeg,png',
-//    );
+    public static $lang = array(
+      'nameLang' => 'required|min:2|max:50',
+    );
 
 
     public function authorize()

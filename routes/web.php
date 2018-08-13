@@ -36,4 +36,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('view_tutors', 'Admin\TutorController@viewTutors');
     Route::resource('employer', 'Admin\EmployerController');
     Route::get('view_employer', 'Admin\EmployerController@viewEmployer');
+    Route::resource('language','Admin\LanguagesController');
 });

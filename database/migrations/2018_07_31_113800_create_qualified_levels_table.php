@@ -15,6 +15,7 @@ class CreateQualifiedLevelsTable extends Migration
     {
         Schema::create('qualified_levels', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('sub_level_id')->nullable();
             $table->string('level', 255);
           });
     }
