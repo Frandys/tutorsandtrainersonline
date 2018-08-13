@@ -1,8 +1,9 @@
 @extends('layouts.admin.dashboard')
-@section('page_heading','Course List')
+@section('page_heading','Language List')
 @section('section')
     @include('message.message')
-
+    <a href="#" id="addLang" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i
+                class="fa fa-plus-circle" aria-hidden="true"></i></a>
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -77,6 +78,12 @@
     </div>
     @push('scripts')
         <script>
+
+            $("#addLang").on("click", function () {
+                $('#nameLang').val('');
+                $('#nameCheck').val('');
+                $('#myModal').modal("toggle");
+            });
             //Delete table
 
             $("a[name=lang_del]").on("click", function () {
@@ -107,9 +114,17 @@
 
             $(document).on('click', '#submitLang', function () {
 
+                if ($('#nameCheck').val() == '') {
+                    var type = 'POST';
+                    var url = "{{url('/admin/language')}}"
+                } else {
+                    var type = 'PUT';
+                    var url = "{{url('/admin/language/')}}" + '/' + $('#nameCheck').val();
+                }
+
                 $.ajax({
-                    type: 'PUT',
-                    url: "{{url('/admin/language/')}}" + '/' + $('#nameCheck').val(),
+                    type: type,
+                    url: url,
                     data: {
                         '_token': $('input[name=_token]').val(),
                         'nameLang': $('#nameLang').val()
@@ -121,7 +136,7 @@
                         if (data.success == '1') {
                             $('#myModal').modal("toggle");
                             location.reload();
-                            //   alert(data.errors);
+                            //alert(data.errors);
                         }
                     }
                 });

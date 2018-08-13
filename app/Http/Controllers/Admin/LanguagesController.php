@@ -43,8 +43,25 @@ class LanguagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $request->input();
+            $validation = \Validator::make($data, ValidationRequest::$lang);
+            if ($validation->fails()) {
+                $errors = $validation->messages()->all();
+                return Response(array('success' => '0', 'data' => null, 'errors' => $errors['0']));
+            }
+            $dataLang = Language::where('name', $data['nameLang'])->get();
+
+            if (!empty(json_decode(json_encode($dataLang)))) {
+                return Response(array('success' => '0', 'data' => null, 'errors' => Config::get('message.options.NAME_EXIT')));
+            }
+            Language::insert(['name' => $data['nameLang']]);
+            return Response(array('success' => '1', 'data' => null, 'errors' => null));
+        } catch (Exception $ex) {
+            return View::make('errors.exception')->with('Message', $ex->getMessage());
+        }
     }
+
 
     /**
      * Display the specified resource.
