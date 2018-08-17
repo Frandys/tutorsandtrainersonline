@@ -5,7 +5,7 @@
     <div class="view-page">
         <div class="text-wrap  mb2">
             <div class="img-wrap text-center"><img class="img-responsive"
-                                                   src="{{asset('images/photo/'.$usersMeta->photo)}}"></div>
+                                                   src="{{asset('images/photocategories/'.$usersMeta->photo)}}"></div>
             <div class="heading"><h2>Personal Information</h2></div>
             <div class="row mb1">
                 <div class="col-sm-6">

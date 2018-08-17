@@ -78,7 +78,9 @@
     </div>
     @push('scripts')
         <script>
-
+            $(document).ready(function() {
+                $('#example').DataTable();
+            } );
             $("#addLang").on("click", function () {
                 $('#nameLang').val('');
                 $('#nameCheck').val('');

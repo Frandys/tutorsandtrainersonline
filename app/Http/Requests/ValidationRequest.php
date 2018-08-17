@@ -102,6 +102,10 @@ class ValidationRequest extends FormRequest
       'nameLang' => 'required|min:2|max:50',
     );
 
+    public static $cate = array(
+        'nameCat' => 'required|min:2|max:50',
+    );
+
 
     public function authorize()
     {
