@@ -38,4 +38,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('view_employer', 'Admin\EmployerController@viewEmployer');
     Route::resource('language','Admin\LanguagesController');
     Route::resource('certificate','Admin\CertificatesController');
+    Route::resource('qualification','Admin\QualifiedController');
 });

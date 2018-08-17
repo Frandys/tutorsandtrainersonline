@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class QualifiedLevel extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'qualified_levels';
     protected $fillable = ['level','sub_level_id'];
 
