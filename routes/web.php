@@ -17,17 +17,14 @@ Auth::routes();
 //Admin Routes
 //'middleware' => 'vendor',
 Route::get('/', function () {
+
     return View::make('auth.login');
 });
 
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
-//Route::resource('/admin', 'Admin\AdminController');
-
-    Route::get('/', function () {
-        return View::make('admin.home');
-    });
-    Route::get('/change_password', function () {
+   Route::resource('/','Admin\AdminController');
+   Route::get('/change_password', function () {
         return View::make('admin.change_password');
     });
     Route::post('change_password', 'UserController@changePassword');

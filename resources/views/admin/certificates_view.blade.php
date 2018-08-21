@@ -78,7 +78,7 @@
                                 <label>Click yes to add SubCtegory</label>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="certificate_cat" id="certificate_cat" value="0">No
+                                        <input type="radio"   name="certificate_cat" id="certificate_cat" value="0">No
                                     </label>
                                     <label>
                                         <input type="radio" name="certificate_cat" id="certificate_cat" value="1">Yes
@@ -126,14 +126,12 @@
                 }
             });
             $(document).ready(function () {
+
+                $('input:radio[name=certificate_cat]').attr('checked',true);
                 $('#example').DataTable();
             });
 
-            $(document).ready(function () {
-                $("body").on("click", "#editCat", function (event) {
 
-                });
-            });
 
             $("#addCat").on("click", function () {
                 $('#nameCat').val('');
