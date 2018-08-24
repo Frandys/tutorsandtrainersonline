@@ -23,7 +23,7 @@ class CreateEmployerProfilesTable extends Migration
             $table->string('contact_tel', 255)->nullable();
             $table->string('head_office_address', 255)->nullable();
             $table->string('authorised_user', 255)->nullable();
-            $table->string('authorised_user_second', 255)->nullable()->nullable();
+            $table->string('authorised_user_second', 255)->nullable();
             $table->string('contact_person', 255)->nullable()->nullable();
             $table->string('head_office_contact_person', 255)->nullable()->nullable();
             $table->string('contact_person_second', 255)->nullable()->nullable();

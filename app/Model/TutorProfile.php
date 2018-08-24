@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TutorProfile extends Model
 {
     protected $table = 'tutor_profiles';
-
+    protected $primaryKey = 'user_id';
     /**
      * {@inheritDoc}
      */
@@ -27,17 +27,34 @@ class TutorProfile extends Model
         'resume',
     );
 
-    public function user(){
-
-        return $this->belongsTo('App\User');
-
+    public function User()
+    {
+     return $this->belongsTo('App\User');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    public function Categories()
+    {
+          return $this->belongsToMany('App\Model\Category', 'category_user', 'user_id', 'category_id');
+    }
+
+    public function QualifiedLevel()
+    {
+//        return $this->belongsToMany('App\Model\QualifiedLevel');
+        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id');
+    }
+
+    public function Disciplines()
+    {
+//      return $this->belongsToMany('App\Model\Disciplines', 'tutor_profiles', 'user_id', 'discipline_id');
+        return $this->hasOne('App\Model\Disciplines','id','discipline_id');
+    }
+
     public function Country()
     {
-        return $this->belongsTo('App\Model\Country');
+         return $this->hasOne('App\Model\Country','id','discipline_id');
     }
+
+
+
+
 }

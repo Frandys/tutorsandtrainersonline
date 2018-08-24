@@ -22,7 +22,9 @@ class CreateTutorProfilesTable extends Migration
             $table->string('state', 255)->nullable();
             $table->string('zip', 255)->nullable();
             $table->integer('country_id')->unsigned();
-            $table->foreign('country_id')->references('id')->nullable()->on('countries');
+            $table->foreign('country_id')->references('id')->on('countries')->nullable();
+            $table->integer('discipline_id')->unsigned();
+            $table->foreign('discipline_id')->references('id')->on('disciplines')->nullable();
             $table->enum('driving_license', ['0', '1'])->comment('0=no,1=yes');
             $table->enum('willing_travel', ['0', '1'])->comment('0=no,1=yes');
             $table->enum('work_in_uk', ['0', '1'])->comment('0=no,1=yes');

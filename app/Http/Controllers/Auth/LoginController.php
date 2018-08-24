@@ -32,7 +32,10 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
 
 
     /**
@@ -75,6 +78,10 @@ class LoginController extends Controller
                 \Sentinel::login($user, true);
                 if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
                     return Redirect::to('/admin');
+                }elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+                    return Redirect::to('/');
+                }elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+                    return Redirect::to('/');
                 }
             } else {
                 Session::flash('error', Config::get('message.options.LOGIN_INVALID'));

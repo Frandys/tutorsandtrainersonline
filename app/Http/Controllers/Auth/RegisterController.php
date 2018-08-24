@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use Activation;
 use App\Http\Controllers\Controller;
+use Cartalyst\Sentinel\Sentinel;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Exception;
+use Cartalyst\Sentinel\Users\UserInterface;
+use App\User;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Cartalyst\Sentinel\Laravel\Facades\Reminder;
+use App\Http\Requests\ValidationRequest;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use View;
 
 class RegisterController extends Controller
 {
@@ -20,14 +31,79 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+//    public function showRegistrationForm()
+//    {
+//        return view('auth.register');
+//    }
 
     /**
-     * Where to redirect users after registration.
+     * Create a new user instance after a valid registration.
      *
-     * @var string
+     * @param  array $data
+     * @return \App\User
      */
-    protected $redirectTo = '/home';
+    public function register(Request $request)
+    {
+        try {
+            $data = $request->input();
+            $validation = Validator::make($data, ValidationRequest::$register);
+            if ($validation->fails()) {
+                $errors = $validation->messages();
+                return Redirect::back()->with('errors', $errors);
+            }
+            //Get and check user data by email
+            $userData = User::GetUserByMail($data['email']);
+
+            //Check Email Exit
+            if (!empty($userData)) {
+                Session::flash('error', Config::get('message.options.REGISTERD_MAIL'));
+                return Redirect::back();
+            }
+
+            $userData = User::GetUserByMail($data['email']);
+            ////Check Email Exit
+            if (!empty($userData)) {
+                $user = Sentinel::findById($userData->id);
+                if (!$activation = Activation::completed($user)) {
+                    Session::flash('error', USER_NOT_ACTIVATE);
+                    return Redirect::back();
+                }
+            }
+
+
+            $credential = [
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+            ];
+            //Vendor register
+
+            $user = \Sentinel::registerAndActivate($credential);
+
+            if (!empty($user)) {
+                $role = \Sentinel::findRoleByName($data["type"]);
+                $role->users()->attach($user);
+                if ($data["type"] == 'tutor') {
+                    $type = new \App\Model\TutorProfile;
+                } else {
+                    $type = new \App\Model\EmployerProfile;
+                }
+                $type->user_id = $user->id;
+                $type->save();
+                Session::flash('error', Config::get('message.options.REGISTERED_USER'));
+            } else {
+                Session::flash('error', Config::get('message.options.REGISTERED_NOT_USER'));
+
+            }
+
+
+            return Redirect::back();
+        } catch (Exception $ex) {
+            return View::make('errors.exception')->with('Message', $ex->getMessage());
+        }
+
+    }
 
     /**
      * Create a new controller instance.
@@ -37,35 +113,5 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
     }
 }

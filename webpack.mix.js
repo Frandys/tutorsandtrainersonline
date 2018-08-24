@@ -15,25 +15,41 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css');
 
 mix.styles([
-    'resources/css/bootstrap.css',
-    'resources/css/bootstrap-datetimepicker.min.css',
-    'resources/css/font-awesome.css',
-    'resources/css/sb-admin-2.css',
-    'resources/css/timeline.css',
-    'resources/css/custom-style.css',
-    'resources/css/dataTables.min.css'], 'public/assets/stylesheets/styles.css', './');
+    'resources/admin/css/bootstrap.css',
+    'resources/admin/css/bootstrap-datetimepicker.min.css',
+    'resources/admin/css/font-awesome.css',
+    'resources/admin/css/sb-admin-2.css',
+    'resources/admin/css/timeline.css',
+    'resources/admin/css/custom-style.css',
+    'resources/admin/css/dataTables.min.css'], 'public/assets/admin/stylesheets/styles.css', './');
 mix.scripts([
-    'resources/js/jquery.js',
-    'resources/js/jquery.validate.min.js',
-    'resources/js/additional-methods.min.js',
-    'resources/js/dataTables.min.js',
-    'resources/js/bootstrap.js',
-    'resources/js/bootstrap-datetimepicker.min.js',
-    'resources/js/formtowizard.js',
-    'resources/js/common_admin.js',
-    'resources/js/Chart.js',
-    'resources/js/metisMenu.js',
-    'resources/js/sb-admin-2.js',
-    'resources/js/frontend.js',
-], 'public/assets/scripts/frontend.js', './');
+    'resources/admin/js/jquery.js',
+    'resources/admin/js/jquery.validate.min.js',
+    'resources/admin/js/additional-methods.min.js',
+    'resources/admin/js/dataTables.min.js',
+    'resources/admin/js/bootstrap.js',
+    'resources/admin/js/bootstrap-datetimepicker.min.js',
+    'resources/admin/js/formtowizard.js',
+    'resources/admin/js/common_admin.js',
+    'resources/admin/js/Chart.js',
+    'resources/admin/js/metisMenu.js',
+    'resources/admin/js/sb-admin-2.js',
+    'resources/admin/js/frontend.js',
+], 'public/assets/scripts/admin/frontend.js', './');
 
+mix.styles([
+    'resources/web/css/bootstrap.css',
+    'resources/web/css/style.css',
+    'resources/web/css/responsive.css',
+    'resources/web/css/all.css',
+    'resources/web/css/animate.css',
+    'resources/web/owlcarousel/owl.carousel.min.css',
+    'resources/web/css/owlcarousel/owl.theme.default.min.css'], 'public/assets/web/stylesheets/styles.css', './');
+mix.scripts([
+    'resources/web/js/jquery.min.js',
+    'resources/web/js/popper.min.js',
+    'resources/web/js/bootstrap.min.js',
+    'resources/web/owlcarousel/owl.carousel.js',
+    'resources/web/js/numscroller-1.0.js',
+    'resources/web/js/script.js',
+], 'public/assets/web/scripts/frontend.js', './');

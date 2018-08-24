@@ -16,12 +16,13 @@ Auth::routes();
 
 //Admin Routes
 //'middleware' => 'vendor',
-Route::get('/', function () {
 
-    return View::make('auth.login');
+Route::get('/register/{type}', function () {
+    return View::make('auth.register');
 });
 
-
+Route::get('/', 'TutorController@index');
+Route::get('TutorAlls/', 'TutorController@TutorAlls');
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
    Route::resource('/','Admin\AdminController');
    Route::get('/change_password', function () {

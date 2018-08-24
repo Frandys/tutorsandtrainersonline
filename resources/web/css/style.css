@@ -1,0 +1,548 @@
+/**
+ * All v1.1.0
+ * Copyright 2013-2018 Gurinder Singh
+ */
+@font-face {
+    font-family: 'Myriad';
+    src: url('../fonts/MPR.otf') format('opentype');
+    font-weight: regular;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Myriad';
+    src: url('../fonts/MPB.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+body {
+    font-family: 'Myriad', sans-serif;
+}
+.main-head {
+    position: fixed;
+    width: 100%;
+    z-index: 9;
+	transition: .3s;
+}
+.main-head.fixHeader {
+    background: rgba(0,0,0,.45);
+}
+
+.main-head .navbar-nav li a.nav-link {
+    font-size: 15px;
+    font-family: 'Myriad', sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff !important;
+    padding: 0.5rem .8rem;
+}
+.main-head .right-section ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: inline-block;
+}
+.main-head .right-section ul li {
+    float: left;
+    font-size: 16px;
+    font-family: 'Myriad', sans-serif;
+    font-weight: 400;
+    color: #fff;
+    display: inline-block;
+}
+.main-head .right-section ul li a {
+    color: inherit;
+    padding: 0.3rem 0.5rem;
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 5px;
+}
+.main-head .right-section ul li span {
+    margin-left: 20px;
+}
+.main-head .right-section ul li.tutor a {
+    background: #609915;
+}
+.main-head .right-section ul li.employer a {
+    background: #7562d5;
+}
+.main-head .right-section ul li a::before {
+    content: "";
+    padding: 7px;
+    position: absolute;
+    margin: 0 7px 0 0;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 5px;
+}
+.main-head .right-section ul li.tutor a::before {
+    background-image: url(../images/icon-2.png);
+}
+.main-head .right-section ul li.employer a::before {
+    background-image: url(../images/icon-1.png);
+}
+
+
+
+#home-banner {
+    min-height: 48rem;
+    background-color: #101010;
+    background-image: url(../images/banner.jpg);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#home-banner .form-wrap {
+    background: rgba(0,0,0,.34);
+    max-width: 75%;
+    margin: 0 auto;
+    padding: 30px;
+}
+#home-banner .form-wrap form .form-group {
+    width: 22%;
+}
+#home-banner .form-wrap form .form-group select {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    font-size: 18px;
+    color: #434343;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fff url(../images/arrow.png) 96% 50% no-repeat;
+    background-position: right 8px top 54%;
+    box-shadow: none;
+}
+#home-banner .form-wrap form .btn {
+    width: 12%;
+    background: #dca500;
+    border-color: #dca500;
+    border-radius: 0;
+    font-size: 18px;
+    line-height: 26px;
+    border: none;
+}
+#home-banner .form-wrap form {
+    margin: 0 0 .5rem 0;
+}
+#home-banner .form-wrap form .form-group {
+    position: relative;
+}
+
+#home-banner .form-wrap form .form-group::after {
+    content: "";
+    height: 50%;
+    position: absolute;
+    width: 2px;
+    background: #434343;
+    right: 0;
+}
+
+#home-banner .form-wrap form .form-group:last-of-type::after {
+	display:none;
+}
+#home-banner .form-wrap form .btn .fas {
+    margin: 0 7px 0 0;
+    font-size: 15px;
+}
+#home-banner .form-wrap p {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+
+#tutor-area {
+    background: #fff;
+    padding: 4% 0 0;
+}
+
+#tutor-area .tutors {
+    background: #138144 url(../images/img-12.png) no-repeat scroll center center;
+    padding: 40px;
+    color: #fff;
+    background-size: cover;
+}
+#tutor-area .employees {
+    background: #bf3281 url(../images/img-11.png) no-repeat scroll center center;
+    padding: 40px;
+    color: #fff;
+    background-size: cover;
+}
+
+#tutor-area .heading h3 {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+#tutor-area .heading img {
+    float: right;
+    width: 50px;
+}
+
+#tutor-area .heading {
+    margin-bottom: 1rem;
+}
+#tutor-area .text-wrap a.round-button {
+    display: inline-block;
+    padding: 8px 40px;
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 28px;
+    text-decoration: none;
+}
+#tutor-area .text-wrap a.round-button i {
+    margin: 0 0 0 5px;
+}
+#tutor-area .row.no-gutters {
+    margin-top: -200px;
+}
+#about {
+    padding: 4% 0;
+}
+#about .text-wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#about .text-wrap strong {
+    color: #e55610;
+    font-size: 16px;
+    margin: 0 0 .4rem 0;
+}
+#about .text-wrap h2 {
+    color: #224090;
+    font-size: 51px;
+    font-weight: 600;
+    max-width: 100%;
+    line-height: 50px;
+    margin-bottom: 1rem;
+}
+#about .text-wrap p {
+    font-size: 16px;
+}
+#about .text-wrap .semi-round {
+    padding: 8px 0px;
+    border: 1px solid #2b2b2b;
+    color: #2b2b2b;
+    display: inline-block;
+    border-radius: 5px;
+    width: 140px;
+    text-align: center;
+}
+#about .text-wrap .semi-round i {
+    margin: 0 0 0 5px;
+}
+#about .img-wrap {
+    padding: 10px;
+}
+
+#about .img-wrap.small {
+    max-height: 239px;
+    overflow: hidden;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+#about .img-wrap img {
+    width: 100%;
+}
+
+
+#book {
+    background: #1b1b1b;
+    padding: 4% 0;
+    color: #ffff;
+}
+
+#book .heading {
+    margin: 0 0 1.5rem 0px;
+}
+
+#book .heading h2 {
+    font-weight: 700;
+    font-size: 35px;
+    margin: 0;
+}
+
+#book .heading p {
+    margin: 0;
+    font-size: 17px;
+}
+#book .book-list .text-wrap {
+    display: inline-block;
+    width: 100%;
+    
+    padding: 20px;
+    color: #fff;
+    background-size: cover;
+    margin: 0 0 2rem 0;
+}
+#book .book-list .health .text-wrap {
+    background: #138144 url(../images/bg1.png) no-repeat scroll center center;
+}
+#book .book-list .construction .text-wrap {
+    background: #138144 url(../images/bg2.png) no-repeat scroll center center;
+}
+#book .book-list .aid .text-wrap {
+    background: #138144 url(../images/bg3.png) no-repeat scroll center center;
+}
+#book .book-list .fire .text-wrap {
+    background: #138144 url(../images/bg4.png) no-repeat scroll center center;
+}
+#book .book-list .food .text-wrap {
+    background: #138144 url(../images/bg5.png) no-repeat scroll center center;
+}
+#book .book-list .care .text-wrap {
+    background: #138144 url(../images/bg6.png) no-repeat scroll center center;
+}
+
+
+#book .book-list .text-wrap img {
+    width: 60px;
+    margin: 0 0 1rem 0;
+}
+#book .book-list .text-wrap  p {
+    margin: 0;
+    font-size: 18px;
+}
+#counter-section {
+    padding: 4% 0;
+    background: #101010 url(../images/count.jpg)  no-repeat scroll center center;
+    color: #fff;
+    background-size: cover;
+}
+#counter-section .text-wrap .numscroller {
+    font-size: 35px;
+    font-weight: 600;
+    position: relative;
+    margin: 0 0 1rem 0;
+}
+#counter-section .text-wrap i {
+    font-size: 25px;
+    margin: 0 0 0.5rem 0;
+}
+#counter-section .text-wrap .numscroller::after {
+    content: "";
+    width: 35px;
+    position: absolute;
+    height: 2px;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+#counter-section .text-wrap p {
+    margin: 0;
+    font-size: 18px;
+}
+#counter-section .tour .text-wrap i {
+    color: #e7a10e;
+}
+#counter-section .tour .text-wrap .numscroller::after {
+    background: #e7a10e;
+}
+
+#counter-section .tutors .text-wrap i {
+    color: #e65713;
+}
+#counter-section .tutors .text-wrap .numscroller::after {
+    background: #e65713;
+}
+
+#counter-section .teachers .text-wrap i {
+    color: #20c957;
+}
+#counter-section .teachers .text-wrap .numscroller::after {
+    background: #20c957;
+}
+
+#counter-section .labs .text-wrap i {
+    color: #fe8400;
+}
+#counter-section .labs .text-wrap .numscroller::after {
+    background: #fe8400;
+}
+
+
+#principal-words {
+    padding: 4% 0;
+}
+
+#principal-words h2.slide-header {
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 0 1.5rem 0px;
+    text-transform: uppercase;
+    color: #767676;
+    position: relative;
+}
+#principal-words .testi-wrap .profile-mata {
+    width: 50%;
+    margin: 0 auto;
+}
+#principal-words .testi-wrap .profile-mata .image-wrap {
+    border: 2px solid #dedede;
+    margin: 0 .8rem 0 0;
+}
+#principal-words .testi-wrap .profile-mata .text-wrap h3 {
+    color: #472dcf;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 0 0;
+}
+#principal-words .testi-wrap .profile-mata .text-wrap {
+    margin: 2rem 0 0 0;
+    padding: 0 0 0 2.5rem;
+    position: relative;
+}
+#principal-words .testi-wrap .profile-mata .text-wrap::before {
+    content: "\f10d";
+    width: 33px;
+    10px:
+    "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    background: #472dcf;
+    color: #fff;
+    height: 33px;
+    text-align: center;
+    font-family: "Font Awesome 5 Free";
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 14px;
+}
+#principal-words .testi-wrap .profile-mata .text-wrap p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 14px;
+}
+#principal-words .textimonial-wrap .text {
+    background-image: url(../images/testi.png);
+    background-size: 100% auto;
+    background-position: 0px 40px;
+    padding: 15px 5px 50px 5px;
+    margin: 0 0px 0rem;
+    background-repeat: no-repeat;
+}
+#principal-words .textimonial-wrap .text p {
+    font-style: italic;
+    max-width: 90%;
+    margin: 0 auto;
+}
+#principal-words .owl-dots {
+    display: none;
+}
+#principal-words h2.slide-header::after {
+    content: "";
+    width: 35px;
+    position: absolute;
+    height: 2px;
+    background: #e65713;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+
+
+#main-footer {
+    background: #262834;
+    padding: 3% 0;
+    color: #fff;
+}
+#main-footer .footer-text h3 {
+    font-size: 19px;
+    font-weight: 600;
+}
+#main-footer .footer-text  ul.address {
+    margin: 0 0 0 0;
+    padding: 0;
+    list-style-type: none;
+}
+#main-footer .footer-text ul.address li {
+    padding: 0 0 0 30px;
+    position: relative;
+}
+#main-footer .footer-text ul.address li span,#main-footer .footer-text ul.address li a {
+    color: #fff;
+    font-size: 14px;
+}
+#main-footer .footer-text ul.address li::before {
+    font-weight: 900;
+    left: 0;
+    color: #e7a10e;
+    height: 20px;
+    text-align: center;
+    font-family: "Font Awesome 5 Free";
+    font-size: 14px;
+    position: absolute;
+}
+#main-footer .footer-text ul.address li.home::before {
+    content: "\f015";
+}
+#main-footer .footer-text ul.address li.tel::before {
+    content: "\f2a0";
+}
+#main-footer .footer-text ul.address li.mail::before {
+    content: "\f0e0";
+}
+#main-footer .footer-text p {
+    font-size: 14px;
+    line-height: 18px;
+}
+#main-footer .footer-text .form-control {
+    margin: 0 !important;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+#main-footer .footer-text .btn {
+    margin: 0 !important;
+    border-radius: 0;
+    border: none;
+    background: #e7a10e;
+    color: #101010;
+}
+
+ section.inner-page-title {
+    padding: 9% 0 4% 0;
+    background: #101010 url(../../../web/images/count.jpg) no-repeat scroll center center;
+    color: #fff;
+    background-size: cover;
+    text-align: center;
+}
+.form-page {
+    padding: 3% 0;
+}
+.form-page .form-wrap {
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.15);
+}
+.form-page .form-wrap .control-label {
+    margin: 0;
+}
+.form-page .form-wrap .form-control {
+    border-radius: 0;
+    box-shadow: none;
+}
+.form-page .form-wrap .button-wrap .btn {
+    padding: 8px 40px;
+    border: 1px solid #609915;
+    color: #fff;
+    display: inline-block;
+    border-radius: 0px;
+    text-align: center;
+    background: #609915;
+    box-shadow: none;
+}

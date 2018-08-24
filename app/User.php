@@ -28,25 +28,26 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    static function GetUserByMail($email) {
-        return  $userData = static::whereEmail($email)->first();
+    static function GetUserByMail($email)
+    {
+        return $userData = static::whereEmail($email)->first();
 
     }
 
-    public function  roles()
+    public function roles()
     {
-     return   $this->belongsToMany('App\Model\Role','role_users','user_id','role_id');
+        return $this->belongsToMany('App\Model\Role', 'role_users', 'user_id', 'role_id');
     }
 
 
     public function Country()
     {
-        return $this->belongsToMany('App\Model\Country','tutor_profiles','user_id','country_id');
+        return $this->belongsToMany('App\Model\Country', 'tutor_profiles', 'user_id', 'country_id');
     }
 
     public function CountryEmployer()
     {
-        return $this->belongsToMany('App\Model\Country','employer_profiles','user_id','country_id');
+        return $this->belongsToMany('App\Model\Country', 'employer_profiles', 'user_id', 'country_id');
     }
 
     public function TutorProfile()
@@ -54,6 +55,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Model\TutorProfile');
     }
 
+    public function Disciplines()
+    {
+        return $this->belongsToMany('App\Model\Disciplines', 'tutor_profiles', 'user_id', 'discipline_id');
+
+    }
 
     public function EmployerProfile()
     {
@@ -78,21 +84,21 @@ class User extends Authenticatable
 
     public function parent()
     {
-        return $this->belongsTo('App\Model\Category','sub_category_id');
+        return $this->belongsTo('App\Model\Category', 'sub_category_id');
     }
 
     public function children()
     {
-        return $this->hasMany('App\Model\Category','sub_category_id');
+        return $this->hasMany('App\Model\Category', 'sub_category_id');
     }
 
     public function parentLevels()
     {
-        return $this->belongsTo('App\Model\QualifiedLevel','sub_level_id');
+        return $this->belongsTo('App\Model\QualifiedLevel', 'sub_level_id');
     }
 
     public function childrenLevels()
     {
-        return $this->hasMany('App\Model\QualifiedLevel','sub_level_id');
+        return $this->hasMany('App\Model\QualifiedLevel', 'sub_level_id');
     }
 }
