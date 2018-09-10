@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Admin {
     use App\Model\Country;
     use App\Model\Course;
     use App\Model\Discipline;
+    use App\Model\Disciplines;
     use App\model\Educations;
     use App\Model\Language;
     use App\Model\Organisations;
@@ -109,12 +110,19 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
             $categories = Category::with('children')->get();
             $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
             $levels = QualifiedLevel::with('childrenLevels')->get();
-             return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels'));
+            $disciplines = Disciplines::with('childrenDisciplines')->get();
+            $disciplineArray[] = '';
+            if(isset($usersMeta->disciplines['0'])){
+                foreach ($usersMeta->disciplines as $discipline){
+                    $disciplineArray[] = $discipline->id;
+                }
+            }
+            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray'));
 
         }
 
@@ -217,6 +225,7 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->save();
                 }
 
+                $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
                 if ($data['certificates_id']) {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();

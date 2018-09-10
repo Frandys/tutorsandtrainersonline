@@ -6,6 +6,7 @@ use Closure;
 
 class TutorMiddleware
 {
+
     /**
      * Handle an incoming request.
      *
@@ -15,13 +16,18 @@ class TutorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
-            $response = $next($request);
-            return $response->header('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate')
-                ->header('Pragma', 'no-cache')
-                ->header('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
+        $user = \Sentinel::check();
+        if (!empty($user) && $user != '') {
+            if (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+                $response = $next($request);
+                return $response->header('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate')
+                    ->header('Pragma', 'no-cache')
+                    ->header('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
+            } else {
+                return \Redirect::to('/');
+            }
         } else {
-            return \Redirect::to('/');
+            return \Redirect::to('/login');
         }
     }
 }

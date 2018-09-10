@@ -576,11 +576,11 @@
 
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="wipe_board" id="wipe_board"
-                                                value="0" {{ $usersMeta->employer_profile->wipe_board == '0' ?  "checked" : '' }} >No
+                                            <input type="radio" name="disabilities" id="disabilities"
+                                                value="0" {{ $usersMeta->employer_profile->disabilities == '0' ?  "checked" : '' }} >No
                                         </label> <label>
-                                            <input type="radio" name="wipe_board" id="wipe_board"
-                                                value="1" {{ $usersMeta->employer_profile->wipe_board == '1' ?  "checked" : '' }} >Yes
+                                            <input type="radio" name="disabilities" id="disabilities"
+                                                value="1" {{ $usersMeta->employer_profile->disabilities == '1' ?  "checked" : '' }} >Yes
                                          </label>
                                     </div>
                                 </div>

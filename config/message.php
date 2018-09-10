@@ -10,9 +10,10 @@ return [
         'PAS_RESET' => 'Password reset successfully .',
         'VALID_PASS_MAIL' => 'Enter valid old password.',
         'PAS_CHNGE' => 'Password has been changed.',
-        'UPDATE_SUCCESS' => 'User updated successfully.',
+        'UPDATE_SUCCESS' => 'Updated successfully.',
         'NAME_EXIT' => "Please enter different name it's already exist.",
         'REGISTERED_USER' => "User registered  successfully",
         'REGISTERED_NOT_USER' => "Issues in User registration please try again",
+        'JOB_SUBMITED' => "Job submitted successfully",
     ]
 ];

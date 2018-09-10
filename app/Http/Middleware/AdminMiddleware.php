@@ -26,7 +26,7 @@ class AdminMiddleware
                 return \Redirect::to('/');
             }
         } else {
-            return \Redirect::to('/');
+            return \Redirect::to('/login');
         }
     }
 }

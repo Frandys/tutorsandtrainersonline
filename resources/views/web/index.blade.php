@@ -1,57 +1,11 @@
 @extends('layouts.dashboard')
 @section('section')
+@section('pageTitle', 'Home')
     <section id="home-banner" class="text-center">
         <div class="container">
             <div class="form-wrap">
                 <h1>Find A...<i class="fas fa-angle-down"></i></h1>
-                <form class="form-inline">
-                    <div class="form-group ">
-                        <select class="form-control" id="">
-                            <option>Specialist</option>
-                            @foreach($categories as  $categorieItem)
-                                @if(isset($categorieItem->children['0']))
-                                    <optgroup label="{{$categorieItem->name}}"
-                                              data-max-options="1">
-                                        @foreach($categorieItem->children as  $categorieChild)
-                                            <option value="{{$categorieChild->id}}" >{{$categorieChild->name}}</option>
-                                        @endforeach
-                                        @endif
-                                        @endforeach
-                                    </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group ">
-                        <select class="form-control" id="">
-                            <option>Disciplines</option>
-                            @foreach($disciplines as $discipline)
-                                <option value="{{$discipline->id}}">{{$discipline->name}}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                    <div class="form-group ">
-                        <select class="form-control" id="">
-                            <option>Level</option>
-                            @foreach($levels as  $level)
-                                @if(isset($level->childrenLevels['0']))
-                                    <optgroup label="{{$level->level}}"
-                                              data-max-options="1">
-                                        @foreach($level->childrenLevels as  $levelChild)
-                                            <option value="{{$levelChild->id}}">{{$levelChild->level}}</option>                                                                            @endforeach
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group ">
-                        <select class="form-control" id="">
-                            <option>Location</option>
-                            @foreach($countrys as $countrys)
-                                <option value="{{$countrys->id}}">{{$countrys->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary "><i class="fas fa-search"></i>Find</button>
-                </form>
+                @include('includes.search_form')
                 <p>Lorem ipsum dolor sit amet, consectetur cing elit Proin convallis nisl turpis, </p>
             </div>
         </div>

@@ -107,7 +107,7 @@ class QualifiedController extends Controller
             if ($id == $data['nameCat']) {
                 return Response(array('success' => '0', 'data' => null, 'errors' => Config::get('message.options.NAME_EXIT')));
             }
-            QualifiedLevel::with('children')->where('level', $id)->update(['level' => $data['nameCat']]);
+            QualifiedLevel::with('children')->where('id', $id)->update(['level' => $data['nameCat']]);
             return Response(array('success' => '1', 'data' => null, 'errors' => null));
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());

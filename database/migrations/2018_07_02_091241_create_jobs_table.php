@@ -22,7 +22,11 @@ class CreateJobsTable extends Migration
             $table->string('title', 255)->nullable();
             $table->enum('type', ['0', '1'])->comment('0=fixes,1=hourly')->nullable();
             $table->integer('rate')->nullable();
-            $table->enum('status', ['0', '1'])->comment('0=,1=')->nullable();
+            $table->enum('status', ['0', '1', '2'])->comment('0=precess,1=accept,2=reject	')->nullable();
+            $table->integer('categories_id')->unsigned();
+            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->integer('qualified_levels_id')->unsigned();
+            $table->foreign('qualified_levels_id')->references('id')->on('qualified_levels')->onDelete('cascade');
             $table->timestamps();
         });
     }

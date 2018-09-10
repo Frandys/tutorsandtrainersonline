@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Model\Activations;
+use App\Model\Category;
+use App\Model\Country;
+use App\Model\Disciplines;
+use App\Model\QualifiedLevel;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Config;
@@ -12,6 +16,18 @@ use View;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        //\Sentinel::logout();
+        $categories = Category::with('children')->get();
+        $levels = QualifiedLevel::with('childrenLevels')->get();
+        $disciplines = Disciplines::all();
+        $countrys = Country::all();
+        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels'));
+    }
+
+
     public function changePassword(Request $request) {
         try {
             $data = $request->input();

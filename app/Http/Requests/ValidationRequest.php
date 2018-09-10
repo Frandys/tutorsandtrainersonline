@@ -114,6 +114,12 @@ class ValidationRequest extends FormRequest
         'nameCat' => 'required|min:2|max:50',
     );
 
+    public static $jobPost = array(
+        'title' => 'required|min:2|max:50',
+        'rate' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+        'specialist' => 'required',
+        'qualified_levels' => 'required',
+     );
 
     public function authorize()
     {

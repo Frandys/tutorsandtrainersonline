@@ -14,15 +14,16 @@
 
 Auth::routes();
 
-//Admin Routes
-//'middleware' => 'vendor',
 
 Route::get('/register/{type}', function () {
     return View::make('auth.register');
 });
 
-Route::get('/', 'TutorController@index');
-Route::get('TutorAlls/', 'TutorController@TutorAlls');
+Route::get('/', 'UserController@index');
+//Route::group(['middleware' => 'tutor' ], function () {
+Route::resource('tutor', 'TutorController');
+//);});
+
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
    Route::resource('/','Admin\AdminController');
    Route::get('/change_password', function () {
@@ -37,4 +38,9 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('language','Admin\LanguagesController');
     Route::resource('certificate','Admin\CertificatesController');
     Route::resource('qualification','Admin\QualifiedController');
+    Route::resource('job','Admin\JobController');
+    Route::get('view_jobs', 'Admin\JobController@viewJobs');
+    Route::resource('types','Admin\TypesController');
+    Route::resource('about','Admin\AboutController');
+
 });

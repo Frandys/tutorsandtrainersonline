@@ -55,11 +55,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Model\TutorProfile');
     }
 
-    public function Disciplines()
-    {
-        return $this->belongsToMany('App\Model\Disciplines', 'tutor_profiles', 'user_id', 'discipline_id');
-
-    }
+//    public function Disciplines()
+//    {
+//        return $this->belongsToMany('App\Model\Disciplines', 'tutor_profiles', 'user_id', 'discipline_id');
+//
+//    }
 
     public function EmployerProfile()
     {
@@ -81,6 +81,12 @@ class User extends Authenticatable
 //        return $this->belongsToMany('App\Model\QualifiedLevel');
         return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id')->withPivot(['category_id']);
     }
+
+    public function Disciplines()
+    {
+         return $this->belongsToMany('App\Model\Disciplines', 'discipline_users', 'user_id', 'disciplines_id');
+    }
+
 
     public function parent()
     {

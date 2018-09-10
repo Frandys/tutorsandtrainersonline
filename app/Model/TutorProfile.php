@@ -39,19 +39,17 @@ class TutorProfile extends Model
 
     public function QualifiedLevel()
     {
-//        return $this->belongsToMany('App\Model\QualifiedLevel');
-        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id');
+         return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id');
     }
 
     public function Disciplines()
     {
-//      return $this->belongsToMany('App\Model\Disciplines', 'tutor_profiles', 'user_id', 'discipline_id');
-        return $this->hasOne('App\Model\Disciplines','id','discipline_id');
+         return $this->belongsToMany('App\Model\Disciplines','discipline_users', 'user_id', 'disciplines_id');
     }
 
     public function Country()
     {
-         return $this->hasOne('App\Model\Country','id','discipline_id');
+         return $this->hasOne('App\Model\Country','id','country_id');
     }
 
 

@@ -827,12 +827,7 @@ $(document).ready(function () {
         buttonWidth: '500px'
     });
 
-    $('#travel_location').multiselect({
-        nonSelectedText: 'Select Country',
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
-        buttonWidth: '500px'
-    });
+
     $('.education_university').find(".length").each(function (index) {
         $('#level').multiselect({
             nonSelectedText: 'Select level',

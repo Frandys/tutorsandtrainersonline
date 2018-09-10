@@ -34,7 +34,18 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        if ($user = \Sentinel::check()) {
+            \Sentinel::login($user, true);
+            if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
+                return Redirect::to('/admin');
+            } elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+                return Redirect::to('/');
+            } elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+                return Redirect::to(\URL::to('/').Session::get('CheckRediraction'));
+            }
+        } else {
+            return view('auth.login');
+        }
     }
 
 
@@ -78,10 +89,10 @@ class LoginController extends Controller
                 \Sentinel::login($user, true);
                 if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
                     return Redirect::to('/admin');
-                }elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+                } elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
                     return Redirect::to('/');
-                }elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
-                    return Redirect::to('/');
+                } elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+                     return Redirect::to(\URL::to('/').Session::get('CheckRediraction'));
                 }
             } else {
                 Session::flash('error', Config::get('message.options.LOGIN_INVALID'));
@@ -92,8 +103,10 @@ class LoginController extends Controller
         }
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         try {
+            \Session::put('CheckRediraction','');
             \Sentinel::logout();
             return Redirect::to('/login');
         } catch (Exception $ex) {

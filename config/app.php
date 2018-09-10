@@ -178,7 +178,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class
     ],
 
