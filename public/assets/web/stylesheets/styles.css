@@ -9334,6 +9334,35 @@ body {
 .inner-cotent .form-wrap button i {
     margin: 0 0 0 5px;
 }
+.form-wrap form .dropdown-menu {
+    width: 400px;
+    text-align: left;
+}
+.multiselect-container>li {
+    padding: 0;
+}
+.multiselect-container .input-group {
+    margin: 5px;
+}
+.multiselect-container>li.multiselect-group label {
+    margin: 0;
+    padding: 3px 20px 3px 20px;
+    height: 100%;
+    font-weight: 700;
+}
+.form-wrap form .dropdown-menu a {
+    display: inline-block;
+    width: 100%;
+    color: #868686;
+    font-size: 15px;
+}
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+    padding: 3px 20px 3px 40px;
+}
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox], .form-inline .multiselect-container li a label.radio input[type=radio] {
+    margin-left: -20px;
+    margin-right: 0;
+}
 /**
  * All v1.1.0
  * Copyright 2013-2018 Gurinder Singh
