@@ -8482,6 +8482,10 @@ body {
 #home-banner .form-wrap form .form-group {
     width: 22%;
 }
+#home-banner .form-wrap form .form-group {
+    padding-right: 2px;
+    background: #fff;
+}
 #home-banner .form-wrap form .form-group select {
     width: 100%;
     border: none;
@@ -8495,6 +8499,20 @@ body {
     background: #fff url(../../../web/images/arrow.png) 96% 50% no-repeat;
     background-position: right 8px top 54%;
     box-shadow: none;
+}
+.form-wrap form .form-group .btn-group {
+    width: 100% !important;
+}
+
+#home-banner .form-wrap form .form-group .multiselect {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    font-size: 18px;
+    color: #434343;
+    cursor: pointer;
+    box-shadow: none;
+    background: transparent;
 }
 #home-banner .form-wrap form .btn {
     width: 12%;
@@ -9284,6 +9302,37 @@ body {
 }
 #faq-main .accordion .card-header.collapsed:after {
     content: "\f067";
+}
+
+
+.inner-cotent {
+    padding: 3% 0;
+}
+.inner-cotent .form-wrap {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    box-shadow: 0 0 18px rgba(0,0,0,.15);
+}
+
+.inner-cotent .form-wrap .form-control {
+    box-shadow: none;
+    border-radius: 0;
+    outline: none;
+}
+.inner-cotent .form-wrap button.btn {
+    padding: 8px 0px;
+    border: 1px solid #2b2b2b;
+    color: #2b2b2b !important;
+    display: inline-block;
+    border-radius: 5px;
+    width: 140px;
+    text-align: center;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.inner-cotent .form-wrap button i {
+    margin: 0 0 0 5px;
 }
 /**
  * All v1.1.0

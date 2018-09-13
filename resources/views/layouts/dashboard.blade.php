@@ -27,8 +27,8 @@
                                 <a class="" href="#" id="navbardrop" data-toggle="dropdown"><span>{{\Sentinel::getUser()->first_name}} {{\Sentinel::getUser()->last_name}}</span></a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{url('change_password')}}">Change Password</a>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   Logout</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
