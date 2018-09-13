@@ -14,14 +14,34 @@
 
 Auth::routes();
 
-
-Route::get('/register/{type}', function () {
+Route::get('/register/{type}/{plan?}', function () {
     return View::make('auth.register');
+});
+
+Route::get('/contact-us', function () {
+    return View::make('web.contact_us');
+});
+Route::post('contact_us', 'UserController@contactUs');
+Route::get('/about', function () {
+   $about = \App\Model\About::where('slug','about')->first();
+     return View::make('web.about',compact('about'));
+});
+Route::get('/pricing', function () {
+    return View::make('web.pricing');
+});
+
+Route::get('/faq', function () {
+    $about = \App\Model\About::where('slug','faq')->first();
+    return View::make('web.about_view',compact('about'));
 });
 
 Route::get('/', 'UserController@index');
 //Route::group(['middleware' => 'tutor' ], function () {
 Route::resource('tutor', 'TutorController');
+Route::post('change_password', 'UserController@changePassword');
+Route::get('/change_password', function () {
+    return View::make('web.change_password');
+});
 //);});
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
@@ -42,5 +62,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('view_jobs', 'Admin\JobController@viewJobs');
     Route::resource('types','Admin\TypesController');
     Route::resource('about','Admin\AboutController');
-
+    Route::post('assign_job','Admin\JobController@assignJob');
 });

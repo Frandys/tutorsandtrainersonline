@@ -15,5 +15,7 @@ return [
         'REGISTERED_USER' => "User registered  successfully",
         'REGISTERED_NOT_USER' => "Issues in User registration please try again",
         'JOB_SUBMITED' => "Job submitted successfully",
+        'SUCCESS' => "Request submitted successfully",
+        'JOBSUBMTD' => "You already submit this job",
     ]
 ];

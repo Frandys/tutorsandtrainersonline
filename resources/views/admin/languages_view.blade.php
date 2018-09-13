@@ -2,8 +2,10 @@
 @section('page_heading','Language List')
 @section('section')
     @include('message.message')
+	<div class="add-buttton mb-3">
     <a href="#" id="addLang" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i
-                class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                class="fa fa-plus-circle" aria-hidden="true"></i> Add Language</a>
+	</div>
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -51,21 +53,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Add New Language</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form class="row language-modal" action="" method="post">
                         <div class="col-md-6 col-sm-6">
-                            <div class="form-group ">
-                                <label class="control-label " for="nameLang">
-                                    First Name
-                                </label>
-                                <input class="form-control" id="nameLang" name="nameLang" type="text">
+                            <div class="form-grup ">
+                                <input class="form-control" id="nameLang" name="nameLang" type="text" placeholder="Language Name">
                                 <input id="nameCheck" hidden name="nameCheck" type="text">
                             </div>
                         </div>
-
-                        <button class="btn btn-success" id="submitLang" name="submit" type="button">Submit</button>
+						<div class="col-md-6 col-sm-6">
+							<button class="btn w-100" id="submitLang" name="submit" type="button">Submit</button>
+						</div>
                     </form>
                 </div>
 

@@ -12,32 +12,52 @@
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <ul class="navbar-nav justify-content-end w-100">
                         <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Prices</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url('about')}}">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url('pricing')}}">Prices</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Courses</a></li>
                         <li class="nav-item"><a class="nav-link" href="">More</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url('contact-us')}}">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="right-section d-none d-lg-block">
                     <ul class="">
 
                         @if (!empty(\Sentinel::check()))
-                            <li><a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i
-                                            class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
+                            <li class="employer dropdown">
+                                <a class="" href="#" id="navbardrop" data-toggle="dropdown"><span>{{\Sentinel::getUser()->first_name}} {{\Sentinel::getUser()->last_name}}</span></a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{url('change_password')}}">Change Password</a>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out fa-fw"></i> Logout</a>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
+                                </div>
+                            </li>
+
                          @else
-                            <li class="tutor">
-                                <a href="{{url('register/tutor')}}"><span>For Tutor</span></a>
-                            </li>
-                            <li class="employer">
-                                <a href="{{url('register/employer')}}"><span>For Employer</span></a>
-                            </li>
+						<!--<li class="tutor dropdown">
+							<a href="{{url('register/tutor')}}"><span>For Tutor</span></a>
+						</li>-->
+						<li class="tutor dropdown">
+							<a class="" href="#" id="navbardrop" data-toggle="dropdown"><span>For Tutor</span></a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{{url('login')}}">Login</a>
+								<a class="dropdown-item" href="{{url('register/tutor')}}">Register</a>
+							</div>
+						</li>
+						<li class="employer dropdown">
+							<a class="" href="#" id="navbardrop" data-toggle="dropdown"><span>For Employer</span></a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{{url('login')}}">Login</a>
+								<a class="dropdown-item" href="{{url('pricing')}}">Register</a>
+							</div>
+						</li>
+						
+						<!--<li class="employer">
+							<a href="{{url('register/employer')}}"><span>For Employer</span></a>
+						</li>-->
                         @endif
                     </ul>
                 </div>

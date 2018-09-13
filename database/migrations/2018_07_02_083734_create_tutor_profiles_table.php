@@ -17,6 +17,7 @@ class CreateTutorProfilesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('uuid', 255)->nullable();
             $table->text('address')->nullable();
             $table->string('city', 255)->nullable();
             $table->string('state', 255)->nullable();

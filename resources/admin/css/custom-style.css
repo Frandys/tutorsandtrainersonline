@@ -96,6 +96,7 @@ legend {
       color: #fff;
       background: transparent;
       outline: none;
+	      text-transform: capitalize;
   }
   .navbar-default.sidebar {
     background: #007bff;
@@ -265,4 +266,37 @@ legend {
 }
 .radio label, .checkbox label {
     display: inline-block;
+}
+.content-part .add-buttton {
+    margin: 0 0 2rem 0;
+}
+
+.content-part .add-buttton .btn {
+    margin: 0;
+}
+
+.content-part .add-buttton .btn i {
+    margin: 0 5px 0 0;
+}
+#myModal .language-modal .btn {
+    width: 100%;
+}
+.content-part .btn {
+    border-color: #007bff;
+}.content-part .add-buttton {
+    margin: 0 0 2rem 0;
+}
+
+.content-part .add-buttton .btn {
+    margin: 0;
+}
+
+.content-part .add-buttton .btn i {
+    margin: 0 5px 0 0;
+}
+#myModal .language-modal .btn {
+    width: 100%;
+}
+.content-part .btn {
+    border-color: #007bff;
 }

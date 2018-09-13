@@ -2,9 +2,9 @@
 @section('page_heading','Qualification List')
 @section('section')
     @include('message.message')
-
-    <a href="#" id="addCat" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i
-                class="fa fa-plus-circle" aria-hidden="true"></i></a>
+	<div class="add-buttton mb-3">
+		<a href="#" id="addCat" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-plus-circle" aria-hidden="true"></i>Qualification List</a>
+	</div>
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -71,9 +71,16 @@
                     <h4 class="modal-title">Modal Header</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
-                        <div class="col-md-6 col-sm-6">
-
+                    <form class="row language-modal" action="" method="post">
+						<div class="col-md-12 col-sm-12">
+                            <div class="form-group ">
+                                <label class="control-label " for="nameCat">
+                                    Category Name
+                                </label>
+								<input class="form-control" placeholder="Name" id="nameCat" name="nameCat" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
                             <div class="form-group" id="RadiaLable">
                                 <label>Click yes to add SubCtegory</label>
                                 <div class="radio">
@@ -85,12 +92,10 @@
                                     </label></div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group ">
-                                <label class="control-label " for="nameCat">
-                                    Category Name
-                                </label>
-                                <input id="nameCheck" hidden name="nameCheck" type="text">
+                        
+						<div class="col-md-12 col-sm-12">
+							<div class="form-group ">
+								<input id="nameCheck" hidden name="nameCheck" type="text">
                                 <div id="catRadio" class="controls certificates_categorie">
                                     <select name="certificates_categorie" id="certificates_categorie"
                                             class="selectpicker length form-control">
@@ -101,10 +106,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <input class="form-control" placeholder="Name" id="nameCat" name="nameCat" type="text">
-                            </div>
+							</div>
                         </div>
-                        <button class="btn btn-success" id="submitCat" name="submit" type="button">Submit</button>
+						<div class="col-md-6 col-sm-6">
+							<button class="btn btn-success" id="submitCat" name="submit" type="button">Submit</button>
+						</div>
                     </form>
                 </div>
 

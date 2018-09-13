@@ -26,7 +26,7 @@ class ValidationRequest extends FormRequest
 
     public static $forgot_email = array(
         'email' => 'required|string|email|max:255',
-      );
+    );
 
     public static $pass_reset = array(
         'token' => 'required',
@@ -40,33 +40,40 @@ class ValidationRequest extends FormRequest
         'confirm_password' => 'required|same:password|min:6',
     );
 
+    public static $contct = array(
+        'name' => 'required|min:2|max:50',
+        'email' => 'required|email',
+        'subject' => 'required|min:2|max:50',
+        'body' => 'required|min:2|max:500',
+    );
+
     public static $userValid = array(
-    'first_name' => 'required|min:2|max:32',
-    'last_name' => 'required|min:2|max:32',
-    'phone' => 'required',
-    'photo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
-    'city' => 'required|min:2|max:32',
-    'state' => 'required|min:2|max:32',
-    'country' => 'required',
-    'address' => 'min:2|max:32',
-    'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
-    'about ' => 'min:2|max:500',
-    'certification_id ' => 'min:2|max:32',
-    'cv' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'dbs_cert_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'certificates_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'teaching_qual' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'teaching_cert' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'passport' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'work_permit' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'birth_certificate' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
-    'pass_start_date' => 'required',
+        'first_name' => 'required|min:2|max:32',
+        'last_name' => 'required|min:2|max:32',
+        'phone' => 'required',
+        'photo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
+        'city' => 'required|min:2|max:32',
+        'state' => 'required|min:2|max:32',
+        'country' => 'required',
+        'address' => 'min:2|max:32',
+        'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
+        'about ' => 'min:2|max:500',
+        'certification_id ' => 'min:2|max:32',
+        'cv' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'dbs_cert_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'certificates_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'teaching_qual' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'teaching_cert' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'passport' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'work_permit' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'birth_certificate' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
+        'pass_start_date' => 'required',
 //    'pass_expiry_date' => 'required',
-    'passport_no' => 'required|min:2|max:32',
-    'permit_start_date' => 'required',
-    'permit_expiry_date' => 'required',
-    'permit_no' => 'required|min:2|max:32',
-);
+        'passport_no' => 'required|min:2|max:32',
+        'permit_start_date' => 'required',
+        'permit_expiry_date' => 'required',
+        'permit_no' => 'required|min:2|max:32',
+    );
 
     public static $EmpValid = array(
         'first_name' => 'required|min:2|max:32',
@@ -107,7 +114,7 @@ class ValidationRequest extends FormRequest
     );
 
     public static $lang = array(
-      'nameLang' => 'required|min:2|max:50',
+        'nameLang' => 'required|min:2|max:50',
     );
 
     public static $cate = array(
@@ -119,7 +126,19 @@ class ValidationRequest extends FormRequest
         'rate' => 'required|regex:/^\d*(\.\d{1,2})?$/',
         'specialist' => 'required',
         'qualified_levels' => 'required',
+        'type_levels' => 'required',
      );
+
+
+    public static $about = array(
+        'title' => 'required|min:2|max:200',
+        'description' => 'required|min:2|max:10000',
+    );
+
+    public static $assignJob = array(
+        'tutor_assign' => 'required',
+        'job_id' => 'required',
+    );
 
     public function authorize()
     {

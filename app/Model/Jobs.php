@@ -25,4 +25,14 @@ class Jobs extends Model
     {
         return $this->hasOne('App\Model\QualifiedLevel','id','qualified_levels_id');
     }
+
+    public function Disciplines()
+    {
+        return $this->belongsToMany('App\Model\Disciplines','discipline_users', 'user_id', 'disciplines_id');
+    }
+
+    public function userJobs()
+    {
+        return $this->belongsToMany('App\User','user_jobs', 'job_id', 'user_id')->withPivot(['status']);
+     }
 }

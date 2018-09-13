@@ -8423,7 +8423,7 @@ body {
     color: #fff;
     display: inline-block;
 }
-.main-head .right-section ul li a {
+.main-head .right-section ul li > a {
     color: inherit;
     padding: 0.3rem 0.5rem;
     position: relative;
@@ -8433,13 +8433,13 @@ body {
 .main-head .right-section ul li span {
     margin-left: 20px;
 }
-.main-head .right-section ul li.tutor a {
+.main-head .right-section ul li.tutor > a {
     background: #609915;
 }
-.main-head .right-section ul li.employer a {
+.main-head .right-section ul li.employer > a {
     background: #7562d5;
 }
-.main-head .right-section ul li a::before {
+.main-head .right-section ul li > a::before {
     content: "";
     padding: 7px;
     position: absolute;
@@ -8449,13 +8449,19 @@ body {
     background-repeat: no-repeat;
     margin-top: 5px;
 }
-.main-head .right-section ul li.tutor a::before {
+.main-head .right-section ul li.tutor > a::before {
     background-image: url(../../../web/images/icon-2.png);
 }
-.main-head .right-section ul li.employer a::before {
+.main-head .right-section ul li.employer > a::before {
     background-image: url(../../../web/images/icon-1.png);
 }
-
+.main-head .right-section ul li .dropdown-menu {
+    padding: 0;
+    margin: 0 0 0 5px;
+    border: none;
+    border-radius: 0 0px 4px 4px;
+    overflow: hidden;
+}
 
 
 #home-banner {
@@ -8475,8 +8481,6 @@ body {
 }
 #home-banner .form-wrap form .form-group {
     width: 22%;
-    padding-right: 2px;
-    background: #fff;
 }
 #home-banner .form-wrap form .form-group select {
     width: 100%;
@@ -8492,30 +8496,13 @@ body {
     background-position: right 8px top 54%;
     box-shadow: none;
 }
-#home-banner .form-wrap form .form-group .multiselect {
-    width: 100%;
-    border: none;
-    border-radius: 0;
-    font-size: 18px;
-    color: #434343;
-    cursor: pointer;
-    box-shadow: none;
-    background: transparent;
-}
-#home-banner .form-wrap form .btn.btn-primary {
-    width: 12%;
-	line-height: 27px;
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-#home-banner .form-wrap form .btn.btn-primary {
+#home-banner .form-wrap form .btn {
     width: 12%;
     background: #dca500;
     border-color: #dca500;
     border-radius: 0;
     font-size: 18px;
-    line-height: 27px;
+    line-height: 26px;
     border: none;
 }
 #home-banner .form-wrap form {
@@ -9062,29 +9049,242 @@ body {
 #tutor-view .persnl-info .text-wrap.listing p strong {
     margin: 0 0.5rem 0px 0;
 }
-.form-wrap form .form-group .btn-group {
-    width: 100% !important;
-}
-.form-wrap form .dropdown-menu {
-    width: 400px;
-    text-align: left;
-}
 
-.form-wrap form .dropdown-menu label {
+
+
+/*****About Us****/
+
+#about-main .content-wrap h3 {
+    font: 600 25px/35px open sans;
+    margin: 0 0 5px 0;
+}
+#about-main .content-wrap ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 16px;
+    counter-reset: li;
+}
+#about-main .content-wrap p {
+    font-size: 16px;
+    margin: 0 0 10px 0;
+}
+#about-main .content-wrap li {
+    position: relative;
+    margin: 0 0 5px 2.5em;
+    padding: 4px 8px 4px 15px;
+}
+#about-main .content-wrap li::before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    top: 0px;
+    left: -35px;
+    width: 35px;
+    height: 35px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 2px solid #7562d5;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+}
+#about-main .content-wrap .img-wrap img {
     width: 100%;
-    justify-content: flex-start;
+}
+#about-main {
+    padding: 2% 0;
+}
+#part {
+    padding: 2% 0;
+    background: #f5f5f5;
+}
+#part .img-part img {
+    width: 100px;
+}
+#part .img-part .img-wrap {
+    height: 130px;
+}
+.section-heading h1 {
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    position: relative;
+    color: #224090;
+    font-size: 30px;
+    font-weight: 600;
+}
+.section-heading h1::after {
+    content: '';
+    width: 100px;
+    height: 2px;
+    background: #224090;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.section-heading p {
+    font-size: 17px;
+    display: block;
+    margin: 0 0 1.5rem 0;
 }
 
-.form-wrap form .dropdown-menu a {
+
+.pricing-page .pricing-wrap {
+    margin-bottom: 30px;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #eeeeee;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.pricing-page .pricing-wrap .pricing-head {
+    background-color: #262834;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.pricing-page {
+    padding: 3% 0;
+}
+
+.pricing-page .pricing-wrap .pricing-head p {
+    position: relative;
+    margin: 10px 0 20px;
+    color: #fff;
+}
+
+.pricing-page .pricing-wrap .pricing-head p::before {
+    bottom: -8px;
+    content: "";
+    height: 1px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    position: absolute;
+    right: 0;
+    width: 30px;
+    background: #ffffff;
+}
+
+.pricing-page .pricing-wrap .pricing-head h2.package-type {
+    color: #ffff;
+    font-weight: 600;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+}
+
+.package-icon {
+    color: #fff;
+    font-size: 60px;
+    opacity: 0.15;
+    position: absolute;
+    right: 15px;
+    top: 4px;
+}
+
+.pricing-ribbon h5 {
+    color: #fff;
+    left: -60px;
+    line-height: 40px;
+    margin: 0;
+    position: absolute;
+    text-transform: uppercase;
+    top: 15px;
+    transform: rotate(-45deg);
+    width: 190px;
+    background: #E66D00;
+    font-size: 0.85rem;
+}
+
+.pricing-page .pricing-wrap .price-wrap  h1.price {
+    color: #E66D00 !important;
+    padding-top: 15px !important;
+    margin: 0;
+    font-weight: 500;
+    font-size: 3.4rem;
+}
+
+.pricing-page .pricing-wrap {}
+
+.pricing-page .pricing-wrap .price-wrap span.currency {
+    vertical-align: super;
+    font-size: 26px !important;
+    font-weight: 500;
+}
+
+.pricing-page .pricing-wrap .price-wrap span.deci {
+    color: #d3d3d3 !important;
+    font-size: 25px;
+}
+
+.pricing-page .pricing-wrap .price-wrap  h5.per {
+    color: #e66d00;
+    font-size: 1rem;
+}
+.pricing-page .pricing-wrap ul.table-list {
+    list-style: outside none none;
+    padding: 0;
+}
+
+.pricing-page .pricing-wrap ul.table-list li {
+    border-bottom: 0;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 10px 0;
+}
+
+.pricing-page .pricing-wrap ul.table-list li:nth-child(2n+1) {
+    background: #f8f8f8 none repeat scroll 0 0;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.pricing-page .pricing-wrap a.btn {
+    padding: 8px 0px;
+    border: 1px solid #2b2b2b;
+    color: #2b2b2b;
     display: inline-block;
-    width: 100%;
-    color: #868686;
-    font-size: 15px;
+    border-radius: 5px;
+    width: 140px;
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+    transition: .3s;
 }
-.form-wrap form .dropdown-menu a input {
-    margin: 0 7px 0px 0;
+.pricing-page .pricing-wrap:hover a.btn {
+    background: #2b2b2b;
+    color: #fff;
 }
 
+
+
+/***FAQ**/
+#faq-main {
+    padding: 3% 0;
+}
+#faq-main .accordion .card-header {
+    margin-top: 10px;
+    border: none;
+    background: #7562d51c;
+    border-radius: 0;
+}
+
+#faq-main .accordion .card {
+    border: none;
+}
+#faq-main .accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+}
+#faq-main .accordion .card-header.collapsed:after {
+    content: "\f067";
+}
 /**
  * All v1.1.0
  * Copyright 2013-2018 Gurinder Singh

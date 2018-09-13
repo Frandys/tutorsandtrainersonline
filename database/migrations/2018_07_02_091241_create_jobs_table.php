@@ -27,6 +27,8 @@ class CreateJobsTable extends Migration
             $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('qualified_levels_id')->unsigned();
             $table->foreign('qualified_levels_id')->references('id')->on('qualified_levels')->onDelete('cascade');
+            $table->integer('sub_disciplines_id')->unsigned();
+            $table->foreign('sub_disciplines_id')->references('id')->on('disciplines')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -69,4 +69,18 @@ class UserController extends Controller
 
 
     }
+
+    public function contactUs(Request $request)
+    {
+        $data = $request->input();
+        $validation = \Validator::make($request->all(), ValidationRequest::$contct);
+        if ($validation->fails()) {
+            $errors = $validation->messages();
+            return Redirect::back()->with('errors', $errors);
+        }
+        \Mail::to('gurinder.singh@triusmail.com')->send(new \App\Mail\ContactUs($data));
+        Session::flash('success', Config::get('message.options.SUCCESS'));
+        return Redirect::back();
+    }
+
 }

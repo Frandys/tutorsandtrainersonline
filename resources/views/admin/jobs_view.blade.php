@@ -13,10 +13,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Title</th>
-                            <th>Tutor Name</th>
-                            <th>Employer Name</th>
-                            {{--<th>Status</th>--}}
-                           <th>Created At</th>
+                             <th>Employer Name</th>
+                            <th>Created At</th>
                            <th>Actions</th>
                         </tr>
                         </thead>
@@ -36,8 +34,7 @@
                     "columns": [
                         { data: 'DT_Row_Index', name: 'DT_Row_Index' },
                         {data: 'title', name: 'title'},
-                        {data: 'tutor.first_name', name: 'tutor.first_name'},
-                        {data: 'employer.first_name', name: 'employer.first_name'},
+                         {data: 'employer.first_name', name: 'employer.first_name'},
                         {data: 'created_at', name: 'created_at'},
                        {data: 'actions', name: 'actions', orderable: false, searchable: false}
 

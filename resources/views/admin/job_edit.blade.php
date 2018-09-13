@@ -4,6 +4,7 @@
 
     <div class="row">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <h1>Socio Professionista</h1>
@@ -54,20 +55,33 @@
                                 </div>
 
                             </div>
+
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
-                                    <label class="control-label" for="rate">
-                                        Rate
+                                    <label class="control-label" for="type">
+                                        Types
                                     </label>
-                                    <input class="form-control" id="rate" value="{{$jobs->rate}}" name="rate"
-                                           type="text"/>
-                                    @if ($errors->has('rate'))
+                                    <select class="form-control" name="type_levels">
+
+                                        @foreach($disciplines as  $discipline)
+                                            @if(isset($discipline->childrenDisciplines['0']))
+                                                <optgroup label="{{$discipline->name}}"
+                                                          data-max-options="1">
+                                                    @foreach($discipline->childrenDisciplines as  $disciplineChild)
+                                                        <option value="{{$disciplineChild->id}}" {{ $disciplineChild->id == $jobs->sub_disciplines_id ? 'selected="selected"' : '' }}>{{$disciplineChild->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('qualified_levels'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('rate') }}</strong>
+                                        <strong>{{ $errors->first('qualified_levels') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
+
+
                         </div>
 
 
@@ -78,7 +92,6 @@
                                         Specialist
                                     </label>
                                     <select class="form-control" name="specialist">
-                                        <option value="">Specialist</option>
                                         @foreach($categories as  $categorieItem)
                                             @if(isset($categorieItem->children['0']))
                                                 <optgroup label="{{$categorieItem->name}}"
@@ -103,7 +116,7 @@
                                         Qualified Levels
                                     </label>
                                     <select class="form-control" name="qualified_levels">
-                                        <option value="">Level</option>
+
                                         @foreach($levels as  $level)
                                             @if(isset($level->childrenLevels['0']))
                                                 <optgroup label="{{$level->level}}"
@@ -130,8 +143,10 @@
                                         Type
                                     </label>
                                     <select class="form-control" name="type">
-                                        <option value="0" {{ '0' == $jobs->type ? 'selected="selected"' : '' }}>Fixed</option>
-                                        <option value="1" {{ '1' == $jobs->type ? 'selected="selected"' : '' }}>Hourly</option>
+                                        <option value="0" {{ '0' == $jobs->type ? 'selected="selected"' : '' }}>Daily
+                                        </option>
+                                        <option value="1" {{ '1' == $jobs->type ? 'selected="selected"' : '' }}>Hourly
+                                        </option>
                                     </select>
                                     @if ($errors->has('type'))
                                         <span class="help-block">
@@ -140,32 +155,157 @@
                                     @endif
                                 </div>
                             </div>
+
                             <div class="col-md-6 col-sm-6">
+
                                 <div class="form-group ">
-                                    <label class="control-label" for="status">
-                                       Status
+                                    <label class="control-label" for="rate">
+                                        Rate
                                     </label>
-                                    <select class="form-control" name="status">
-                                        <option value="0" {{ '0' == $jobs->status ? 'selected="selected"' : '' }}>Open</option>
-                                        <option value="1" {{ '1' == $jobs->status ? 'selected="selected"' : '' }}>Done</option>
-                                        <option value="2" {{ '2' == $jobs->status ? 'selected="selected"' : '' }}>Cancel</option>
-                                    </select>
-                                    @if ($errors->has('status'))
+                                    <input class="form-control" id="rate" value="{{$jobs->rate}}" name="rate"
+                                           type="text"/>
+                                    @if ($errors->has('rate'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
+                                        <strong>{{ $errors->first('rate') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
-                            <input type="submit" value="Update">
                         </div>
+                        <div class="text-right">
+                            <input class="btn btn-primary next" type="submit" value="Update">
+                        </div>
+
+
                     </fieldset>
                     {{ Form::close() }}
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
 
 
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                    <form action="{{url('admin/assign_job')}}" method="post">
+
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <input name="job_id" required value="{{$jobs->id}}" type="hidden"/>
+                        <fieldset>
+                            <legend>Informazioni Generali</legend>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group ">
+                                        <label class="control-label" for="title">
+                                            Employer Name
+                                        </label>
+                                        <input class="form-control" disabled
+                                               value="{{$jobs->employer->first_name}} {{$jobs->employer->last_name}}"
+                                               type="text"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group ">
+                                        <label>
+                                            Select Tutor
+                                        </label>
+                                        <select class="form-control" name=" []" id="tutor_assign" multiple="">
+                                            <option value="{{$jobs->tutor->id}}" selected>{{$jobs->tutor->first_name}}
+                                                (Primary)
+                                            </option>
+                                            @foreach($usersMeta as  $usersTutor)
+                                                @if($usersTutor['user']->id != $jobs->tutor->id)
+
+                                                    <option value="{{$usersTutor['user']->id}}">{{$usersTutor['user']->first_name}}</option>
+
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('tutor_assign'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('tutor_assign') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="text-right">
+                                <input class="btn btn-primary next" type="submit" value="Assign">
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                    <form action="{{url('admin/assign_job')}}" method="post">
+
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <input name="job_id" required value="{{$jobs->id}}" type="hidden"/>
+                        <fieldset>
+                            <legend>Informazioni Generali</legend>
+
+                            <div class="row">
+
+                                <table>
+                                    <tr>
+                                        <th>Tutor</th>
+                                        <th>Status</th>
+
+                                    </tr>
+                                    @foreach($jobs['userJobs'] as $userJobs)
+                                        <tr>
+                                            <th>{{$userJobs->first_name}}</th>
+                                            @if($userJobs->pivot->status == '0')
+                                                <th>{{ 'Open'}}</th>
+                                            @elseif ($userJobs->pivot->status == '1')
+                                                <th>{{ 'Accept'}}</th>
+                                            @else
+                                                <th>{{'Reject'}}</th>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                            <style>
+                                table {
+                                    font-family: arial, sans-serif;
+                                    border-collapse: collapse;
+                                    width: 100%;
+                                }
+
+                                td, th {
+                                    border: 1px solid #dddddd;
+                                    text-align: left;
+                                    padding: 8px;
+                                }
+
+                                tr:nth-child(even) {
+                                    background-color: #dddddd;
+                                }
+                            </style>
+                            @push('scripts')
+                                <script src="{{ asset("js/admin/bootstrap-multiselect.js") }}"
+                                        type="text/javascript"></script>
+                                <link rel="stylesheet" href="{{ asset("css/bootstrap-multiselect.css") }}"/>
+
+                                <script>
+                                    $('#tutor_assign').multiselect({
+                                        nonSelectedText: 'Select Tutor',
+                                        enableFiltering: true,
+                                        enableCaseInsensitiveFiltering: true,
+                                        buttonWidth: '500px'
+                                    });
+                                </script>
+    @endpush
 @stop

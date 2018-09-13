@@ -10,6 +10,7 @@ use App\model\Jobs;
 use App\Model\Language;
 use App\Model\QualifiedLevel;
 use App\model\TutorProfile;
+use App\Model\UserJobs;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -39,24 +40,24 @@ class TutorController extends Controller
 
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
-        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'country_id' , 'about')
-            ->orWhereHas('Disciplines', function ($query) {
-                $query->whereIn('name', !empty(input::get('disciplines'))? input::get('disciplines') : []);
+        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id','uuid','country_id', 'about')
+            ->WhereHas('Disciplines', function ($query) {
+                $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
             })
-            ->orWhereHas('Country', function ($query) {
-                $query->whereIn('name', !empty(input::get('location'))? input::get('location') : []);
+            ->WhereHas('Country', function ($query) {
+                $query->whereIn('name', !empty(input::get('location')) ? input::get('location') : []);
             })
-            ->orWhereHas('Categories', function ($query) {
-                $query->whereIn('name', !empty(input::get('specialist'))? input::get('specialist') : []);
+            ->WhereHas('Categories', function ($query) {
+                $query->whereIn('name', !empty(input::get('specialist')) ? input::get('specialist') : []);
             })
-            ->orWhereHas('QualifiedLevel', function ($query) {
-                $query->whereIn('level', !empty(input::get('level'))? input::get('level') : []);
+            ->WhereHas('QualifiedLevel', function ($query) {
+                $query->whereIn('level', !empty(input::get('level')) ? input::get('level') : []);
             })
             ->paginate(10)->toArray();
-           $user = \Sentinel::check();
+        $user = \Sentinel::check();
         if (empty($user)) {
             \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
-           }
+        }
         return View('web.tutor_lists', compact('usersMeta', 'categories', 'disciplines', 'countrys', 'levels'));
     }
 
@@ -80,13 +81,17 @@ class TutorController extends Controller
     {
         try {
             $data = $request->input();
-
             $validation = \Validator::make($data, ValidationRequest::$jobPost);
             if ($validation->fails()) {
+                $errors = $validation->messages();
                 return Response::json(['errors' => $validation->errors()]);
 
             }
+            $ckeJob = Jobs::where('tutor_id', $data['tutor_id'])->where('employer_id',\Sentinel::getUser()->id)->first();
 
+            if (!empty($ckeJob)) {
+                return Response::json(['success' => '2', 'message' => Config::get('message.options.JOBSUBMTD')]);
+              }
             $jobs = new Jobs;
             $jobs->tutor_id = $data['tutor_id'];
             $jobs->employer_id = \Sentinel::getUser()->id;
@@ -95,11 +100,16 @@ class TutorController extends Controller
             $jobs->type = $data['type'];
             $jobs->categories_id = $data['specialist'];
             $jobs->qualified_levels_id = $data['qualified_levels'];
+            $jobs->sub_disciplines_id = $data['type_levels'];
             $jobs->status = '0';
             $jobs->save();
 
             if ($jobs) {
-              return Response::json(['success' => '1', 'message' => Config::get('message.options.JOB_SUBMITED')]);
+                $uj = New UserJobs;
+                $uj->user_id = $data['tutor_id'];
+                $uj->job_id = $jobs->id;
+                $uj->save();
+                return Response::json(['success' => '1', 'message' => Config::get('message.options.JOB_SUBMITED')]);
             }
 
         } catch (Exception $ex) {
@@ -121,7 +131,8 @@ class TutorController extends Controller
         $ttrLocaWill = json_decode(json_encode(Country::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->travel_location) : $array)->get()));
         $categories = Category::with('children')->get();
         $levels = QualifiedLevel::with('childrenLevels')->get();
-        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels'));
+        $disciplines = Disciplines::with('childrenDisciplines')->get();
+        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels', 'disciplines'));
     }
 
     /**

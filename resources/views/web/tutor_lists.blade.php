@@ -30,7 +30,8 @@
                     <div class="col-sm-9">
                         <div class="text-wrap">
                             <a class="tutor-name" href="{{url('tutor/').'/'.encrypt($user['user']['id'])}}">
-                                <h4 class="media-heading">{{substr($user['user']['first_name'],'0',1  ) . str_repeat("*", strlen($user['user']['first_name'])-1)}} {{substr($user['user']['last_name'],'0',1  ) . str_repeat("*", strlen($user['user']['last_name'])-1)}} </h4>
+                                {{--<h4 class="media-heading">{{substr($user['user']['first_name'],'0',1  ) . str_repeat("*", strlen($user['user']['first_name'])-1)}} {{substr($user['user']['last_name'],'0',1  ) . str_repeat("*", strlen($user['user']['last_name'])-1)}} </h4>--}}
+                            <h4>{{$user['uuid']}}</h4>
                             </a>
                             <p class="sub-str">{{str_limit($user['about'], 100).'...'}}</p>
                             <div class="skills">

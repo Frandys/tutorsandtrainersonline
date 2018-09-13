@@ -18,8 +18,9 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="text-wrap">
-                        <h2>{{$usersMeta->first_name}} {{$usersMeta->last_name}}</h2>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        {{--<h4 class="media-heading">{{substr($usersMeta->first_name,'0',1  ) . str_repeat("*", strlen($usersMeta->first_name)-1)}} {{substr($usersMeta->last_name,'0',1  ) . str_repeat("*", strlen($usersMeta->last_name)-1)}} </h4>--}}
+                        <h4>{{$usersMeta->tutor_profile->uuid}}</h4>
+                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                             Launch demo modal
                         </button>
 
@@ -30,52 +31,52 @@
             </div>
         </div>
 
-        <div class="persnl-info">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Personal Information</h3>
-                </div>
-                <div class="col-sm-8">
-                    <div class="text-wrap">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Phone:</strong><span>{{$usersMeta->phone}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Address:</strong><span>{{$usersMeta->tutor_profile->address}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>City:</strong><span>{{$usersMeta->tutor_profile->city}}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>State:</strong><span>{{$usersMeta->tutor_profile->state}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Country:</strong><span>{{$usersMeta->country['0']->name}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Zip:</strong><span>{{$usersMeta->tutor_profile->zip}}</span></p>
-                                </div>
-                            </div>
-                        </div>
+        {{--<div class="persnl-info">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4">--}}
+                    {{--<h3>Personal Information</h3>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-8">--}}
+                    {{--<div class="text-wrap">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Phone:</strong><span>{{$usersMeta->phone}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Address:</strong><span>{{$usersMeta->tutor_profile->address}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>City:</strong><span>{{$usersMeta->tutor_profile->city}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>State:</strong><span>{{$usersMeta->tutor_profile->state}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Country:</strong><span>{{$usersMeta->country['0']->name}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Zip:</strong><span>{{$usersMeta->tutor_profile->zip}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+    {{--</div>--}}
         <div class="persnl-info">
             <div class="row">
                 <div class="col-sm-4">
@@ -188,69 +189,71 @@
                 </div>
             </div>
         </div>
-        <div class="persnl-info">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Passport</h3>
-                </div>
-                <div class="col-sm-8">
-                    <div class="text-wrap">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Permit
-                                            No:</strong><span>{{$usersMeta->tutor_profile->passport_no}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Permit Start Date:</strong><span
-                                                class="">{{$usersMeta->tutor_profile->pass_start_date}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Permit Expiry
-                                            Date:</strong><span>{{$usersMeta->tutor_profile->pass_expiry_date}}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="persnl-info">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>DBS Certertificate</h3>
-                </div>
-                <div class="col-sm-8">
-                    <div class="text-wrap">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Do you have a current DBS
-                                            Cert?:</strong><span>{{$usersMeta->tutor_profile->passport_no}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>Enter the date the Certificate was issued?:</strong><span
-                                                class="">{{$usersMeta->tutor_profile->cert_issued}}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-wrap listing">
-                                    <p><strong>If entered yes, please enter your DBS certificate no:</strong><span
-                                                class="">{{$usersMeta->tutor_profile->dbs_certificate_no}}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        {{--<div class="persnl-info">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4">--}}
+                    {{--<h3>Passport</h3>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-8">--}}
+                    {{--<div class="text-wrap">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Permit--}}
+                                            {{--No:</strong><span>{{$usersMeta->tutor_profile->passport_no}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Permit Start Date:</strong><span--}}
+                                                {{--class="">{{$usersMeta->tutor_profile->pass_start_date}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Permit Expiry--}}
+                                            {{--Date:</strong><span>{{$usersMeta->tutor_profile->pass_expiry_date}}</span>--}}
+                                    {{--</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+
+        {{--<div class="persnl-info">--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4">--}}
+                    {{--<h3>DBS Certertificate</h3>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-8">--}}
+                    {{--<div class="text-wrap">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Do you have a current DBS--}}
+                                            {{--Cert?:</strong><span>{{$usersMeta->tutor_profile->passport_no}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>Enter the date the Certificate was issued?:</strong><span--}}
+                                                {{--class="">{{$usersMeta->tutor_profile->cert_issued}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="text-wrap listing">--}}
+                                    {{--<p><strong>If entered yes, please enter your DBS certificate no:</strong><span--}}
+                                                {{--class="">{{$usersMeta->tutor_profile->dbs_certificate_no}}</span></p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="persnl-info">
             <div class="row">
                 <div class="col-sm-4">
@@ -401,7 +404,7 @@
                         Type
                     </label>
                     <select class="form-control" id="type" name="type">
-                        <option value="0">Fixed</option>
+                        <option value="0">Daily</option>
                         <option value="1">Hourly</option>
                     </select>
                 </div>
@@ -458,6 +461,23 @@
                             </span>
                 </div>
 
+                <div class="form-group ">
+                    <select class="form-control" name="type_levels">
+                        <option value="">Type</option>
+                        @foreach($disciplines as  $discipline)
+                            @if(isset($discipline->childrenDisciplines['0']))
+                                <optgroup label="{{$discipline->name}}"
+                                          data-max-options="1">
+                                    @foreach($discipline->childrenDisciplines as  $disciplineChild)
+                                        <option value="{{$disciplineChild->id}}">{{$disciplineChild->name}}</option>                                                                            @endforeach
+                            @endif
+                        @endforeach
+                    </select>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span class="text-danger">
+                                <strong id="type_levels-error"></strong>
+                            </span>
+                </div>
 
                 <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success"/>
             </form>
@@ -481,6 +501,7 @@
                 $('#rate-error').html("");
                 $('#specialist-error').html("");
                 $('#qualified_levels-error').html("");
+                $('#type_levels-error').html("");
                 $.ajax({
                     type: "POST",
                     url: "{{url('/tutor')}}",
@@ -488,9 +509,10 @@
                     success: function (data) {
                          if (data.errors) {
                              $('#title-error').html(data.errors.title);
-                            $('#rate-error').html(data.errors.rate);
-                            $('#specialist-error').html(data.errors.specialist);
-                            $('#qualified_levels-error').html(data.errors.qualified_levels);
+                             $('#rate-error').html(data.errors.rate);
+                             $('#specialist-error').html(data.errors.specialist);
+                             $('#qualified_levels-error').html(data.errors.qualified_levels);
+                             $('#type_levels-error').html(data.errors.type_levels);
                         }
 
                         if(data.success) {
@@ -498,6 +520,7 @@
                               bootoast.toast({
                                 message: data.message
                             });
+
                         }
                     }
                 });
