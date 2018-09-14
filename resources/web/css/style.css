@@ -989,3 +989,16 @@ body {
     margin-left: -20px;
     margin-right: 0;
 }
+
+
+
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+    flex-direction: inherit;
+    text-align: left;
+    justify-content: flex-start !important;
+}
+.multiselect-container>li.multiselect-group label {
+    font-weight: 700;
+    align-items: start;
+    flex-direction: column;
+}

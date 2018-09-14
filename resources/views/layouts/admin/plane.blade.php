@@ -19,6 +19,24 @@
 	@yield('body')
 
 	<script src="{{ asset("assets/admin/scripts/frontend.js") }}" type="text/javascript"></script>
+	<script>
+		//Sidebar-nav
+		$(document).ready(function() {
+			$(".openbtn").click(function(){
+				
+				document.getElementById("mySidenav").style.width = "250px";
+			});
+
+			$(".closebtn").click(function(){
+			
+				document.getElementById("mySidenav").style.width = "0px";
+			});
+		});
+		
+	</script>
 	@stack('scripts')
+	
+	
+	
 </body>
 </html>

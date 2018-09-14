@@ -182,3 +182,13 @@ legend {
 .inner-cotent .form-wrap button i {
     margin: 0 0 0 5px;
 }
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+    flex-direction: inherit;
+    text-align: left;
+    justify-content: flex-start !important;
+}
+.multiselect-container>li.multiselect-group label {
+    font-weight: 700;
+    align-items: start;
+    flex-direction: column;
+}

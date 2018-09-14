@@ -25,7 +25,7 @@
                     <div class="text-wrap">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
-                        <a class="round-button" href="{{url('register/tutor')}}"><span>Login/Sign Up</span><i
+                        <a class="round-button" href="{{url('register/tutor')}}"><span>Sign Up</span><i
                                     class="fas fa-angle-double-right"></i></a>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <div class="text-wrap">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
-                        <a class="round-button" href="{{url('register/employer')}}"><span>Login/Sign Up</span><i
+                        <a class="round-button" href="{{url('register/employer')}}"><span>Sign Up</span><i
                                     class="fas fa-angle-double-right"></i></a>
                     </div>
                 </div>

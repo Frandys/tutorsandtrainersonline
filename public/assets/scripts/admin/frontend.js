@@ -15559,6 +15559,20 @@ $(function() {
 });
 
 
+//Sidebar-nav
+$(document).ready(function() {
+	$(".openbtn").click(function(){
+		
+		document.getElementById("mySidenav").style.width = "250px";
+	});
+
+	$(".closebtn").click(function(){
+	
+		document.getElementById("mySidenav").style.width = "0px";
+	});
+});
+
+
 var lineChartData = {
     labels : ["January","February","March","April","May","June","July"],
     datasets : [
