@@ -75,4 +75,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('types','Admin\TypesController');
     Route::resource('about','Admin\AboutController');
     Route::post('assign_job','Admin\JobController@assignJob');
+    Route::resource('faq','Admin\FaqController');
 });

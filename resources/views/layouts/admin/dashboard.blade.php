@@ -113,9 +113,9 @@
                         <li>
                             <a href="#"><i class="fa fa-users fa-fw"></i>Addition<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*admin/about') ? 'class="active"' : '') }}>
+                                <li {{ (Request::is('*admin/about/faq') ? 'class="active"' : '') }}>
                                     <a href="{{ url ('admin/about') }}">About View</a>
-                                    <a href="{{ url ('admin/about/faq') }}">Faq View</a>
+                                    <a href="{{ url ('admin/faq') }}">Faq View</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

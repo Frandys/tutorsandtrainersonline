@@ -14,25 +14,28 @@
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Description</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($languages as $key=>$language)
+                        @foreach($faqs as $key=>$faq)
                             <tr>
                                 <td>{{$count++}}</td>
-                                <td>{{$language->name}}</td>
-                                <td>{!! '<a   href="#" data-index="'.$language->name.'" name="tab" data-toggle="modal" data-target="#myModal" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></a>' !!}</td>
-                                <td>{!! '<a   href="#" data-index="'.$language->id.'" name="lang_del"  class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-trash"></i></a>' !!}</td>
+                                <td>{{$faq->title}}</td>
+                                <td>{{$faq->description}}</td>
+                                <td>{!! '<a   href="#" data-index="'.$faq->id.'" name="tab" data-toggle="modal" data-target="#myModal" class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-edit"></i></a>' !!}</td>
+                                <td>{!! '<a   href="#" data-index="'.$faq->id.'" name="lang_del"  class="btn btn-square btn-option3 btn-icon wdth red_btn"><i class="fa fa-trash"></i></a>' !!}</td>
                             </tr>
                         @endforeach
 
                         <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Description</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -53,15 +56,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add New Language</h4>
+                    <h4 class="modal-title">Add New Faq</h4>
                 </div>
                 <div class="modal-body">
                     <form class="row language-modal" action="" method="post">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-grup ">
-                                <input class="form-control" id="nameLang" name="nameLang" type="text" placeholder="Language Name">
+                                <input class="form-control" id="title" name="title" type="text" placeholder="Title Name">
                                 <input id="nameCheck" hidden name="nameCheck" type="text">
                             </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-grup ">
+                                <textarea class="form-control" id="description" name="description" placeholder="Description"></textarea>
+                             </div>
                         </div>
 						<div class="col-md-6 col-sm-6">
 							<button class="btn w-100" id="submitLang" name="submit" type="button">Submit</button>
@@ -97,7 +106,7 @@
 
                 $.ajax({
                     type: 'DELETE',
-                    url: "{{url('/admin/language/')}}" + '/' + $(this).data("index"),
+                    url: "{{url('/admin/faq/')}}" + '/' + $(this).data("index"),
                     data: {
                         '_token': $('input[name=_token]').val(),
                     },
@@ -118,10 +127,10 @@
 
                 if ($('#nameCheck').val() == '') {
                     var type = 'POST';
-                    var url = "{{url('/admin/language')}}"
+                    var url = "{{url('/admin/faq')}}"
                 } else {
                     var type = 'PUT';
-                    var url = "{{url('/admin/language/')}}" + '/' + $('#nameCheck').val();
+                    var url = "{{url('/admin/faq/')}}" + '/' + $('#nameCheck').val();
                 }
 
                 $.ajax({

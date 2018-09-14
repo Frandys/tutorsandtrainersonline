@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Category;
 use App\Http\Requests\ValidationRequest;
+use App\Model\Faq;
 use App\Model\Specialization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,7 +22,8 @@ class FaqController extends Controller
     {
         $faqs = \App\Model\Faq::all();
         $faqs =  json_decode(json_encode($faqs));
-        return View::make('web.FAQ',compact('faqs'));
+        $count = '1';
+        return View::make('admin.faq_view',compact('faqs','count'));
     }
 
     /**
@@ -87,6 +89,6 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Faq::destroy($id);
     }
 }
