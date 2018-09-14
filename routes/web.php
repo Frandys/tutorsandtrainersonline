@@ -31,18 +31,30 @@ Route::get('/pricing', function () {
 });
 
 Route::get('/faq', function () {
-    $about = \App\Model\About::where('slug','faq')->first();
-    return View::make('web.about_view',compact('about'));
+    $faqs = \App\Model\Faq::all();
+    $faqs =  json_decode(json_encode($faqs));
+    return View::make('web.FAQ',compact('faqs'));
 });
 
 Route::get('/', 'UserController@index');
 //Route::group(['middleware' => 'tutor' ], function () {
-Route::resource('tutor', 'TutorController');
+Route::resource('tutors', 'TutorsController');
+ Route::group(['middleware' => 'tutor' ], function () {
 Route::post('change_password', 'UserController@changePassword');
 Route::get('/change_password', function () {
     return View::make('web.change_password');
 });
-//);});
+ Route::resource('tutor', 'TutorController');
+ });
+
+
+Route::group(['middleware' => 'employer' ], function () {
+    Route::post('change_password', 'UserController@changePassword');
+    Route::get('/change_password', function () {
+        return View::make('web.change_password');
+    });
+    Route::resource('employer', 'EmployerController');
+});
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
    Route::resource('/','Admin\AdminController');

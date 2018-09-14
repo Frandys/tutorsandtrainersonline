@@ -1,24 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ValidationRequest;
 use App\Model\Category;
-use App\Model\Country;
-use App\Model\Disciplines;
-use App\model\Jobs;
-use App\Model\Language;
-use App\Model\QualifiedLevel;
-use App\model\TutorProfile;
-use App\Model\UserJobs;
-use App\User;
+use App\Http\Requests\ValidationRequest;
+use App\Model\Specialization;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
 use View;
 
-class TutorController extends Controller
+class FaqController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +19,9 @@ class TutorController extends Controller
      */
     public function index()
     {
-        return view('web/tutor_dashboard');
+        $faqs = \App\Model\Faq::all();
+        $faqs =  json_decode(json_encode($faqs));
+        return View::make('web.FAQ',compact('faqs'));
     }
 
     /**

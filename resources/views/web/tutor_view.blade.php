@@ -504,7 +504,7 @@
                 $('#type_levels-error').html("");
                 $.ajax({
                     type: "POST",
-                    url: "{{url('/tutor')}}",
+                    url: "{{url('/tutors')}}",
                     data: $('#insert_form').serialize(),
                     success: function (data) {
                          if (data.errors) {

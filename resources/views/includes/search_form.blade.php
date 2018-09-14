@@ -1,4 +1,4 @@
-<form class="form-inline" method="get" action="tutor">
+<form class="form-inline" method="get" action="tutors">
     <div class="form-group ">
 
         <select class="form-control" name="specialist[]" id="specialist" multiple="">

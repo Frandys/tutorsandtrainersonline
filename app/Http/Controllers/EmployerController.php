@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use View;
 
-class TutorController extends Controller
+class EmployerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,8 @@ class TutorController extends Controller
      */
     public function index()
     {
-        return view('web/tutor_dashboard');
+        return view('web/employer_dashboard');
+
     }
 
     /**

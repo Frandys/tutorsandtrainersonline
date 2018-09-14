@@ -90,7 +90,7 @@ class LoginController extends Controller
                 if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
                     return Redirect::to('/admin');
                 } elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
-                    return Redirect::to('/');
+                    return Redirect::to('/tutor');
                 } elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
                      return Redirect::to(\URL::to('/').Session::get('CheckRediraction'));
                 }
