@@ -37,9 +37,9 @@
 						<div class="footer-text">
 							<h3>Newsletter</h3>
 							<p>Subscribe dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
-							<form class="form-inline">
-								<input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Email Address">
-								<button type="submit" class="btn btn-primary mb-2">Subscribe</button>
+							<form class="form-inline" >
+								<input type="text" class="form-control mb-2 mr-sm-2" id="email" placeholder="Email Address">
+								<button type="button" id="invite_user_btn" class="btn btn-primary mb-2"><i style="display: none;" class="fa fa-spinner fa-spin"></i>Subscribe</button>
 							</form>
 						</div>
 					</div>
@@ -48,6 +48,34 @@
 		</div>
 	</footer>
 	<script src="{{ asset("assets/web/scripts/frontend.js") }}" type="text/javascript"></script>
+	<script>    $(function () {
+            $('#modelsbun').click(function () {
+                $('#email').val('');
+                $('.fa-spin').hide();
+                $("#Content").html('');
+            });
+            $('#invite_user_btn').click(function () {
+                $("#invite_user_btn").prop("disabled",true);
+                $('.fa-spin').show();
+                $.ajax({
+                    type: 'post',
+                    url: '{{url('subscribe')}}',
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'email': $('#email').val()
+					},
+                    success: function (data) {
+                        // $("#Content").html(data);
+                        // $("#Content").show();
+                        bootoast.toast({
+                            message: data
+                        });
+                        $("#invite_user_btn").prop("disabled",false);
+                        $('.fa-spin').hide();
+                    }
+                });
+            });
+        });</script>
 	@stack('scripts')
 </body>
 </html>

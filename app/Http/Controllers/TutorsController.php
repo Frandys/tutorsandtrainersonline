@@ -40,20 +40,38 @@ class TutorsController extends Controller
 
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
-        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id','uuid','country_id', 'about')
-            ->WhereHas('Disciplines', function ($query) {
-                $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
-            })
-            ->WhereHas('Country', function ($query) {
+        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
+      if(!empty(input::get('disciplines'))) {
+          $usersMeta = $usersMeta->WhereHas('Disciplines', function ($query) {
+              $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
+          });
+      }
+
+        if(!empty(input::get('location'))) {
+            $usersMeta = $usersMeta->WhereHas('Country', function ($query) {
                 $query->whereIn('name', !empty(input::get('location')) ? input::get('location') : []);
-            })
-            ->WhereHas('Categories', function ($query) {
+            });
+        }
+
+        if(!empty(input::get('specialist'))) {
+            $usersMeta = $usersMeta->WhereHas('Categories', function ($query) {
                 $query->whereIn('name', !empty(input::get('specialist')) ? input::get('specialist') : []);
-            })
-            ->WhereHas('QualifiedLevel', function ($query) {
+            });
+        }
+
+        if(!empty(input::get('level'))) {
+            $usersMeta = $usersMeta->WhereHas('QualifiedLevel', function ($query) {
                 $query->whereIn('level', !empty(input::get('level')) ? input::get('level') : []);
-            })
-            ->paginate(10)->toArray();
+            });
+        }
+
+        if(!empty(input::get('subcat'))) {
+            $usersMeta = $usersMeta->WhereHas('Categories', function ($query) {
+                $query->where('sub_category_id', decrypt(input::get('subcat')));
+            });
+        }
+
+        $usersMeta = $usersMeta->paginate(10)->toArray();
         $user = \Sentinel::check();
         if (empty($user)) {
             \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
@@ -87,11 +105,11 @@ class TutorsController extends Controller
                 return Response::json(['errors' => $validation->errors()]);
 
             }
-            $ckeJob = Jobs::where('tutor_id', $data['tutor_id'])->where('employer_id',\Sentinel::getUser()->id)->first();
+            $ckeJob = Jobs::where('tutor_id', $data['tutor_id'])->where('employer_id', \Sentinel::getUser()->id)->first();
 
             if (!empty($ckeJob)) {
                 return Response::json(['success' => '2', 'message' => Config::get('message.options.JOBSUBMTD')]);
-              }
+            }
             $jobs = new Jobs;
             $jobs->tutor_id = $data['tutor_id'];
             $jobs->employer_id = \Sentinel::getUser()->id;

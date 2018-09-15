@@ -22,6 +22,7 @@ Route::get('/contact-us', function () {
     return View::make('web.contact_us');
 });
 Route::post('contact_us', 'UserController@contactUs');
+Route::post('subscribe', 'UserController@subscribe');
 Route::get('/about', function () {
    $about = \App\Model\About::where('slug','about')->first();
      return View::make('web.about',compact('about'));

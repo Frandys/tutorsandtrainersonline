@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 @section('section')
 @section('pageTitle', 'Contact Us')
-@include('message.message')
 
 <section class="inner-page-title">
     <div class="container">
@@ -11,7 +10,8 @@
 
 <section class="inner-cotent">
     <div class="container">
-        
+		@include('message.message')
+
 		<div class="form-wrap">
 			<form class="form-horizontal" method="POST" action="{{ url('contact_us') }}">
 				{{ csrf_field() }}

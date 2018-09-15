@@ -81,7 +81,5 @@
 
     @yield('section')
 
-
-
 @stop
 
