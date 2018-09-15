@@ -418,14 +418,48 @@ legend {
     border-bottom: 1px solid #e7e7e7;
 }
 
-#mySidenav #side-menu li ul.nav.nav-second-level.collapse.in {
+#mySidenav #side-menu li ul.nav.nav-second-level{
     padding-left: 37px;
 }
 
 #mySidenav #side-menu li a {
     font-size: 15px;
 }
+.sidebar .sidebar-nav.navbar-collapse .panel-group {
+    margin: 0;
+}
 
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-heading {
+    padding: 0;
+    background: #fff;
+}
+
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-heading a {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    text-decoration: none;
+    color: #797979;
+}
+
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-body {
+    border: none;
+    padding: 0 0 0 25px;
+}
+
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel {
+    border: none;
+}
+
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-body li {
+    border: none;
+}
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-body li a:hover, .sidebar .sidebar-nav.navbar-collapse .panel-group .panel-body li a:focus {
+    background: transparent;
+}
+.sidebar .sidebar-nav.navbar-collapse .panel-group .panel-body li a {
+    padding: 3px 5px;
+}
 /******Responsive starts Here******/
 @media screen and (width:1280px){
 

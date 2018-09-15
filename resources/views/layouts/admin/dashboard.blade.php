@@ -104,75 +104,129 @@
 				<div class="logo-wrap">
 					<img src="https://via.placeholder.com/350x150" class="img-responsive">
 				</div>
-				<ul class="nav" id="side-menu">
-					<li {{ (Request::is('/') ? 'class="active"' : '') }}>
-						<a href="{{ url ('') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Tutor<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/tutor') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/tutor') }}">Tutors View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Employer<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/employer') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/employer') }}">Employer View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Languages<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/language') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/language') }}">Languages View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Certificates<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/certificate') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/certificate') }}">Certificates View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Qualification<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/qualification') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/qualification') }}">Qualification View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>jobs<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/job') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/job') }}">jobs View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-					<li>
-						<a href="#"><i class="fa fa-users fa-fw"></i>Addition<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li {{ (Request::is('*admin/about/faq') ? 'class="active"' : '') }}>
-								<a href="{{ url ('admin/about') }}">About View</a>
-								<a href="{{ url ('admin/faq') }}">Faq View</a>
-							</li>
-						</ul>
-						<!-- /.nav-second-level -->
-					</li>
-				</ul>
+				
+				<div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									<i class="fa fa-users fa-fw"></i>Tutor<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/tutor') }}">Tutors View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingTwo">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									<i class="fa fa-users fa-fw"></i>Employer<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse {{ (Request::is('*admin/employer') ? 'in' : '') }}" role="tabpanel" aria-labelledby="headingTwo">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/employer') }}">Employer View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading3">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
+									<i class="fa fa-users fa-fw"></i>Languages<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse3" class="panel-collapse collapse  {{ (Request::is('*admin/language') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading3">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/language') }}">Languages View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading4">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+									<i class="fa fa-users fa-fw"></i>Certificates<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse4" class="panel-collapse collapse  {{ (Request::is('*admin/certificate') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading4">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/certificate') }}">Certificates View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading5">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+									<i class="fa fa-users fa-fw"></i>Qualification<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse5" class="panel-collapse collapse  {{ (Request::is('*admin/qualification') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading5">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/qualification') }}">Qualification View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading6">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+									<i class="fa fa-users fa-fw"></i>jobs<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse6" class="panel-collapse collapse  {{ (Request::is('*admin/job') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading6">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/job') }}">jobs View</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading7">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+									<i class="fa fa-users fa-fw"></i>Addition<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse7" class="panel-collapse collapse {{ (Request::is('*admin/about/faq') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading7">
+							<div class="panel-body">
+								<ul class="nav">
+									<li>
+										<a href="{{ url ('admin/about') }}">About View</a>
+									</li>
+									<li>
+										<a href="{{ url ('admin/faq') }}">Faq View</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+
 			</div>
 			<!-- /.sidebar-collapse -->
 		</div>
