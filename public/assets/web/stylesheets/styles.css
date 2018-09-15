@@ -8672,13 +8672,17 @@ body {
     font-size: 17px;
 }
 #book .book-list .text-wrap {
-    display: inline-block;
+    display: inline-flex;
     width: 100%;
-    
     padding: 20px;
     color: #fff;
-    background-size: cover;
+    background-size: cover !important;
     margin: 0 0 2rem 0;
+    min-height: 170px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 #book .book-list .health .text-wrap {
     background: #138144 url(../../../web/images/bg1.png) no-repeat scroll center center;
@@ -9337,6 +9341,8 @@ body {
 .form-wrap form .dropdown-menu {
     width: 400px;
     text-align: left;
+	top: 40px !important;
+    transform: translate3d(0,0,0) !important;
 }
 .multiselect-container>li {
     padding: 0;
