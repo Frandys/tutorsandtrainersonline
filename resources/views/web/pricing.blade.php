@@ -13,11 +13,11 @@
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam a libero non porttitor. Maecenas sit amet libero id est dignissim ornare. Integer sagittis, elit ut rhoncus lacinia, enim diam semper dolor</p>
 		</div>
 		<div class="row listing-wrap">
-			<div class="col-md-4">
+			<div class="col-lg-4">
 				<div class="pricing-wrap">
 					<div class="pricing-head">
 						<p class="">BASIC</p>
-						<h2 class="package-type">Perfect if this is your first time!</h2>
+						<h2 class="package-type">first timer!</h2>
 						<div class="package-icon"><i class="fa fa-database"></i></div>
 						<div class="pricing-ribbon">
 							<h5>featured</h5>
@@ -42,7 +42,7 @@
 					<a class="btn" href="{{url('register/employer/').'/'.encrypt('1')}}">Order Now!</a>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-lg-4">
 				<div class="pricing-wrap">
 					<div class="pricing-head">
 						<p class="">Starting At</p>
@@ -68,11 +68,11 @@
 					<a class="btn" href="{{url('register/employer/').'/'.encrypt('2')}}">Order Now!</a>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-lg-4">
 				<div class="pricing-wrap">
 					<div class="pricing-head">
 						<p class="">PRO</p>
-						<h2 class="package-type">Perfect for Frequent use</h2>
+						<h2 class="package-type">Frequent user</h2>
 						<div class="package-icon"><i class="fa fa-cubes"></i></div>
 						<div class="pricing-ribbon">
 							<h5>POPULAR</h5>

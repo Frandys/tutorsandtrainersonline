@@ -15,10 +15,10 @@
         <div class="row no-gutters">
             <div class="col-md-6 tutors">
                 <div class="row heading">
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 col-8">
                         <h3>For Tutor</h3>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-4">
                         <img src="web/images/icon-3.png" class="img-fluid">
                     </div>
                 </div>
@@ -31,10 +31,10 @@
             </div>
             <div class="col-md-6 employees">
                 <div class="row heading">
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 col-8">
                         <h3>For Employer</h3>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-4">
                         <img src="web/images/icon-3.png" class="img-fluid">
                     </div>
                 </div>

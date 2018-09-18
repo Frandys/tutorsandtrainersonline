@@ -34,10 +34,16 @@ body {
     font-weight: 600;
     color: #fff !important;
     padding: 0.5rem .8rem;
+    transition: .3s;
+    margin: 0 0 0 5px;
+	border-radius: 4px;
+}
+.main-head .navbar-nav li.nav-item.active a.nav-link, .main-head .navbar-nav li.nav-item:hover a.nav-link {
+    background: #472dcf;
 }
 .main-head .right-section ul {
     padding: 0;
-    margin: 0;
+    margin: 6px 0 0 0;
     list-style-type: none;
     display: inline-block;
 }
@@ -51,10 +57,10 @@ body {
 }
 .main-head .right-section ul li > a {
     color: inherit;
-    padding: 0.3rem 0.5rem;
+    padding: 0.4rem 0.5rem;
     position: relative;
     display: inline-block;
-    margin: 0 0 0 5px;
+    margin: 0px 0 0 5px;
 }
 .main-head .right-section ul li span {
     margin-left: 20px;
@@ -150,6 +156,9 @@ body {
     border: none;
     box-shadow: none;
 }
+#home-banner .form-wrap form .btn.btn-primary:hover {
+    background: #472dcf;
+}
 #home-banner .form-wrap form {
     margin: 0 0 .5rem 0;
 }
@@ -218,6 +227,11 @@ body {
     color: #fff;
     border-radius: 28px;
     text-decoration: none;
+    transition: .3s;
+}
+#tutor-area .text-wrap a.round-button:hover {
+    background: #472dcf;
+    border-color: #472dcf;
 }
 #tutor-area .text-wrap a.round-button i {
     margin: 0 0 0 5px;
@@ -258,6 +272,13 @@ body {
     border-radius: 5px;
     width: 140px;
     text-align: center;
+    transition: .3s;
+    text-decoration: none;
+}
+#about .text-wrap .semi-round:hover {
+    background: #472dcf;
+    color: #fff;
+    border-color: #472dcf;
 }
 #about .text-wrap .semi-round i {
     margin: 0 0 0 5px;
@@ -540,8 +561,14 @@ body {
     border: none;
     background: #e7a10e;
     color: #101010;
+    box-shadow: none;
+    outline: none;
+    transition: .3s;
 }
-
+#main-footer .footer-text .btn:hover {
+    background: #472dcf;
+    color: #fff;
+}
  section.inner-page-title {
     padding: 9% 0 4% 0;
     background: #101010 url(../../../web/images/count.jpg) no-repeat scroll center center;
@@ -964,6 +991,13 @@ body {
     text-align: center;
     background: transparent !important;
     box-shadow: none !important;
+    cursor: pointer;
+    transition: .3s;
+}
+.inner-cotent .form-wrap button.btn:hover {
+    background: #472dcf !important;
+    color: #fff !important;
+    border-color: #472dcf !important;
 }
 .inner-cotent .form-wrap button i {
     margin: 0 0 0 5px;
