@@ -78,26 +78,26 @@ class ValidationRequest extends FormRequest
     public static $EmpValid = array(
         'first_name' => 'required|min:2|max:32',
         'last_name' => 'required|min:2|max:32',
-        'company_name' => 'required|min:2|max:32',
+        'company_name' => 'required|min:2|max:100',
         'company_address' => 'required|min:2|max:300',
         'contact_tel' => 'required',
         'head_office_address' => 'required|min:2|max:300',
-        'authorised_user' => 'required|min:2|max:32',
-        'authorised_user_second' => 'required|min:2|max:32',
+        'authorised_user' => 'required|min:2|max:100',
+        'authorised_user_second' => 'required|min:2|max:100',
         'contact_person' => 'required|min:2|max:32',
         'head_office_contact_person' => 'required|min:2|max:300',
-        'contact_person_second' => 'required|min:2|max:32',
+        'contact_person_second' => 'required|min:2|max:100',
         'head_office_contact_person_second' => 'required|min:2|max:300',
         'dept' => 'min:2|max:300',
         'dept_second' => 'min:2|max:300',
         'contact_no' => 'required',
         'contact_no_second' => 'required',
-        'email' => 'required|email|min:2|max:32',
-        'email_second' => 'required|email|min:2|max:32',
+        'email' => 'required|email|min:2|max:100',
+        'email_second' => 'required|email|min:2|max:100',
         'phone' => 'required',
         'company_logo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
-        'city' => 'required|min:2|max:32',
-        'state' => 'required|min:2|max:32',
+        'city' => 'required|min:2|max:100',
+        'state' => 'required|min:2|max:100',
         'country' => 'required',
         'address' => 'min:2|max:500',
         'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
@@ -105,11 +105,11 @@ class ValidationRequest extends FormRequest
         'company_reg_no' => 'required|min:2|max:50',
         'contact_no' => 'required',
         'photo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
-        'report_name' => 'min:2|max:32',
-        'report_department' => 'min:2|max:32',
+        'report_name' => 'min:2|max:100',
+        'report_department' => 'min:2|max:100',
         'dept' => 'min:2|max:32',
-        'additional_information' => 'min:2|max:32',
-        'additional_details' => 'min:2|max:32',
+        'additional_information' => 'min:2|max:100',
+        'additional_details' => 'min:2|max:255',
 
     );
 
@@ -131,8 +131,9 @@ class ValidationRequest extends FormRequest
 
 
     public static $about = array(
-        'title' => 'required|min:2|max:200',
-        'description' => 'required|min:2|max:10000',
+        'title' => 'required|min:2|max:255',
+        'shot' => 'required|min:2|max:255',
+        'description' => 'required|min:2',
     );
 
     public static $assignJob = array(

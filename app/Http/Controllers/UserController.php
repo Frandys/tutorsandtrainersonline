@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\About;
 use App\Model\Activations;
 use App\Model\Category;
 use App\Model\Country;
@@ -24,7 +25,8 @@ class UserController extends Controller
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::all();
         $countrys = Country::all();
-        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels'));
+        $about = About::select('id','shot')->first();
+        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels','about'));
     }
 
 

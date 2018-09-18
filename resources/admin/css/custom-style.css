@@ -92,16 +92,17 @@ legend {
     font-family: fontawesome;
     margin: 0 5px 0 0;
   }
-  #side-menu li a {
-      color: #fff;
-      background: transparent;
-      outline: none;
-	      text-transform: capitalize;
-  }
-  .navbar-default.sidebar {
-    background: #007bff;
-    min-height: calc(100vh - 50px);
-  }
+#side-menu li a {
+    color: #797979;
+    background: transparent;
+    outline: none;
+    text-transform: capitalize;
+}
+.navbar-default.sidebar {
+    background: #ffffff;
+    min-height: calc(100vh - 0px);
+    margin: 0;
+}
   .navbar-default.sidebar ul {
     background: transparent;
   }
@@ -212,9 +213,7 @@ legend {
     box-shadow: 0 0px 12px rgba(0, 123, 255,.14);
     background: #fff;
 }
-#wrapper {
-    background: #007bff;
-}
+
 .recordsetWork .form-group .controls label.error {
     position: absolute;
     font-size: 12px;
@@ -300,3 +299,166 @@ legend {
 .content-part .btn {
     border-color: #007bff;
 }
+.navbar-default.sidebar .logo-wrap {
+    padding: 20px;
+    border-bottom: 1px solid #e7e7e7;
+}
+#page-wrapper {
+    position: inherit;
+    margin: 0 0 0 250px;
+    padding: 30px;
+    border-left: 1px solid #e7e7e7;
+    background: #007aff;
+    background: -webkit-linear-gradient(to bottom, #007aff, #FFF);
+    background: linear-gradient(to bottom, #007aff, #FFF);
+}
+#page-wrapper .content-part {
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 41px rgba(0,0,0,.15);
+	    display: inline-block;
+    width: 100%;
+}
+#page-wrapper .page-heading-wrap {
+    border-bottom: 1px solid #fff;
+    margin: 0 0 2rem 0;
+}
+
+#page-wrapper .page-heading-wrap h2.dashboard-header {
+    margin: 0 0 1rem 0;
+    color: #fff;
+}
+#page-wrapper .page-heading-wrap .dropdown {
+    display: inline-block;
+}
+#page-wrapper .page-heading-wrap a.dropdown-toggle {
+    padding: 10px;
+    background: #fff;
+    color: #444444;
+    text-decoration: none;
+    display: inline-block;
+}
+#page-wrapper .page-heading-wrap .dropdown ul.dropdown-menu {
+    right: 0;
+    left: unset;
+}
+#side-menu li.active a {
+    color: #037cff;
+}
+/**sidebar-nav**/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+    box-shadow: 0 0px 20px rgba(0,0,0,.22);
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    font-size: 36px;
+    margin-left: 0;
+    padding: 0;
+    height: 30px;
+    line-height: 35px;
+}
+.dashboard-page span.openbtn {
+    font-size: 30px;
+    cursor: pointer;
+    padding: 0 0 0 10px;
+    margin: 2rem 0 0 0;
+}
+.dashboard-page  .logo-wrap-side {
+    padding: 0 15px 0 0;
+}
+.dashboard-page .logo-wrap-side img {
+    width: 100px;
+}
+.dashboard-page .side-nav-menu {
+    padding: 10px 0;
+}
+.dashboard-page .menu-wrap .nav .nav-item .submenu {
+    padding: 0 0 0 3.8rem;
+    font-size: 12px;
+    font-weight: 500;
+}
+.dashboard-page .menu-wrap .nav .nav-item .submenu a {
+    display: inline-block;
+    width: 100%;
+    color: #6d6a6a;
+	transition:.3s;
+}
+.dashboard-page .menu-wrap .nav .nav-item .submenu a:hover,.dashboard-page .menu-wrap .nav .nav-item .submenu a.active{
+	color: #00b6ad;
+}
+.d-sm-block.d-md-block.d-block.d-lg-none {
+    display: none;
+}
+#mySidenav #side-menu li {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+#mySidenav #side-menu li ul.nav.nav-second-level.collapse.in {
+    padding-left: 37px;
+}
+
+#mySidenav #side-menu li a {
+    font-size: 15px;
+}
+
+/******Responsive starts Here******/
+@media screen and (width:1280px){
+
+}
+
+
+@media screen and (width:1024px){
+
+}
+
+@media screen and (max-width:992px){
+
+
+}
+@media screen and (max-width:767px){
+#page-wrapper {
+   margin: 0 0 0 0px;
+}
+.d-sm-block.d-md-block.d-block.d-lg-none {
+    display: block;
+}
+}
+/*********Small***************/
+/*********Mobiles*************/
+/*********Starts**************/
+/*********Here****************/
+@media screen and (max-width:576px){
+
+
+}
+
+@media screen and (max-width:375px){
+
+
+}
+/******Responsive ends Here******/

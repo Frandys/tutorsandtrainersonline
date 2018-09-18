@@ -86,7 +86,7 @@ class RegisterController extends Controller
                 $role->users()->attach($user);
                 if ($data["type"] == 'tutor') {
                     $type = new \App\Model\TutorProfile;
-                    $type->uuid =   str_random(15);
+                    $type->uuid = mt_rand();
                 } else {
                     $type = new \App\Model\EmployerProfile;
                 }

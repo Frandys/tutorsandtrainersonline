@@ -6,6 +6,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="{{ asset("assets/web/stylesheets/styles.css") }}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
  	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Raleway:400,500,600,700,800" rel="stylesheet">
 </head>
 <body>
@@ -28,7 +30,7 @@
 									<a href="tel:+0123456789">+0123456789</a>
 								</li>
 								<li class="mail">
-									<a href="mailto:info@mail.com">info@mail.com</a>
+									<a href="mailto:gurinder.singh@triusmail.com">info@mail.com</a>
 								</li>
 							</ul>
 						</div>
@@ -49,6 +51,7 @@
 	</footer>
 	<script src="{{ asset("assets/web/scripts/frontend.js") }}" type="text/javascript"></script>
 	<script>    $(function () {
+
             $('#modelsbun').click(function () {
                 $('#email').val('');
                 $('.fa-spin').hide();

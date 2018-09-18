@@ -130,7 +130,7 @@ body {
     width: 100% !important;
 }
 
-#home-banner .form-wrap form .form-group .multiselect {
+.form-wrap form .form-group .multiselect {
     width: 100%;
     border: none;
     border-radius: 0;
@@ -140,14 +140,15 @@ body {
     box-shadow: none;
     background: transparent;
 }
-#home-banner .form-wrap form .btn {
+#home-banner .form-wrap form .btn.btn-primary {
     width: 12%;
     background: #dca500;
     border-color: #dca500;
     border-radius: 0;
     font-size: 18px;
-    line-height: 26px;
+    line-height: 27px;
     border: none;
+    box-shadow: none;
 }
 #home-banner .form-wrap form {
     margin: 0 0 .5rem 0;
@@ -298,13 +299,17 @@ body {
     font-size: 17px;
 }
 #book .book-list .text-wrap {
-    display: inline-block;
+    display: inline-flex;
     width: 100%;
-    
     padding: 20px;
     color: #fff;
-    background-size: cover;
+    background-size: cover !important;
     margin: 0 0 2rem 0;
+    min-height: 170px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 #book .book-list .health .text-wrap {
     background: #138144 url(../../../web/images/bg1.png) no-repeat scroll center center;
@@ -578,6 +583,8 @@ body {
 }
 .inner-page-title .form-wrap form .form-group {
     width: 22%;
+    padding-right: 2px;
+    background: #fff;
 }
 .inner-page-title .form-wrap form .form-group select {
     width: 100%;
@@ -593,14 +600,15 @@ body {
     background-position: right 8px top 54%;
     box-shadow: none;
 }
-.inner-page-title .form-wrap form .btn {
+.inner-page-title .form-wrap form .btn.btn-primary {
     width: 12%;
     background: #dca500;
     border-color: #dca500;
     border-radius: 0;
     font-size: 18px;
-    line-height: 26px;
+    line-height: 27px;
     border: none;
+    box-shadow: none !important;
 }
 .inner-page-title .form-wrap form {
     margin: 0 0 .5rem 0;
@@ -963,6 +971,8 @@ body {
 .form-wrap form .dropdown-menu {
     width: 400px;
     text-align: left;
+	top: 40px !important;
+    transform: translate3d(0,0,0) !important;
 }
 .multiselect-container>li {
     padding: 0;
@@ -988,4 +998,30 @@ body {
 .form-inline .multiselect-container li a label.checkbox input[type=checkbox], .form-inline .multiselect-container li a label.radio input[type=radio] {
     margin-left: -20px;
     margin-right: 0;
+}
+
+
+
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+    flex-direction: inherit;
+    text-align: left;
+    justify-content: flex-start !important;
+}
+.multiselect-container>li.multiselect-group label {
+    font-weight: 700;
+    align-items: start;
+    flex-direction: column;
+}
+.pricing-page .pricing-wrap ul.table-list li  p {
+    margin: 5px 0 0 0;
+}
+.pricing-page .pricing-wrap ul.table-list li a {
+    color: #7562d5;
+    text-decoration: none;
+    border-bottom: 1px solid;
+}
+
+.well.second-well, .well.first-well, .well.third-well, .well.other-well.v, .well.fourth-well {
+
+    padding: 20px;
 }

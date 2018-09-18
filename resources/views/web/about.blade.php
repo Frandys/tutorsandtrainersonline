@@ -11,5 +11,5 @@
         <?php print_r($about->description); ?>
 	</div>
 </section>
-
- @stop
+@include('includes.middle_section')
+@stop

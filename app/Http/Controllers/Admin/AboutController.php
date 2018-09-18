@@ -21,7 +21,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $about = About::where('slug','about')->first();
+        $about = About::first();
         return View('admin.about_view', compact('about'));
     }
 
@@ -50,8 +50,9 @@ class AboutController extends Controller
                 $errors = $validation->messages();
                 return Redirect::back()->with('errors', $errors);
             }
-            $about = About::where('slug',$data['slug'])->first();
+            $about = About::first();
             $about->title = $data['title'];
+            $about->shot = $data['shot'];
             $about->description = $data['description'];
             $about->save();
             Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));

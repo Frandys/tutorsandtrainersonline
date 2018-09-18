@@ -32,12 +32,16 @@
                                     @if ($user = Sentinel::getUser())
                                         @if ($user->inRole('tutor'))
                                             <a class="dropdown-item" href="{{url('tutor')}}">Dashboard</a>
+                                            <a class="dropdown-item" href="{{url('tutor').'/'.encrypt($user->id).'/edit'}}">Profile</a>
+                                            <a class="dropdown-item" href="{{url('tutor/change_password')}}">Change Password</a>
                                         @else
                                             <a class="dropdown-item" href="{{url('employer')}}">Dashboard</a>
+                                            <a class="dropdown-item" href="{{url('employer').'/'.encrypt($user->id).'/edit'}}">Profile</a>
+                                            <a class="dropdown-item" href="{{url('employer/change_password')}}">Change Password</a>
                                         @endif
                                     @endif
 
-                                    <a class="dropdown-item" href="{{url('change_password')}}">Change Password</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Logout</a>
@@ -57,7 +61,7 @@
                                 <a class="" href="#" id="navbardrop" data-toggle="dropdown"><span>For Tutor</span></a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{{url('login')}}">Login</a>
-                                    <a class="dropdown-item" href="{{url('register/tutor')}}">Register</a>
+                                    <a class="dropdown-item" href="{{url('tutor_type')}}">Register</a>
                                 </div>
                             </li>
                             <li class="employer dropdown">

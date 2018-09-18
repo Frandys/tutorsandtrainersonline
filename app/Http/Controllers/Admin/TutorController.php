@@ -114,7 +114,7 @@ namespace App\Http\Controllers\Admin {
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
             $categories = Category::with('children')->get();
             $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
-            $levels = QualifiedLevel::with('childrenLevels')->get();
+                  $levels = QualifiedLevel::with('childrenLevels')->get();
             $disciplines = Disciplines::with('childrenDisciplines')->get();
             $disciplineArray[] = '';
             if(isset($usersMeta->disciplines['0'])){
@@ -141,7 +141,6 @@ namespace App\Http\Controllers\Admin {
          */
         public function update(Request $request, $id)
         {
-
             try {
                 $data = $request->input();
                 $validation = Validator::make($request->all(), ValidationRequest::$userValid);
