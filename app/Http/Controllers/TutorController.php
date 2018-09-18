@@ -3,20 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationRequest;
+use App\Model\Activations;
 use App\Model\Category;
+use App\Model\CategoryUser;
 use App\Model\Country;
+use App\Model\Course;
+use App\Model\Discipline;
 use App\Model\Disciplines;
-use App\model\Jobs;
+use App\model\Educations;
 use App\Model\Language;
+use App\Model\Organisations;
 use App\Model\QualifiedLevel;
-use App\model\TutorProfile;
-use App\Model\UserJobs;
+use App\Model\Skill;
+use App\Model\Specialization;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use View;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Session;
 
 class TutorController extends Controller
 {
@@ -70,7 +78,20 @@ class TutorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
+        $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
+        $categories = Category::with('children')->get();
+        $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
+        $levels = QualifiedLevel::with('childrenLevels')->get();
+        $disciplines = Disciplines::with('childrenDisciplines')->get();
+        $disciplineArray[] = '';
+        if(isset($usersMeta->disciplines['0'])){
+            foreach ($usersMeta->disciplines as $discipline){
+                $disciplineArray[] = $discipline->id;
+            }
+        }
+        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray'));
+
     }
 
     /**

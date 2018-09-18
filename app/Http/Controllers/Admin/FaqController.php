@@ -44,7 +44,19 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $request->input();
+            $validation = \Validator::make($data, ValidationRequest::$about);
+            if ($validation->fails()) {
+                $errors = $validation->messages()->all();
+                return Response(array('success' => '0', 'data' => null, 'errors' => $errors['0']));
+            }
+
+            Faq::insert(['title' => $data['title'],'description' => $data['description']]);
+            return Response(array('success' => '1', 'data' => null, 'errors' => null));
+        } catch (Exception $ex) {
+            return View::make('errors.exception')->with('Message', $ex->getMessage());
+        }
     }
 
     /**
@@ -78,7 +90,19 @@ class FaqController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->input();
+            $validation = \Validator::make($data, ValidationRequest::$about);
+            if ($validation->fails()) {
+                $errors = $validation->messages()->all();
+                return Response(array('success' => '0', 'data' => null, 'errors' => $errors['0']));
+            }
+
+            Faq::where('id', $id)->update(['title' => $data['title'],'description' => $data['description']]);
+            return Response(array('success' => '1', 'data' => null, 'errors' => null));
+        } catch (Exception $ex) {
+            return View::make('errors.exception')->with('Message', $ex->getMessage());
+        }
     }
 
     /**

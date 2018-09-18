@@ -1,6 +1,7 @@
 <?php
 return [
     'options' => [
+        'REQ_MAIL' => 'This email required .',
         'INLAVID_MAIL' => 'This email not is registered .',
         'REGISTERD_MAIL' => 'This email already registered .',
         'USER_NOT_ACTIVATE' => 'User is not activate please click the link to activate user account via email .',

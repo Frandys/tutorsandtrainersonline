@@ -21,7 +21,8 @@ mix.styles([
     'resources/admin/css/sb-admin-2.css',
     'resources/admin/css/timeline.css',
     'resources/admin/css/custom-style.css',
-     'resources/admin/css/dataTables.min.css'], 'public/assets/admin/stylesheets/styles.css', './');
+     'resources/admin/css/dataTables.min.css'
+], 'public/assets/admin/stylesheets/styles.css', './');
 mix.scripts([
     'resources/admin/js/jquery.js',
     'resources/admin/js/jquery.validate.min.js',
@@ -39,21 +40,28 @@ mix.scripts([
 
 mix.styles([
     'resources/web/css/bootstrap.css',
+    'resources/admin/css/bootstrap-datetimepicker.min.css',
+    'resources/admin/css/bootstrap-multiselect.css',
     'resources/web/css/style.css',
     'resources/web/css/responsive.css',
     'resources/web/css/all.css',
     'resources/web/css/animate.css',
     'resources/web/owlcarousel/owl.carousel.min.css',
     'resources/web/css/bootoast.css',
-    'resources/admin/css/bootstrap-multiselect.css',
-    'resources/web/css/owlcarousel/owl.theme.default.min.css'], 'public/assets/web/stylesheets/styles.css', './');
+    'resources/admin/css/font-awesome.css',
+    'resources/admin/css/custom-style.css',
+     'resources/web/css/owlcarousel/owl.theme.default.min.css'], 'public/assets/web/stylesheets/styles.css', './');
 mix.scripts([
-    'resources/web/js/jquery.min.js',
+    'resources/admin/js/jquery.js',
     'resources/web/js/popper.min.js',
-    'resources/web/js/bootstrap.js',
+    'resources/admin/js/jquery.validate.min.js',
+    'resources/admin/js/additional-methods.min.js',
     'resources/web/owlcarousel/owl.carousel.js',
     'resources/web/js/numscroller-1.0.js',
+    'resources/web/js/bootstrap.js',
+    'resources/admin/js/bootstrap-datetimepicker.min.js',
+    'resources/admin/js/bootstrap-multiselect.js',
     'resources/web/js/script.js',
     'resources/web/js/bootoast.min.js',
-    'resources/admin/js/bootstrap-multiselect.js',
+    'resources/admin/js/frontend.js',
 ], 'public/assets/web/scripts/frontend.js', './');

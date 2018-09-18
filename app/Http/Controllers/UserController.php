@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\About;
 use App\Model\Activations;
 use App\Model\Category;
 use App\Model\Country;
@@ -24,7 +25,8 @@ class UserController extends Controller
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::all();
         $countrys = Country::all();
-        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels'));
+        $about = About::select('id','shot')->first();
+        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels','about'));
     }
 
 
@@ -81,6 +83,62 @@ class UserController extends Controller
         \Mail::to('gurinder.singh@triusmail.com')->send(new \App\Mail\ContactUs($data));
         Session::flash('success', Config::get('message.options.SUCCESS'));
         return Redirect::back();
+    }
+
+    public function subscribe(Request $request)
+    {
+        $data = $request->input();
+        $validation = \Validator::make($request->all(), ValidationRequest::$forgot_email);
+        if ($validation->fails()) {
+              return  Config::get('message.options.REQ_MAIL');
+        }
+        $email = $data['email'];
+
+        // MailChimp API credentials
+        $apiKey = 'b68be37a6121571f7b6881d38742ef7f-us18';
+        $listID = 'c2e6acc490';
+
+        // MailChimp API URL
+        $memberID = md5(strtolower($email));
+        $dataCenter = substr($apiKey,strpos($apiKey,'-')+1);
+        $url = 'https://' . $dataCenter . '.api.mailchimp.com/3.0/lists/' . $listID . '/members/' . $memberID;
+
+        // member information
+        $json = json_encode([
+            'email_address' => $email,
+            'status'        => 'subscribed',
+            'merge_fields'  => [
+                'FNAME'     => ''
+            ]
+        ]);
+
+        // send a HTTP POST request with curl
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $apiKey);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+        $result = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        // store the status message based on response code
+        if ($httpCode == 200) {
+            echo 'You have successfully subscribed to tutorsandtrainersonline.';
+        } else {
+            switch ($httpCode) {
+                case 214:
+                    echo    $msg = 'You are already subscribed.';
+                    break;
+                default:
+                    echo     $msg = 'Some problem occurred, please try again.';
+                    break;
+            }
+            print_r($msg);
+        }
     }
 
 }
