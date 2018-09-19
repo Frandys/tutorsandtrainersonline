@@ -41,7 +41,17 @@ Route::get('/faq', function () {
     return View::make('web.FAQ', compact('faqs'));
 });
 
+//if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
+//    return Redirect::to('/admin');
+//} elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+//    return \Redirect::to('/vendor');
+//} elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+//    return Redirect::to('/');
+//}
+
 Route::get('/', 'UserController@index');
+
+
 Route::resource('tutors', 'TutorsController');
 
 

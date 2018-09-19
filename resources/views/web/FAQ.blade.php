@@ -36,4 +36,45 @@
     </div>
 </section>
 @include('includes.middle_section')
+
+<!-- ############################################################################# -->
+<!-- Examples
+<!-- ############################################################################# -->
+<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" media="all" type="text/css" href="http://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.css" />
+
+<div class="example-container">
+    <p>Timepicker also includes some shortcut methods for ranges:</p>
+    <div>
+        <input type="text" name="range_example_2_start" id="range_example_2_start" value="" />
+        <input type="text" name="range_example_2_end" id="range_example_2_end" value="" />
+    </div>
+
+@push('scripts')
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="http://trentrichardson.com/examples/timepicker/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+
+    <script>
+        var dateToday = new Date();
+        var startDateTextBox = $('#range_example_2_start');
+        var endDateTextBox = $('#range_example_2_end');
+        $.timepicker.datetimeRange(
+            startDateTextBox,
+            endDateTextBox,
+            {
+                minInterval: (1000*60*60), // 1hr
+                minDate: dateToday,
+                dateFormat: 'dd M yy',
+                timeFormat: 'HH:mm',
+                start: {}, // start picker options
+                end: {} // end picker options
+            }
+        );
+    </script>
+
+@endpush
+
 @stop

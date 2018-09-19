@@ -22,7 +22,7 @@ class TutorsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('employer', ['except' => ['index']]);
+        $this->middleware('employer', ['except' => ['index', 'show']]);
 
     }
 
@@ -41,31 +41,31 @@ class TutorsController extends Controller
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
         }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
-      if(!empty(input::get('disciplines'))) {
-          $usersMeta = $usersMeta->WhereHas('Disciplines', function ($query) {
-              $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
-          });
-      }
+        if (!empty(input::get('disciplines'))) {
+            $usersMeta = $usersMeta->WhereHas('Disciplines', function ($query) {
+                $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
+            });
+        }
 
-        if(!empty(input::get('location'))) {
+        if (!empty(input::get('location'))) {
             $usersMeta = $usersMeta->WhereHas('Country', function ($query) {
                 $query->whereIn('name', !empty(input::get('location')) ? input::get('location') : []);
             });
         }
 
-        if(!empty(input::get('specialist'))) {
+        if (!empty(input::get('specialist'))) {
             $usersMeta = $usersMeta->WhereHas('Categories', function ($query) {
                 $query->whereIn('name', !empty(input::get('specialist')) ? input::get('specialist') : []);
             });
         }
 
-        if(!empty(input::get('level'))) {
+        if (!empty(input::get('level'))) {
             $usersMeta = $usersMeta->WhereHas('QualifiedLevel', function ($query) {
                 $query->whereIn('level', !empty(input::get('level')) ? input::get('level') : []);
             });
         }
 
-        if(!empty(input::get('subcat'))) {
+        if (!empty(input::get('subcat'))) {
             $usersMeta = $usersMeta->WhereHas('Categories', function ($query) {
                 $query->where('sub_category_id', decrypt(input::get('subcat')));
             });
@@ -143,6 +143,22 @@ class TutorsController extends Controller
      */
     public function show($id)
     {
+
+        $user = \Sentinel::check();
+        if (empty($user)) {
+            \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
+            return \Redirect::to('login/');
+        } else {
+            if (!\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+                \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
+                return \Redirect::to('login/');
+            }
+        }
+        if (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+        }else{
+            return \Redirect::to('login/');
+        }
+
         $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel'])->find(decrypt($id))));
         $array = array();
         $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
