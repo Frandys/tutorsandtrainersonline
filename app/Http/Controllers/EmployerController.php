@@ -27,7 +27,9 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        return view('web/employer_dashboard');
+        $jobs = Jobs::with('userJobsMeta')->where('employer_id', \Sentinel::getUser()->id)->get();
+        $status = '0';
+        return view('web/employer_dashboard',compact('jobs','status'));
 
     }
 
@@ -44,7 +46,7 @@ class EmployerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,7 +57,7 @@ class EmployerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -66,20 +68,20 @@ class EmployerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $usersMeta = json_decode(json_encode(User::with(['CountryEmployer', 'EmployerProfile'])->find(decrypt($id))));
-        return View('web.employer_edit',compact('usersMeta'));
+        return View('web.employer_edit', compact('usersMeta'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,7 +92,7 @@ class EmployerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

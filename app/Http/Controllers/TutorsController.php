@@ -73,9 +73,9 @@ class TutorsController extends Controller
 
         $usersMeta = $usersMeta->paginate(10)->toArray();
         $user = \Sentinel::check();
-        if (empty($user)) {
-            \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
-        }
+//        if (empty($user)) {
+//            \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
+//        }
         return View('web.tutor_lists', compact('usersMeta', 'categories', 'disciplines', 'countrys', 'levels'));
     }
 

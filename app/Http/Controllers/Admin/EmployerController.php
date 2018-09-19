@@ -119,14 +119,16 @@ class EmployerController extends Controller
             $validation = Validator::make($request->all(), ValidationRequest::$EmpValid);
             if ($validation->fails()) {
                 $errors = $validation->messages();
+
                 return Redirect::back()->with('errors', $errors);
             }
 
             $user = User::find(decrypt($id));
             $user->first_name = $data['first_name'];
             $user->last_name = $data['last_name'];
-            $user->phone = $data['phone'];
-
+            if($data['different_locations'] == '1') {
+                $user->phone = $data['phone'];
+            }
             //Check User Photo
             if (!empty($request->file())) {
                 $file = $request->file();
@@ -156,12 +158,14 @@ class EmployerController extends Controller
                  $empPro->company_vat_reg_no = $data['company_vat_reg_no'];
                  $empPro->company_reg_no = $data['company_reg_no'];
                  $empPro->different_locations = $data['different_locations'];
-                 $empPro->city = $data['city'];
-                 $empPro->state = $data['state'];
-                 $empPro->country_id = $data['country'];
-                 $empPro->address = $data['address'];
-                 $empPro->zip = $data['zip'];
-                 $empPro->address = $data['address'];
+                 if($data['different_locations'] == '1') {
+                     $empPro->city = $data['city'];
+                     $empPro->state = $data['state'];
+                     $empPro->country_id = $data['country'];
+                     $empPro->address = $data['address'];
+                     $empPro->zip = $data['zip'];
+                     $empPro->address = $data['address'];
+                 }
                  $empPro->onsite_projector = $data['onsite_projector'];
                  $empPro->wipe_board = $data['wipe_board'];
                  $empPro->flip_chart_and_stand = $data['flip_chart_and_stand'];

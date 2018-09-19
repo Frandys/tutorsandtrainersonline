@@ -41,6 +41,7 @@
 							<p>Subscribe dolor sit amet, consectetur adipiscing elit, sed do eiusmod </p>
 							<form class="form-inline" >
 								<input type="text" class="form-control mb-2 mr-sm-2" id="email" placeholder="Email Address">
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
 								<button type="button" id="invite_user_btn" class="btn btn-primary mb-2"><i style="display: none;" class="fa fa-spinner fa-spin"></i>Subscribe</button>
 							</form>
 						</div>

@@ -50,6 +50,7 @@ mix.styles([
     'resources/web/css/bootoast.css',
     'resources/admin/css/font-awesome.css',
     'resources/admin/css/custom-style.css',
+    'resources/admin/css/dataTables.min.css',
      'resources/web/css/owlcarousel/owl.theme.default.min.css'], 'public/assets/web/stylesheets/styles.css', './');
 mix.scripts([
     'resources/admin/js/jquery.js',
@@ -58,6 +59,7 @@ mix.scripts([
     'resources/admin/js/additional-methods.min.js',
     'resources/web/owlcarousel/owl.carousel.js',
     'resources/web/js/numscroller-1.0.js',
+    'resources/admin/js/dataTables.min.js',
     'resources/web/js/bootstrap.js',
     'resources/admin/js/bootstrap-datetimepicker.min.js',
     'resources/admin/js/bootstrap-multiselect.js',

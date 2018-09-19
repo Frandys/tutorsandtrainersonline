@@ -12,12 +12,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <ul class="navbar-nav justify-content-end w-100">
-                        <li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url('about')}}">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url('pricing')}}">Prices</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Courses</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url('faq')}}">Faq</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{url('contact-us')}}">Contact Us</a></li>
+                        <li class="nav-item {{ (Request::is('*/') ? 'active' : '') }}"><a class="nav-link" href="{{url('/')}}">Home</a></li>
+                        <li class="nav-item {{ (Request::is('*about') ? 'active' : '') }}"><a class="nav-link" href="{{url('about')}}">About Us</a></li>
+                        <li class="nav-item {{ (Request::is('*pricing') ? 'active' : '') }}"><a class="nav-link" href="{{url('pricing')}}">Prices</a></li>
+                        <li class="nav-item {{ (Request::is('*courses') ? 'active' : '') }}"><a class="nav-link" href="">Courses</a></li>
+                        <li class="nav-item {{ (Request::is('*faq') ? 'active' : '') }}"><a class="nav-link" href="{{url('faq')}}">Faq</a></li>
+                        <li class="nav-item {{ (Request::is('*contact-us') ? 'active' : '') }}"><a class="nav-link" href="{{url('contact-us')}}">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="right-section d-none d-lg-block">
