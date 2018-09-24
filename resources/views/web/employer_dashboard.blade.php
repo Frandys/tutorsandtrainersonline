@@ -17,8 +17,8 @@
             <tr>
                 <th>No</th>
                 <th>Title</th>
+                <th>Date Form - To</th>
                 <th>Status</th>
-
             </tr>
             </thead>
             <tbody>
@@ -26,6 +26,7 @@
                 <tr>
                     <td>{{$key+1}}</td>
                     <td><a href="tutors/{{encrypt($job->tutor_id)}}">{{$job->title}}</a></td>
+                    <td>{{$job->date}}</td>
                     @foreach($job['userjobsmeta'] as  $jobMet)
                         @if($jobMet->pivot->status == '1')
                            @php   $status = '1';  @endphp

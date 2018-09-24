@@ -18,6 +18,9 @@ Route::get('/register/{type}/{plan?}', function () {
     return View::make('auth.register');
 });
 
+Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe','uses' => 'AddMoneyController@payWithStripe'));
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'AddMoneyController@postPaymentWithStripe'));
+
 Route::get('/contact-us', function () {
     return View::make('web.contact_us');
 });
@@ -41,15 +44,24 @@ Route::get('/faq', function () {
     return View::make('web.FAQ', compact('faqs'));
 });
 
-//if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
-//    return Redirect::to('/admin');
-//} elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
-//    return \Redirect::to('/vendor');
-//} elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
-//    return Redirect::to('/');
-//}
+Route::get('/', function () {
+    $user = Sentinel::check();
+    if (!empty($user) && $user != '') {
+        if (\Sentinel::getUser()->roles()->first()->slug == 'admin') {
+            return Redirect::to('/admin');
+        } elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
+            return \Redirect::to('/dashboard');
+        } elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
+            return Redirect::to('/dashboard');
+        }
+    }else{
+        return Redirect::to('/dashboard');
+    }
+});
 
-Route::get('/', 'UserController@index');
+
+
+Route::get('/dashboard', 'UserController@index');
 
 
 Route::resource('tutors', 'TutorsController');
@@ -64,6 +76,7 @@ Route::group(['middleware' => 'tutor'], function () {
     });
     Route::resource('/tutor', 'TutorController');
     Route::match(['put', 'patch'], 'tutor_update/{tutor}', 'Admin\TutorController@update');
+    Route::post('tutor/change_job_status', 'TutorController@ChangeJobStatus');
 });
 
 

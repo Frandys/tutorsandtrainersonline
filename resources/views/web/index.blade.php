@@ -41,7 +41,7 @@
                 <div class="text-wrap">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
-                    <a class="round-button" href="{{url('register/employer')}}"><span>Sign Up</span><i
+                    <a class="round-button" href="{{url('pricing')}}"><span>Sign Up</span><i
                                 class="fas fa-angle-double-right"></i></a>
                 </div>
             </div>
@@ -88,12 +88,12 @@
             <p>Lorem ipsum dolor sit amet</p>
         </div>
         <div class="row book-list">
-            @foreach($categories as  $categorieItem)
+            @foreach($categories as  $key=>$categorieItem)
                 @if(isset($categorieItem->children['0']))
                     <div class="col-md-4 health">
                         <a href="{{url('tutors')."?subcat=".encrypt($categorieItem->id)}}"
                            class="text-wrap text-center">
-                            <img src="web/images/special-6.png" class="img-fluid">
+                            <img src="web/images/special-1.png" class="img-fluid">
                             <p>{{$categorieItem->name}}</p>
                         </a>
                     </div>

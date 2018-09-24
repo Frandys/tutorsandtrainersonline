@@ -87,11 +87,15 @@ class RegisterController extends Controller
                 if ($data["type"] == 'tutor') {
                     $type = new \App\Model\TutorProfile;
                     $type->uuid = mt_rand();
+                    $type->user_id = $user->id;
+                    $type->save();
                 } else {
                     $type = new \App\Model\EmployerProfile;
-                }
-                $type->user_id = $user->id;
-                $type->save();
+                    $type->user_id = $user->id;
+                    $type->save();
+                    return redirect()->route('addmoney.paywithstripe');
+                 }
+
                 Session::flash('error', Config::get('message.options.REGISTERED_USER'));
             } else {
                 Session::flash('error', Config::get('message.options.REGISTERED_NOT_USER'));

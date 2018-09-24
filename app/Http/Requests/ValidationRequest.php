@@ -123,7 +123,7 @@ class ValidationRequest extends FormRequest
 
     public static $jobPost = array(
         'title' => 'required|min:2|max:50',
-        'rate' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+        'date' => 'required',
         'specialist' => 'required',
         'qualified_levels' => 'required',
         'type_levels' => 'required',
@@ -140,6 +140,14 @@ class ValidationRequest extends FormRequest
         'tutor_assign' => 'required',
         'job_id' => 'required',
     );
+
+    public static $stripeValid = array(
+        'card_no' => 'required',
+        'ccExpiryMonth' => 'required',
+        'ccExpiryYear' => 'required',
+        'cvvNumber' => 'required',
+    );
+
 
     public function authorize()
     {

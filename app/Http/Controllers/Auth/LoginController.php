@@ -92,7 +92,7 @@ class LoginController extends Controller
                 } elseif (\Sentinel::getUser()->roles()->first()->slug == 'tutor') {
                     return Redirect::to('/tutor');
                 } elseif (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
-                     return Redirect::to(\URL::to('/').Session::get('CheckRediraction'));
+                     return Redirect::to(\URL::to('/').'/'.Session::get('CheckRediraction'));
                 }
             } else {
                 Session::flash('error', Config::get('message.options.LOGIN_INVALID'));

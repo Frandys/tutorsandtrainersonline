@@ -1,19 +1,5 @@
 <form class="form-inline" method="get" action="tutors">
-    <div class="form-group ">
 
-        <select class="form-control" name="specialist[]" id="specialist" multiple="">
-             @foreach($categories as  $categorieItem)
-                @if(isset($categorieItem->children['0']))
-                    <optgroup label="{{$categorieItem->name}}"
-                              data-max-options="1">
-                        @foreach($categorieItem->children as  $categorieChild)
-                            <option value="{{$categorieChild->name}}" {{ !empty(\Input::get('specialist')) ? in_array($categorieChild->name , \Input::get('specialist'))   ? 'selected="selected"' : '' : ''}} >{{$categorieChild->name}}</option>
-                        @endforeach
-                        @endif
-                        @endforeach
-                    </optgroup>
-        </select>
-    </div>
     <div class="form-group ">
         <select class="form-control" name="disciplines[]"  id="disciplines" multiple="">
 
@@ -27,6 +13,23 @@
                  @endforeach
         </select>
     </div>
+
+    <div class="form-group ">
+
+        <select class="form-control" name="specialist[]" id="specialist" multiple="">
+            @foreach($categories as  $categorieItem)
+                @if(isset($categorieItem->children['0']))
+                    <optgroup label="{{$categorieItem->name}}"
+                              data-max-options="1">
+                        @foreach($categorieItem->children as  $categorieChild)
+                            <option value="{{$categorieChild->name}}" {{ !empty(\Input::get('specialist')) ? in_array($categorieChild->name , \Input::get('specialist'))   ? 'selected="selected"' : '' : ''}} >{{$categorieChild->name}}</option>
+                        @endforeach
+                        @endif
+                        @endforeach
+                    </optgroup>
+        </select>
+    </div>
+
     <div class="form-group ">
         <select class="form-control" name="level[]"  id="level" multiple="">
              @foreach($levels as  $level)

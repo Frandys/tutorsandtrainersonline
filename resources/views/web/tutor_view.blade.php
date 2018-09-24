@@ -459,14 +459,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label " for="rate">
-                                    Rate
+                                <label class="control-label " for="date">
+                                   Date
                                 </label>
-                                <input class="form-control" id="rate"
-                                       name="rate" type="text"/>
+                                <input class="form-control" name="date" readonly="" type="text" id="date">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 <span class="text-danger">
-                                <small id="rate-error"></small>
+                                <small id="date-error"></small>
                             </span>
                             </div>
                         </div>
@@ -554,59 +553,100 @@
 
         </div>
     </div>
-    @push('scripts')
+</div>
 
-        <script>
+@push('scripts')
+
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
 
-            $('#myModal1').click( function( e ) {
-                $('#myModal').modal('toggle');
-                $("#insert_form")[0].reset();
-                $('#title-error').html("");
-                $('#rate-error').html("");
-                $('#specialist-error').html("");
-                $('#qualified_levels-error').html("");
-                $('#type_levels-error').html("");
+    <script>
+        var disabledArr = @php echo json_encode($dates); @endphp
+        // var disabledArr = ["09/21/2018","09/23/2018","12/02/2016","12/23/2016"];
+      console.log(disabledArr);
+
+        $("#date").daterangepicker({
+            minDate: new Date(),
+            timePicker: true,
+            locale: {
+                format: 'M/DD/Y hh:mm A'
+            },
+            isInvalidDate: function(arg){
+                // Prepare the date comparision
+                var thisMonth = arg._d.getMonth()+1;   // Months are 0 based
+                if (thisMonth<10){
+                    thisMonth = "0"+thisMonth; // Leading 0
+                }
+                var thisDate = arg._d.getDate();
+                if (thisDate<10){
+                    thisDate = "0"+thisDate; // Leading 0
+                }
+                var thisYear = arg._d.getYear()+1900;   // Years are 1900 based
+
+                var thisCompare = thisMonth +"/"+ thisDate +"/"+ thisYear;
+                console.log(thisCompare);
+
+                if($.inArray(thisCompare,disabledArr)!=-1){
+                    return arg._pf = {userInvalidated: true};
+                }
+            }
+        }).focus();
+
+    </script>
+
+
+    <script>
+
+
+        $('#myModal1').click(function (e) {
+            $('#myModal').modal('toggle');
+            $("#insert_form")[0].reset();
+            $('#title-error').html("");
+            $('#date-error').html("");
+            $('#specialist-error').html("");
+            $('#qualified_levels-error').html("");
+            $('#type_levels-error').html("");
+        });
+
+
+        $('#insert_form').on("submit", function (event) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-
-
-
-            $('#insert_form').on("submit", function (event) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            $('#title-error').html("");
+            $('#date-error').html("");
+            $('#specialist-error').html("");
+            $('#qualified_levels-error').html("");
+            $('#type_levels-error').html("");
+            $.ajax({
+                type: "POST",
+                url: "{{url('/tutors')}}",
+                data: $('#insert_form').serialize(),
+                success: function (data) {
+                    if (data.errors) {
+                        $('#title-error').html(data.errors.title);
+                        $('#date-error').html(data.errors.date);
+                        $('#specialist-error').html(data.errors.specialist);
+                        $('#qualified_levels-error').html(data.errors.qualified_levels);
+                        $('#type_levels-error').html(data.errors.type_levels);
                     }
-                });
-                $('#title-error').html("");
-                $('#rate-error').html("");
-                $('#specialist-error').html("");
-                $('#qualified_levels-error').html("");
-                $('#type_levels-error').html("");
-                $.ajax({
-                    type: "POST",
-                    url: "{{url('/tutors')}}",
-                    data: $('#insert_form').serialize(),
-                    success: function (data) {
-                        if (data.errors) {
-                            $('#title-error').html(data.errors.title);
-                            $('#rate-error').html(data.errors.rate);
-                            $('#specialist-error').html(data.errors.specialist);
-                            $('#qualified_levels-error').html(data.errors.qualified_levels);
-                            $('#type_levels-error').html(data.errors.type_levels);
-                        }
 
-                        if (data.success) {
-                            $('#insert_form').trigger("reset");
-                            bootoast.toast({
-                                message: data.message
-                            });
-                            $('#myModal').modal('toggle');
-                        }
+                    if (data.success) {
+                        $('#insert_form').trigger("reset");
+                        bootoast.toast({
+                            message: data.message
+                        });
+                        $('#myModal').modal('toggle');
                     }
-                });
-                event.preventDefault();
+                }
             });
-        </script>
+            event.preventDefault();
+        });
+    </script>
 
 
 @endpush

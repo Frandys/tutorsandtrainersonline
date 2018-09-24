@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function Categories()
     {
-        return $this->belongsToMany('App\Model\Category')->withPivot(['qualified_levels_id']);
+        return $this->belongsToMany('App\Model\Category')->withPivot(['qualified_levels_id','rate']);
     }
 
     public function QualifiedLevel()

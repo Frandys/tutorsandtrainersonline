@@ -101,4 +101,21 @@
 		</div>
 	</div>
 </section>@include('includes.middle_section')
+
+@push('scripts')
+
+	<script>
+
+                         bootoast.toast({
+                            message: "Go to login if you already registered",
+                             icon: 'exclamation-sign',// Glyphicons name
+                             timeout: 2000,
+                             animationDuration: 300,
+                             position: 'top-center',
+                         });
+
+	</script>
+
+
+@endpush
 @stop

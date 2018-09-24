@@ -122,6 +122,7 @@ namespace App\Http\Controllers\Admin {
                     $disciplineArray[] = $discipline->id;
                 }
             }
+
             return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray'));
 
         }
@@ -229,7 +230,7 @@ namespace App\Http\Controllers\Admin {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();
                     for ($i = 0; $i < count($data['certificates_id']); $i++) {
-                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i]);
+                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
                     }
                     $user->Categories()->attach($sync_data);
                 }
