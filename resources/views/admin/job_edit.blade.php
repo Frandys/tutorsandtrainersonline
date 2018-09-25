@@ -162,8 +162,7 @@
                                     <label class="control-label" for="rate">
                                         Rate
                                     </label>
-                                    <input class="form-control" id="rate" value="{{$jobs->rate}}" name="rate"
-                                           type="text"/>
+                                    <input class="form-control" name="date" readonly="" type="text" id="date">
                                     @if ($errors->has('rate'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('rate') }}</strong>
@@ -213,7 +212,8 @@
                                         <label>
                                             Select Tutor
                                         </label>
-                                        <select class="form-control" name=" []" id="tutor_assign" multiple="">
+                                        <select class="form-control" name="tutor_assign[]" id="tutor_assign"
+                                                multiple="">
                                             <option value="{{$jobs->tutor->id}}" selected>{{$jobs->tutor->first_name}}
                                                 (Primary)
                                             </option>
@@ -295,6 +295,53 @@
                                 }
                             </style>
                             @push('scripts')
+                                <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+                                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+                                <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+
+                                <script>
+
+                                    var disabledArr = ["09/20/2018","11/28/2016","12/02/2016","12/23/2016"];
+
+
+                                    $("#date").daterangepicker({
+                                        minDate: new Date(),
+                                        timePicker: true,
+                                        locale: {
+                                            format: 'M/DD/Y hh:mm A'
+                                        },
+                                        isInvalidDate: function(arg){
+
+
+                                            // Prepare the date comparision
+                                            var thisMonth = arg._d.getMonth()+1;   // Months are 0 based
+                                            if (thisMonth<10){
+                                                thisMonth = "0"+thisMonth; // Leading 0
+                                            }
+                                            var thisDate = arg._d.getDate();
+                                            if (thisDate<10){
+                                                thisDate = "0"+thisDate; // Leading 0
+                                            }
+                                            var thisYear = arg._d.getYear()+1900;   // Years are 1900 based
+
+                                            var thisCompare = thisMonth +"/"+ thisDate +"/"+ thisYear;
+                                            console.log(thisCompare);
+
+                                            if($.inArray(thisCompare,disabledArr)!=-1){
+
+                                                return arg._pf = {userInvalidated: true};
+                                            }
+                                        }
+
+                                    }).focus();
+
+                                    $(document).ready(function(){
+                                        $(".daterangepicker").hide();
+                                    });
+
+                                </script>
+
                                 <script src="{{ asset("js/admin/bootstrap-multiselect.js") }}"
                                         type="text/javascript"></script>
                                 <link rel="stylesheet" href="{{ asset("css/bootstrap-multiselect.css") }}"/>

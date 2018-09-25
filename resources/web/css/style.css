@@ -137,7 +137,7 @@ body {
 }
 
 .form-wrap form .form-group .multiselect {
-    width: 100%;
+    width: 100% !important;
     border: none;
     border-radius: 0;
     font-size: 18px;
@@ -1058,4 +1058,28 @@ body {
 .well.second-well, .well.first-well, .well.third-well, .well.other-well.v, .well.fourth-well {
 
     padding: 20px;
+}
+#book .book-list .health:nth-child(2) .text-wrap {
+    background: #138144 url(../../../web/images/bg2.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(3) .text-wrap {
+    background: #138144 url(../../../web/images/bg3.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(4) .text-wrap {
+    background: #138144 url(../../../web/images/bg4.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(5) .text-wrap {
+    background: #138144 url(../../../web/images/bg5.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(6) .text-wrap {
+    background: #138144 url(../../../web/images/bg6.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(7) .text-wrap {
+    background: #138144 url(../../../web/images/bg1.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(8) .text-wrap {
+    background: #138144 url(../../../web/images/bg2.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(9) .text-wrap {
+    background: #138144 url(../../../web/images/bg3.png) no-repeat scroll center center;
 }

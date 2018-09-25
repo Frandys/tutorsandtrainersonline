@@ -114,7 +114,7 @@ class TutorsController extends Controller
             $jobs->tutor_id = $data['tutor_id'];
             $jobs->employer_id = \Sentinel::getUser()->id;
             $jobs->title = $data['title'];
-            $jobs->rate = $data['rate'];
+            $jobs->date = $data['date'];
             $jobs->type = $data['type'];
             $jobs->categories_id = $data['specialist'];
             $jobs->qualified_levels_id = $data['qualified_levels'];
@@ -146,16 +146,16 @@ class TutorsController extends Controller
 
         $user = \Sentinel::check();
         if (empty($user)) {
-            \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
-            return \Redirect::to('login/');
+            \Session::put('CheckRediraction', \Request::segment('1') . '/' . \Request::segment('2'));
+            return \Redirect::to('pricing/');
         } else {
             if (!\Sentinel::getUser()->roles()->first()->slug == 'employer') {
-                \Session::put('CheckRediraction', $_SERVER['REQUEST_URI']);
+                \Session::put('CheckRediraction', '/' . \Request::segment('1') . '/' . \Request::segment('2'));
                 return \Redirect::to('login/');
             }
         }
         if (\Sentinel::getUser()->roles()->first()->slug == 'employer') {
-        }else{
+        } else {
             return \Redirect::to('login/');
         }
 
@@ -166,7 +166,27 @@ class TutorsController extends Controller
         $categories = Category::with('children')->get();
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::with('childrenDisciplines')->get();
-        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels', 'disciplines'));
+        $jobs = json_decode(json_encode(UserJobs::with('userJobs')->where('user_id', decrypt($id))->get()));
+
+        $dates = array();
+        foreach ($jobs as $job) {
+
+            if ($job->status == '1') {
+                $date = explode('-', $job->user_jobs->date);
+
+                $date_from = $date['0'];
+                $date_from = strtotime($date_from);
+
+                $date_to = $date['1'];
+                $date_to = strtotime($date_to);
+
+                for ($i = $date_from; $i <= $date_to; $i += 86400) {
+                    $dates[] = date("m/d/Y", $i);
+                }
+            }
+        }
+        //      h:i
+        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels', 'disciplines', 'dates'));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Activation;
 use App\Http\Controllers\Controller;
+use App\Model\Subscription;
 use Cartalyst\Sentinel\Sentinel;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -87,11 +88,19 @@ class RegisterController extends Controller
                 if ($data["type"] == 'tutor') {
                     $type = new \App\Model\TutorProfile;
                     $type->uuid = mt_rand();
+                    $type->user_id = $user->id;
+                    $type->save();
                 } else {
                     $type = new \App\Model\EmployerProfile;
+                    $type->user_id = $user->id;
+                    $type->save();
+                    $subs = New Subscription;
+                    $subs->plan_id = decrypt($data['planId']);
+                    $subs->user_id = $user->id;
+                    $subs->save();
+                   return Redirect::to('subscription/'.encrypt($user->id));
                 }
-                $type->user_id = $user->id;
-                $type->save();
+
                 Session::flash('error', Config::get('message.options.REGISTERED_USER'));
             } else {
                 Session::flash('error', Config::get('message.options.REGISTERED_NOT_USER'));

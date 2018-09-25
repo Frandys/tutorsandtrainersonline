@@ -515,6 +515,24 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group ">
+                                            <div id="div_certificates_rate" class="form-group certificates_rate">
+                                                <label for="certificates_{{$keyCerti}}_rate"
+                                                       class="control-label  requiredField">
+                                                    Rate<span class="asteriskField">*</span>
+                                                </label>
+
+                                                <input  type="text" name="certificates_rate[{{$keyCerti}}]"
+                                                        id="certificates_{{$keyCerti}}_rate"
+                                                        class="length form-control"
+                                                        value="{{isset($usersMeta->categories[$keyCerti]->pivot->rate) ? $usersMeta->categories[$keyCerti]->pivot->rate : ''}}">
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     @if($keyCerti > '0')
                                         <div id="parntDiv{{$keyCerti}}" class="bunPare"
                                              onchange="enableTxt(this)">
@@ -592,6 +610,24 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div id="div_organization_registration"
+                                                 class="form-group certificates_rate">
+                                                <label for="certificates_1_rate"
+                                                       class="control-label  requiredField">
+                                                    Rate<span
+                                                            class="asteriskField">*</span>
+                                                </label>
+                                                <div class="controls certificates_rate">
+                                                    <input type="text"
+                                                           name="certificates_rate[{{'2'}}]"
+                                                           id="certificates_1_rate"
+                                                           class="textinput form-control length"/>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

@@ -12,6 +12,7 @@
 					<form class="form-horizontal" method="POST" action="{{ route('register') }}">
 						{{ csrf_field() }}
 						<input type="hidden" value="{{Request::segment(2)}}" name="type">
+						<input type="hidden" value="{{Request::segment(3)}}" name="planId">
 						<div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
 							<label for="name" class="control-label">First Name</label>
 

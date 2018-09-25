@@ -16,6 +16,7 @@ use App\Model\Organisations;
 use App\Model\QualifiedLevel;
 use App\Model\Skill;
 use App\Model\Specialization;
+use App\Model\UserJobs;
 use App\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -35,8 +36,22 @@ class TutorController extends Controller
      */
     public function index()
     {
-        return view('web/tutor_dashboard');
+        $jobs = UserJobs::with('userJobs')->where('user_id', \Sentinel::getUser()->id)->get();
+
+        $status = '0';
+        return view('web/tutor_dashboard', compact('jobs', 'status'));
     }
+
+    public function ChangeJobStatus(Request $request)
+    {
+        $data = $request->input();
+        $job = UserJobs::find(decrypt($data['jobid']));
+        $job->status = $data['status'];
+        $job->save();
+        Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
+        return Redirect::back();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -51,7 +66,7 @@ class TutorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,7 +77,7 @@ class TutorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -73,32 +88,32 @@ class TutorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
+        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel', 'Disciplines'])->find(decrypt($id))));
         $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
         $categories = Category::with('children')->get();
         $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::with('childrenDisciplines')->get();
         $disciplineArray[] = '';
-        if(isset($usersMeta->disciplines['0'])){
-            foreach ($usersMeta->disciplines as $discipline){
+        if (isset($usersMeta->disciplines['0'])) {
+            foreach ($usersMeta->disciplines as $discipline) {
                 $disciplineArray[] = $discipline->id;
             }
         }
-        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray'));
+        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations', 'levels', 'disciplines', 'disciplineArray'));
 
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -109,7 +124,7 @@ class TutorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
