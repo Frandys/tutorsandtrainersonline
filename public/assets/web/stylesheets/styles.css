@@ -9264,7 +9264,7 @@ body {
 }
 
 .form-wrap form .form-group .multiselect {
-    width: 100%;
+    width: 100% !important;
     border: none;
     border-radius: 0;
     font-size: 18px;
@@ -9813,9 +9813,9 @@ body {
     width: 100%;
     overflow: hidden;
 }
-#tutors-listing .listing-wrap .list-items .img-wrap img{
-	-webkit-filter: blur(5px);
-    filter: blur(3px);
+#tutors-listing .listing-wrap .list-items .img-wrap img {
+    -webkit-filter: blur(9px);
+    filter: blur(9px);
 }
 #tutors-listing .listing-wrap .list-items .text-wrap .skills p {
     margin: 0;
@@ -10186,6 +10186,45 @@ body {
 
     padding: 20px;
 }
+#book .book-list .health:nth-child(2) .text-wrap {
+    background: #138144 url(../../../web/images/bg2.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(3) .text-wrap {
+    background: #138144 url(../../../web/images/bg3.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(4) .text-wrap {
+    background: #138144 url(../../../web/images/bg4.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(5) .text-wrap {
+    background: #138144 url(../../../web/images/bg5.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(6) .text-wrap {
+    background: #138144 url(../../../web/images/bg6.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(7) .text-wrap {
+    background: #138144 url(../../../web/images/bg7.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(8) .text-wrap {
+    background: #138144 url(../../../web/images/bg8.png) no-repeat scroll center center;
+}
+#book .book-list .health:nth-child(9) .text-wrap {
+    background: #138144 url(../../../web/images/bg9.png) no-repeat scroll center center;
+}
+#tutors-listing .listing-wrap .list-items .text-wrap .skills p span.country::after {
+    content: ",";
+}
+
+#tutors-listing .listing-wrap .list-items .text-wrap .skills p span.country:last-child::after {
+    display: none;
+}
+#tutor-view .persnl-info .img-wrap .img-fluid {
+    -webkit-filter: blur(9px);
+    filter: blur(9px);
+}
+
+#tutor-view .persnl-info .img-wrap {
+    overflow: hidden;
+}
 /**
  * All v1.1.0
  * Copyright 2013-2018 Gurinder Singh
@@ -10199,6 +10238,11 @@ body {
 @media screen and (width:1024px){
 .navbar-light .navbar-brand {
     max-width: 180px;
+}
+.main-head .navbar-nav li a.nav-link {
+        font-size: 14px;
+        padding: 0.5rem 0.5rem;
+
 }
 
 }
