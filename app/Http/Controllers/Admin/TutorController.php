@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin {
     use App\Model\Category;
     use App\Model\CategoryUser;
     use App\Model\Country;
+    use App\Model\CountryUser;
     use App\Model\Course;
     use App\Model\Discipline;
     use App\Model\Disciplines;
@@ -114,16 +115,16 @@ namespace App\Http\Controllers\Admin {
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
             $categories = Category::with('children')->get();
             $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
-                  $levels = QualifiedLevel::with('childrenLevels')->get();
+            $levels = QualifiedLevel::with('childrenLevels')->get();
             $disciplines = Disciplines::with('childrenDisciplines')->get();
+            $countries = Country::with('children')->get();
             $disciplineArray[] = '';
             if(isset($usersMeta->disciplines['0'])){
                 foreach ($usersMeta->disciplines as $discipline){
                     $disciplineArray[] = $discipline->id;
                 }
             }
-
-            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray'));
+            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray','countries'));
 
         }
 
@@ -226,6 +227,7 @@ namespace App\Http\Controllers\Admin {
                 }
 
                 $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
+
                 if ($data['certificates_id']) {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();
@@ -234,6 +236,18 @@ namespace App\Http\Controllers\Admin {
                     }
                     $user->Categories()->attach($sync_data);
                 }
+
+                if ($data['travel_location']) {
+                    CountryUser::whereUserId(decrypt($id))->delete();
+                    $sync_data = array();
+                    for ($i = 0; $i < count($data['travel_location']); $i++) {
+                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
+                    }
+                    $user->Country()->attach($sync_data);
+                }
+
+
+
 
                 if ($data['work_id']) {
                     for ($i = 0; $i < count($data['work_id']); $i++) {

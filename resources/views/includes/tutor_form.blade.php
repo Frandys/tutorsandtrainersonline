@@ -399,11 +399,18 @@
                     Please select the locations willing to travel to below...
                 </label>
 
-                <select name="travel_location[]" id="travel_location" multiple=""
-                        class="form-control">
-                    @foreach(\App\Model\Country::all() as $country)
-                        <option value="{{$country->id}}" {{in_array($country->id, ($usersMeta->tutor_profile->travel_location ? unserialize($usersMeta->tutor_profile->travel_location) : array())) ? ' selected="selected" ' : ''}}>{{$country->name}}</option>
-                    @endforeach
+
+                <select class="form-control" name="travel_location[]" id="travel_location" multiple="">
+                    @foreach($countries as  $keyCun=>$country)
+                        @if(isset($country->children['0']))
+                            <optgroup label="{{$country->name}}"
+                                      data-max-options="1">
+                                @foreach($country->children as  $categorieChild)
+                                    <option value="{{$categorieChild->id}}" {{( isset($usersMeta->country[$keyCun]) && $usersMeta->country[$keyCun]->id == $categorieChild->id) ? 'selected' : '' }} >{{$categorieChild->name}}</option>
+                                @endforeach
+                                @endif
+                                @endforeach
+                            </optgroup>
                 </select>
             </div>
         </div>

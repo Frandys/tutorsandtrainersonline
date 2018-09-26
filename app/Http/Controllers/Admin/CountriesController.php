@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Model\QualifiedLevel;
+use App\Model\Category;
 use App\Http\Requests\ValidationRequest;
+use App\Model\Country;
 use App\Model\Specialization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 use View;
 
 
-class QualifiedController extends Controller
+class CountriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +21,10 @@ class QualifiedController extends Controller
      */
     public function index()
     {
-        $categories = QualifiedLevel::with('childrenLevels')->get();
-//
+        $categories = Country::with('children')->get();
+
         $count = '1';
-        return View('admin.qualification_view', compact('categories', 'count'));
+        return View('admin.country_view', compact('categories', 'count'));
     }
 
     /**
@@ -52,14 +53,17 @@ class QualifiedController extends Controller
                 $errors = $validation->messages()->all();
                 return Response(array('success' => '0', 'data' => null, 'errors' => $errors['0']));
             }
-            $dataCat = QualifiedLevel::where('level', $data['nameCat'])->get();
+            $dataCat = Country::where('name', $data['nameCat'])->get();
 
             if (!empty(json_decode(json_encode($dataCat)))) {
                 return Response(array('success' => '0', 'data' => null, 'errors' => Config::get('message.options.NAME_EXIT')));
             }
 
-            QualifiedLevel::insert(['level' => $data['nameCat'],'sub_level_id' => $data['nameCatId']]);
-
+//            if($data['radioVal'] == '0') {
+//                Category::insert(['name' => $data['nameCat']]);
+//            }else{
+            Country::insert(['name' => $data['nameCat'],'sub_country_id' => $data['nameCatId']]);
+//            }
             return Response(array('success' => '1', 'data' => null, 'errors' => null));
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());
@@ -74,7 +78,11 @@ class QualifiedController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $categories = Category::with('children')->get();
+
+        $count = '1';
+        return View('admin.certificates_view', compact('categories', 'count'));
     }
 
     /**
@@ -85,7 +93,7 @@ class QualifiedController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -107,7 +115,7 @@ class QualifiedController extends Controller
             if ($id == $data['nameCat']) {
                 return Response(array('success' => '0', 'data' => null, 'errors' => Config::get('message.options.NAME_EXIT')));
             }
-            QualifiedLevel::with('children')->where('level', $id)->update(['level' => $data['nameCat']]);
+            Country::with('children')->where('id', $id)->update(['name' => $data['nameCat']]);
             return Response(array('success' => '1', 'data' => null, 'errors' => null));
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());
@@ -122,6 +130,7 @@ class QualifiedController extends Controller
      */
     public function destroy($id)
     {
-        QualifiedLevel::with('children')->where('id',$id)->delete();
+        Category::with('children')->where('id',$id)->delete();
+
     }
 }

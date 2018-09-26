@@ -42,12 +42,21 @@
             @endforeach
         </select>
     </div>
+
     <div class="form-group ">
-        <select class="form-control" name="location[]" id="location" multiple="">
-             @foreach($countrys as $countrys)
-                <option value="{{$countrys->name}}" {{ !empty(\Input::get('location')) ? in_array($countrys->name , \Input::get('location'))   ? 'selected="selected"' : '' : ''}}>{{$countrys->name}}</option>
-            @endforeach
-        </select>
+
+    <select class="form-control" name="location[]" id="location" multiple="">
+        @foreach($countrys as  $country)
+            @if(isset($country->children['0']))
+                <optgroup label="{{$country->name}}"
+                          data-max-options="1">
+                    @foreach($country->children as  $categorieChild)
+                        <option value="{{$categorieChild->name}}" {{ !empty(\Input::get('location')) ? in_array($categorieChild->name , \Input::get('location'))   ? 'selected="selected"' : '' : ''}}>{{$categorieChild->name}}</option>
+                    @endforeach
+                    @endif
+                    @endforeach
+                </optgroup>
+    </select>
     </div>
     <button type="submit" class="btn btn-primary "><i class="fas fa-search"></i>Find</button>
 </form>

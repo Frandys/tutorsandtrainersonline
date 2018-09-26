@@ -59,8 +59,6 @@ Route::get('/', function () {
     }
 });
 
-
-
 Route::get('/dashboard', 'UserController@index');
 
 
@@ -109,4 +107,5 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::resource('about', 'Admin\AboutController');
     Route::post('assign_job', 'Admin\JobController@assignJob');
     Route::resource('faq', 'Admin\FaqController');
+    Route::resource('countries', 'Admin\CountriesController');
 });

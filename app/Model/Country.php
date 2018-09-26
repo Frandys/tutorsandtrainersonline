@@ -15,6 +15,15 @@ class Country extends Model
         'name',
     );
 
+    public function parent()
+    {
+        return $this->belongsTo('App\Model\Country','sub_country_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Model\Country', 'sub_country_id');
+    }
 //    public function TutorProfile()
 //    {
 //        return $this->hasOne('App\Model\TutorProfile');

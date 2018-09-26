@@ -42,7 +42,8 @@ class User extends Authenticatable
 
     public function Country()
     {
-        return $this->belongsToMany('App\Model\Country', 'tutor_profiles', 'user_id', 'country_id');
+    return $this->belongsToMany('App\Model\Country', 'country_users', 'user_id', 'countries_id');
+
     }
 
     public function CountryEmployer()

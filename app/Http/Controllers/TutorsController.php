@@ -36,11 +36,12 @@ class TutorsController extends Controller
         $categories = Category::with('children')->get();
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::with('childrenDisciplines')->get();
-        $countrys = Country::all();
+        $countrys = Country::with('children')->get();
 
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
         }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
+
         if (!empty(input::get('disciplines'))) {
             $usersMeta = $usersMeta->WhereHas('Disciplines', function ($query) {
                 $query->whereIn('name', !empty(input::get('disciplines')) ? input::get('disciplines') : []);
@@ -185,7 +186,7 @@ class TutorsController extends Controller
                 }
             }
         }
-        //      h:i
+
         return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels', 'disciplines', 'dates'));
     }
 

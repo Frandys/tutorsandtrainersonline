@@ -18,5 +18,7 @@ return [
         'JOB_SUBMITED' => "Job submitted successfully",
         'SUCCESS' => "Request submitted successfully",
         'JOBSUBMTD' => "You already submit this job",
+        'SUBS' => "You have to subscribe us to use feature",
+        'SUBSEXPIRE' => "Your subscription has benn expired",
     ]
 ];

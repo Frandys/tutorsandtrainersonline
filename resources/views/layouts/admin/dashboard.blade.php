@@ -2,7 +2,7 @@
 
 @section('body')
     <div id="wrapper">
-	
+
 		<div class="container-fluid">
 		<div class="d-sm-block d-md-block d-block d-lg-none sidebar-nav">
 			<div id="mySidenav" class="sidenav">
@@ -57,6 +57,17 @@
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
+
+						<li>
+							<a href="#"><i class="fa fa-users fa-fw"></i>Countries<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li {{ (Request::is('*admin/countries') ? 'class="active"' : '') }}>
+									<a href="{{ url ('admin/countries') }}">Countries View</a>
+								</li>
+							</ul>
+							<!-- /.nav-second-level -->
+						</li>
+
 						<li>
 							<a href="#"><i class="fa fa-users fa-fw"></i>jobs<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
@@ -66,6 +77,7 @@
 							</ul>
 							<!-- /.nav-second-level -->
 						</li>
+
 						<li>
 							<a href="#"><i class="fa fa-users fa-fw"></i>Addition<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
@@ -77,16 +89,16 @@
 							<!-- /.nav-second-level -->
 						</li>
 					</ul>
-					
-					
+
+
 				</div>
-				
+
 			</div>
 			<div class="side-nav-menu row no-gutters">
 				<div class="col-xs-6">
 					<span class="openbtn" style="font-size:30px;cursor:pointer" >&#9776; </span>
 				</div>
-				
+
 				<div class="col-xs-6 text-right">
 					<div class="logo-wrap-side">
 						<img src="https://via.placeholder.com/350x150" class="img-responsive">
@@ -95,16 +107,16 @@
 			</div>
 		</div>
 		</div>
-	
-	
-	
-	
+
+
+
+
 		<div class="navbar-default sidebar hidden-xs" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<div class="logo-wrap">
 					<img src="https://via.placeholder.com/350x150" class="img-responsive">
 				</div>
-				
+
 				<div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingOne">
@@ -190,6 +202,24 @@
 						<div class="panel-heading" role="tab" id="heading6">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+									<i class="fa fa-users fa-fw"></i>Countries<span class="fa arrow"></span>
+								</a>
+							</h4>
+						</div>
+						<div id="collapse6" class="panel-collapse collapse  {{ (Request::is('*admin/countries') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading6">
+							<div class="panel-body">
+								<ul class="nav">
+									<li><a href="{{ url ('admin/countries') }}">Countries</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="heading6">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
 									<i class="fa fa-users fa-fw"></i>jobs<span class="fa arrow"></span>
 								</a>
 							</h4>
@@ -223,8 +253,8 @@
 							</div>
 						</div>
 					</div>
-					
-					
+
+
 				</div>
 
 			</div>
@@ -257,10 +287,10 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
-            
+
             <div class="content-part ">
                 @yield('section')
 
