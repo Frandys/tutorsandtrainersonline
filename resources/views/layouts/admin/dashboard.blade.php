@@ -199,14 +199,14 @@
 						</div>
 					</div>
 					<div class="panel panel-default">
-						<div class="panel-heading" role="tab" id="heading6">
+						<div class="panel-heading" role="tab" id="heading61">
 							<h4 class="panel-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseheading61" aria-expanded="false" aria-controls="collapseheading61">
 									<i class="fa fa-users fa-fw"></i>Countries<span class="fa arrow"></span>
 								</a>
 							</h4>
 						</div>
-						<div id="collapse6" class="panel-collapse collapse  {{ (Request::is('*admin/countries') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading6">
+						<div id="collapseheading61" class="panel-collapse collapse  {{ (Request::is('*admin/countries') ? 'in' : '') }}" role="tabpanel" aria-labelledby="heading61">
 							<div class="panel-body">
 								<ul class="nav">
 									<li><a href="{{ url ('admin/countries') }}">Countries</a></li>

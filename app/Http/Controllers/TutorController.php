@@ -93,19 +93,20 @@ class TutorController extends Controller
      */
     public function edit($id)
     {
-        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel', 'Disciplines'])->find(decrypt($id))));
+        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
         $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
         $categories = Category::with('children')->get();
         $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::with('childrenDisciplines')->get();
-        $disciplineArray[] = '';
-        if (isset($usersMeta->disciplines['0'])) {
-            foreach ($usersMeta->disciplines as $discipline) {
-                $disciplineArray[] = $discipline->id;
+        $countries = Country::with('children')->get();
+        $countryUser[] = '';
+        if(isset($usersMeta->country['0'])){
+            foreach ($usersMeta->country as $countryUse){
+                $countryUser[] = $countryUse->id;
             }
         }
-        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations', 'levels', 'disciplines', 'disciplineArray'));
+        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','countries','countryUser'));
 
     }
 

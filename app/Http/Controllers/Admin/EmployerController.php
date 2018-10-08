@@ -89,7 +89,6 @@ class EmployerController extends Controller
     {
         $usersMeta = json_decode(json_encode(User::with(['CountryEmployer', 'EmployerProfile'])->find(decrypt($id))));
         return View('admin.employer_view',compact('usersMeta'));
-
     }
 
     /**
@@ -104,6 +103,8 @@ class EmployerController extends Controller
         return View('admin.employer_edit',compact('usersMeta'));
 
     }
+
+
 
     /**
      * Update the specified resource in storage.

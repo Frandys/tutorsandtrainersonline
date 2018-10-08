@@ -7,7 +7,6 @@
 
 <section id="tutor-view">
 
-
     <div class="container">
         <div class="persnl-info">
             <div class="row">
@@ -460,7 +459,7 @@
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="control-label " for="date">
-                                   Date
+                                    Date
                                 </label>
                                 <input class="form-control" name="date" readonly="" type="text" id="date">
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -469,78 +468,82 @@
                             </span>
                             </div>
                         </div>
+
+
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label " for="rate">
-                                    Specialist
+                                <label class="control-label " for="type_levels">
+                                    Type
                                 </label>
-                                <select class="form-control" name="specialist">
-                                    <option value="">Specialist</option>
-                                    @foreach($categories as  $categorieItem)
-                                        @if(isset($categorieItem->children['0']))
-                                            <optgroup label="{{$categorieItem->name}}"
-                                                      data-max-options="1">
-                                                @foreach($categorieItem->children as  $categorieChild)
-                                                    <option value="{{$categorieChild->id}}">{{$categorieChild->name}}</option>
-                                                @endforeach
-                                                @endif
-                                                @endforeach
-                                            </optgroup>
+                                <select class="form-control" id="type_levels" onchange="fetch_select(this.value);"
+                                        name="type_levels">
+                                    <option value="">Type</option>
+                                    @foreach($disciplines as  $discipline)
+                                        <option value="{{$discipline->disciplines->id}}">{{$discipline->disciplines->name}}</option>
+
+                                    @endforeach
                                 </select>
+
+
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 <span class="text-danger">
-                                <small id="specialist-error"></small>
+                                <small id="type_levels-error"></small>
                             </span>
                             </div>
                         </div>
+
                     </div>
 
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label " for="rate">
-                                    Qualified levels
+                                <label class="control-label " for="specialist">
+                                    Specialist
                                 </label>
-                                <select class="form-control" name="qualified_levels">
-                                    <option value="">Level</option>
-                                    @foreach($levels as  $level)
-                                        @if(isset($level->childrenLevels['0']))
-                                            <optgroup label="{{$level->level}}"
-                                                      data-max-options="1">
-                                                @foreach($level->childrenLevels as  $levelChild)
-                                                    <option value="{{$levelChild->id}}">{{$levelChild->level}}</option>                                                                            @endforeach
-                                        @endif
-                                    @endforeach
+
+                                <select class="form-control" id="specialist" name="specialist">
+                                    <option value="">Specialist</option>
+
                                 </select>
+
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 <span class="text-danger">
-                                <small id="qualified_levels-error"></small>
+                                <small id="specialist-error"></small>
                             </span>
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label class="control-label " for="rate">
-                                    Type
+                                <label class="control-label " for="levels">
+                                    Levels
                                 </label>
-                                <select class="form-control" name="type_levels">
-                                    <option value="">Type</option>
-                                    @foreach($disciplines as  $discipline)
-                                        @if(isset($discipline->childrenDisciplines['0']))
-                                            <optgroup label="{{$discipline->name}}"
-                                                      data-max-options="1">
-                                                @foreach($discipline->childrenDisciplines as  $disciplineChild)
-                                                    <option value="{{$disciplineChild->id}}">{{$disciplineChild->name}}</option>                                                                            @endforeach
-                                        @endif
-                                    @endforeach
+
+
+                                <select class="form-control" id="qualified_levels" name="qualified_levels">
+                                    <option value="">Level</option>
+
                                 </select>
                                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                 <span class="text-danger">
-                                <small id="type_levels-error"></small>
+                                <small id="qualified_levels-error"></small>
                             </span>
                             </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label class="control-label " for="description">
+                                    Description
+                                </label>
+                                <textarea class="form-control" name="description" value="" id="description"></textarea>
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <span class="text-danger">
+                                <small id="description-error"></small>
+                            </span>
+                            </div>
+
                         </div>
                     </div>
 
@@ -557,48 +560,70 @@
 
 @push('scripts')
 
-     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
 
     <script>
+
+        function fetch_select(val) {
+
+            $.ajax({
+                type: 'POST',
+                url: "{{url('/tutors/get_option')}}",
+                data: {
+                    get_option: val,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    if (response.status == '0') {
+                        document.getElementById("specialist").innerHTML = '<option value="">Specialist</option>';
+                        document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
+                    } else {
+                        document.getElementById("specialist").innerHTML = response.categories;
+                        document.getElementById("qualified_levels").innerHTML = response.qualifiedlevel;
+                    }
+                }
+
+            });
+        }
+
+
         var disabledArr = @php echo json_encode($dates); @endphp
-        // var disabledArr = ["09/21/2018","09/23/2018","12/02/2016","12/23/2016"];
-      console.log(disabledArr);
+            // var disabledArr = ["09/21/2018","09/23/2018","12/02/2016","12/23/2016"];
 
-        $("#date").daterangepicker({
-            minDate: new Date(),
-            timePicker: true,
-            locale: {
-                format: 'M/DD/Y hh:mm A'
-            },
-            isInvalidDate: function(arg){
-                // Prepare the date comparision
-                var thisMonth = arg._d.getMonth()+1;   // Months are 0 based
-                if (thisMonth<10){
-                    thisMonth = "0"+thisMonth; // Leading 0
-                }
-                var thisDate = arg._d.getDate();
-                if (thisDate<10){
-                    thisDate = "0"+thisDate; // Leading 0
-                }
-                var thisYear = arg._d.getYear()+1900;   // Years are 1900 based
+            $("#date").daterangepicker({
+                minDate: new Date(),
+                timePicker: true,
+                locale: {
+                    format: 'M/DD/Y hh:mm A'
+                },
+                isInvalidDate: function (arg) {
+                    // Prepare the date comparision
+                    var thisMonth = arg._d.getMonth() + 1;   // Months are 0 based
+                    if (thisMonth < 10) {
+                        thisMonth = "0" + thisMonth; // Leading 0
+                    }
+                    var thisDate = arg._d.getDate();
+                    if (thisDate < 10) {
+                        thisDate = "0" + thisDate; // Leading 0
+                    }
+                    var thisYear = arg._d.getYear() + 1900;   // Years are 1900 based
 
-                var thisCompare = thisMonth +"/"+ thisDate +"/"+ thisYear;
-                console.log(thisCompare);
+                    var thisCompare = thisMonth + "/" + thisDate + "/" + thisYear;
+                    console.log(thisCompare);
 
-                if($.inArray(thisCompare,disabledArr)!=-1){
-                    return arg._pf = {userInvalidated: true};
+                    if ($.inArray(thisCompare, disabledArr) != -1) {
+                        return arg._pf = {userInvalidated: true};
+                    }
                 }
-            }
-        }).focus();
+            }).focus();
 
     </script>
 
 
     <script>
-
 
         $('#myModal1').click(function (e) {
             $('#myModal').modal('toggle');

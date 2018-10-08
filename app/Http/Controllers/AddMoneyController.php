@@ -22,9 +22,9 @@ class AddMoneyController extends Controller
 {
     public function payWithStripe()
     {
-
-
-        return view('paywithstripe');
+        $subs =  Subscription::whereUserId(decrypt(\Request::segment(2)))->first();
+         $plan  =  Plan::find($subs['plan_id'])->price;
+         return view('paywithstripe',compact('plan'));
     }
 
     public function postPaymentWithStripe(Request $request)

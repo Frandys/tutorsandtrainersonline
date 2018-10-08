@@ -36,12 +36,15 @@
                             <p class="sub-str">{{str_limit($user['about'], 100).'...'}}</p>
                             <div class="skills">
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <p><strong>Country:</strong><span>{{$user['country']['name']}}</span></p>
+                                    <div class="col-sm-12">
+                                            <p><strong>Country:</strong>
+                                                @foreach($user['country']  as $country_level)
+                                                <span class="country">{{$country_level['name']}}</span>
+                                                @endforeach
+                                            </p>
+                                        {{--<p><strong>Country:</strong><span>{{$user['country']['name']}}</span></p>--}}
                                     </div>
-                                    <div class="col-sm-6">
-                                        {{--<p><strong>Discipline:</strong><span>{{$user['disciplines']['name']}}</span></p>--}}
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="skills">

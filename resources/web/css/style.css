@@ -1098,3 +1098,10 @@ body {
 #tutor-view .persnl-info .img-wrap {
     overflow: hidden;
 }
+.inner-cotent .form-wrap #image-strip {
+    padding: 3px 0px 0 9px;
+    display: inline-block;
+}
+.inner-cotent .form-wrap #image-strip img.img-fluid {
+    width: 100px;
+}

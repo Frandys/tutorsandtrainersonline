@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidationRequest;
 use App\Model\Category;
+use App\Model\CategoryUser;
 use App\Model\Country;
 use App\Model\Disciplines;
 use App\model\Jobs;
@@ -22,7 +23,7 @@ class TutorsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('employer', ['except' => ['index', 'show']]);
+        $this->middleware('employer', ['except' => ['index', 'show', 'getOption']]);
 
     }
 
@@ -99,37 +100,34 @@ class TutorsController extends Controller
     public function store(Request $request)
     {
         try {
+
             $data = $request->input();
-            $validation = \Validator::make($data, ValidationRequest::$jobPost);
+            $validation = \Validator::make($request->all(), ValidationRequest::$jobPost);
             if ($validation->fails()) {
                 $errors = $validation->messages();
                 return Response::json(['errors' => $validation->errors()]);
 
             }
-            $ckeJob = Jobs::where('tutor_id', $data['tutor_id'])->where('employer_id', \Sentinel::getUser()->id)->first();
-
-            if (!empty($ckeJob)) {
-                return Response::json(['success' => '2', 'message' => Config::get('message.options.JOBSUBMTD')]);
+            if ($data['tutor_id'] != '') {
+                $ckeJob = Jobs::where('tutor_id', $data['tutor_id'])->where('employer_id', \Sentinel::getUser()->id)->first();
+                if (!empty($ckeJob)) {
+                    return Response::json(['success' => '2', 'message' => Config::get('message.options.JOBSUBMTD')]);
+                }
             }
             $jobs = new Jobs;
-            $jobs->tutor_id = $data['tutor_id'];
+            $jobs->tutor_id = $data['tutor_id'] == '' ? '' : $data['tutor_id'];
+            $jobs->category_id = $data['specialist'];
+            $jobs->qualified_levels_id = $data['qualified_levels'];
+            $jobs->sub_disciplines_id = $data['type_levels'];
+            $jobs->description = $data['description'];
             $jobs->employer_id = \Sentinel::getUser()->id;
             $jobs->title = $data['title'];
             $jobs->date = $data['date'];
             $jobs->type = $data['type'];
-            $jobs->categories_id = $data['specialist'];
-            $jobs->qualified_levels_id = $data['qualified_levels'];
-            $jobs->sub_disciplines_id = $data['type_levels'];
             $jobs->status = '0';
             $jobs->save();
 
-            if ($jobs) {
-                $uj = New UserJobs;
-                $uj->user_id = $data['tutor_id'];
-                $uj->job_id = $jobs->id;
-                $uj->save();
-                return Response::json(['success' => '1', 'message' => Config::get('message.options.JOB_SUBMITED')]);
-            }
+            return Response::json(['success' => '1', 'message' => Config::get('message.options.JOB_SUBMITED')]);
 
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());
@@ -164,9 +162,17 @@ class TutorsController extends Controller
         $array = array();
         $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
         $ttrLocaWill = json_decode(json_encode(Country::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->travel_location) : $array)->get()));
-        $categories = Category::with('children')->get();
-        $levels = QualifiedLevel::with('childrenLevels')->get();
-        $disciplines = Disciplines::with('childrenDisciplines')->get();
+
+
+//        $categories = json_decode(json_encode(User::with(['Categories', 'QualifiedLevel', 'Disciplines'])->select('id', 'email')->find(decrypt($id))));
+
+//
+
+        $disciplines = CategoryUser::with('Disciplines')->select('disciplines_id')->where('user_id', decrypt($id))->groupBy('disciplines_id')->get();
+
+
+//        $levels = QualifiedLevel::with('childrenLevels')->get();
+//        $disciplines = Disciplines::with('childrenDisciplines')->get();
         $jobs = json_decode(json_encode(UserJobs::with('userJobs')->where('user_id', decrypt($id))->get()));
 
         $dates = array();
@@ -186,8 +192,23 @@ class TutorsController extends Controller
                 }
             }
         }
+        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'disciplines', 'ttrLocaWill', 'dates'));
+    }
 
-        return View('web.tutor_view', compact('usersMeta', 'ttrLan', 'categories', 'ttrLocaWill', 'levels', 'disciplines', 'dates'));
+    public function getOption(Request $request)
+    {
+        $data = $request->input();
+       if($data['get_option'] == ''){
+           return Response::json(['status' => '0']);
+       }
+        $disIds = CategoryUser::with('Categories', 'QualifiedLevel')->where('disciplines_id', $data['get_option'])->get();
+        foreach ($disIds as $disId) {
+            $categories[] = "<option value='" . $disId['categories']->id . "'>" . $disId['categories']->name . "</option>";
+            $qualifiedlevel[] = "<option value='" . $disId['qualifiedlevel']->id . "'> " . $disId['qualifiedlevel']->level . "</option>";
+        }
+
+        return Response::json(['categories' => $categories, 'qualifiedlevel' => $qualifiedlevel]);
+
     }
 
     /**
@@ -212,6 +233,7 @@ class TutorsController extends Controller
     {
         //
     }
+
 
     /**
      * Remove the specified resource from storage.

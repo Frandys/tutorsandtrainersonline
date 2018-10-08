@@ -29,8 +29,11 @@ class EmployerController extends Controller
     {
         $jobs = Jobs::with('userJobsMeta')->where('employer_id', \Sentinel::getUser()->id)->get();
         $status = '0';
-        return view('web/employer_dashboard',compact('jobs','status'));
 
+        $categories = Category::with('children')->get();
+        $levels = QualifiedLevel::with('childrenLevels')->get();
+        $disciplines = Disciplines::with('childrenDisciplines')->get();
+        return view('web/employer_dashboard',compact('jobs','status','categories','levels','disciplines'));
     }
 
     /**

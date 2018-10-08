@@ -19,7 +19,7 @@
                         <h3>For Tutor</h3>
                     </div>
                     <div class="col-sm-4 col-4">
-                        <img src="web/images/icon-3.png" class="img-fluid">
+                        <img src="web/images/icon-4.png" class="img-fluid">
                     </div>
                 </div>
                 <div class="text-wrap">
@@ -88,15 +88,17 @@
             <p>Lorem ipsum dolor sit amet</p>
         </div>
         <div class="row book-list">
+            @php $i = '1'  @endphp
             @foreach($categories as  $key=>$categorieItem)
                 @if(isset($categorieItem->children['0']))
                     <div class="col-md-4 health">
                         <a href="{{url('tutors')."?subcat=".encrypt($categorieItem->id)}}"
                            class="text-wrap text-center">
-                            <img src="web/images/special-1.png" class="img-fluid">
+                            <img src="web/images/special-{{$i}}.png" class="img-fluid">
                             <p>{{$categorieItem->name}}</p>
                         </a>
                     </div>
+                    @php $i++;  @endphp
                 @endif
             @endforeach
         </div>

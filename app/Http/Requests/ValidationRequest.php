@@ -127,6 +127,8 @@ class ValidationRequest extends FormRequest
         'specialist' => 'required',
         'qualified_levels' => 'required',
         'type_levels' => 'required',
+        'description' => 'nullable|min:2|max:3000',
+        'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
      );
 
 

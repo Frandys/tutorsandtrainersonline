@@ -44,15 +44,13 @@ class TutorProfile extends Model
 
     public function Disciplines()
     {
-         return $this->belongsToMany('App\Model\Disciplines','discipline_users', 'user_id', 'disciplines_id');
+         return $this->belongsToMany('App\Model\Disciplines','category_user', 'user_id', 'disciplines_id');
     }
 
     public function Country()
     {
-         return $this->hasOne('App\Model\Country','id','country_id');
-    }
+        return $this->belongsToMany('App\Model\Country', 'country_users', 'user_id', 'countries_id');
 
-
-
+     }
 
 }

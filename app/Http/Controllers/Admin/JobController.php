@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ValidationRequest;
 
 use App\Model\Category;
+use App\Model\CategoryUser;
 use App\Model\Disciplines;
 use App\model\Jobs;
 use App\Model\QualifiedLevel;
 use App\model\TutorProfile;
+use App\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -79,30 +81,45 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $jobs = Jobs::with(['Tutor', 'Employer', 'Categories', 'QualifiedLevels', 'Disciplines','userJobs'])->find(decrypt($id));
-        $categories = Category::with('children')->get();
-        $levels = QualifiedLevel::with('childrenLevels')->get();
-        $disciplines = Disciplines::with('childrenDisciplines')->get();
+        $jobs = Jobs::with(['Tutor', 'Employer', 'userJobs','Disciplines','QualifiedLevels','Categories'])->find(decrypt($id));
 
-        $qualifiedLevels = isset($jobs['qualifiedLevels']->level) ? $jobs['qualifiedLevels']->level : '';
-        $categoriesGet = isset($jobs['categories']->name) ? $jobs['categories']->name : '';
-        $disciplinesGet = isset($jobs['disciplines']->name) ? $jobs['disciplines']->name : '';
+        if ($jobs['tutor'] != '') {
+            $disciplines = CategoryUser::with('Disciplines')->select('disciplines_id')->where('user_id', $jobs['tutor']->id)->groupBy('disciplines_id')->get();
+
+        } else {
+            $categories = Category::with('children')->get();
+            $levels = QualifiedLevel::with('childrenLevels')->get();
+            $disciplines = Disciplines::with('childrenDisciplines')->get();
+
+            $qualifiedLevels[] = QualifiedLevel::find($jobs['qualified_levels_id'])->level;
+            $categoriesGet[] = Category::find($jobs['category_id'])->name;
+            $disciplinesGet[] = Disciplines::find($jobs['sub_disciplines_id'])->name;
+        }
+
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
-            $query->select('id', 'email', 'first_name');
-        }, 'Disciplines', 'Categories', 'QualifiedLevel'))->select('id', 'user_id')
-            ->orWhereHas('Disciplines', function ($query) use ($categoriesGet) {
-                $query->where('name', $categoriesGet);
-            })
-            ->orWhereHas('Categories', function ($query) use ($disciplinesGet) {
-                $query->where('name', $disciplinesGet);
-            })
-            ->orWhereHas('QualifiedLevel', function ($query) use ($qualifiedLevels) {
+            $query->select('id', 'email', 'first_name', 'last_name', 'photo');
+        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
 
-                $query->where('level', $qualifiedLevels);
-            })
-            ->get();
+        if (!empty($disciplinesGet)) {
+            $usersMeta = $usersMeta->OrWhereHas('Disciplines', function ($query) use ($disciplinesGet) {
+                $query->whereIn('name', $disciplinesGet);
+            });
+        }
 
-        return view::make('admin.job_edit', compact('jobs', 'categories', 'levels', 'disciplines', 'usersMeta'));
+        if (!empty($categoriesGet)) {
+            $usersMeta = $usersMeta->OrWhereHas('Categories', function ($query) use ($categoriesGet) {
+                $query->whereIn('name', $categoriesGet);
+            });
+        }
+
+        if (!empty($qualifiedLevels)) {
+            $usersMeta = $usersMeta->OrWhereHas('QualifiedLevel', function ($query) use ($qualifiedLevels) {
+                $query->whereIn('level', $qualifiedLevels);
+            });
+        }
+
+        $usersMeta = $usersMeta->get();
+        return view::make('admin.job_edit', compact('jobs', 'categories', 'usersMeta', 'levels', 'disciplines'));
     }
 
     /**
@@ -123,14 +140,17 @@ class JobController extends Controller
             }
 
             $jobs = Jobs::find(decrypt($id));
-            $jobs->title = $data['title'];
-            $jobs->rate = $data['rate'];
-            $jobs->type = $data['type'];
-            $jobs->categories_id = $data['specialist'];
+
+            $jobs->category_id = $data['specialist'];
             $jobs->qualified_levels_id = $data['qualified_levels'];
             $jobs->sub_disciplines_id = $data['type_levels'];
+            $jobs->description = $data['description'];
+            $jobs->title = $data['title'];
+            $jobs->date = $data['date'];
+            $jobs->type = $data['type'];
             $jobs->status = '0';
             $jobs->save();
+
             Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
             return Redirect::back();
         } catch (Exception $ex) {
@@ -147,8 +167,8 @@ class JobController extends Controller
                 $errors = $validation->messages();
                 return Redirect::back()->with('errors', $errors);
             }
-         $job = Jobs::find($data['job_id']);
-         $job->userJobs()->sync($data['tutor_assign']);
+            $job = Jobs::find($data['job_id']);
+            $job->userJobs()->sync($data['tutor_assign']);
 
             Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
             return Redirect::back();
@@ -156,6 +176,7 @@ class JobController extends Controller
             return View::make('errors.exception')->with('Message', $ex->getMessage());
         }
     }
+
     /**
      * Remove the specified resource from storage.
      *

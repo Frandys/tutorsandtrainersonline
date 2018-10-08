@@ -162,7 +162,7 @@
                                         onchange="fetch_select(this.value);" name="qualified_levels">
                                         <option value="">Level</option>
                                         </select>
-                                        @else 
+                                        @else
                                         <select class="form-control" id="qualified_levels"
                                                 name="qualified_levels">
                                             @foreach($levels as  $level)

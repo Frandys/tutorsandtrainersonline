@@ -118,13 +118,13 @@ namespace App\Http\Controllers\Admin {
             $levels = QualifiedLevel::with('childrenLevels')->get();
             $disciplines = Disciplines::with('childrenDisciplines')->get();
             $countries = Country::with('children')->get();
-            $disciplineArray[] = '';
-            if(isset($usersMeta->disciplines['0'])){
-                foreach ($usersMeta->disciplines as $discipline){
-                    $disciplineArray[] = $discipline->id;
+            $countryUser[] = '';
+            if(isset($usersMeta->country['0'])){
+                foreach ($usersMeta->country as $countryUse){
+                    $countryUser[] = $countryUse->id;
                 }
             }
-            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','disciplineArray','countries'));
+            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','countries','countryUser'));
 
         }
 
@@ -226,28 +226,20 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->save();
                 }
 
-                $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
+           //     $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
 
                 if ($data['certificates_id']) {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();
                     for ($i = 0; $i < count($data['certificates_id']); $i++) {
-                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
+                        $sync_data[$data['certificates_categorie'][$i]] = array('disciplines_id' => $data['disciplines_level'][$i],'qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
                     }
                     $user->Categories()->attach($sync_data);
                 }
 
                 if ($data['travel_location']) {
-                    CountryUser::whereUserId(decrypt($id))->delete();
-                    $sync_data = array();
-                    for ($i = 0; $i < count($data['travel_location']); $i++) {
-                        $sync_data[$data['certificates_categorie'][$i]] = array('qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
-                    }
-                    $user->Country()->attach($sync_data);
+                 $user->Country()->sync($data['travel_location']);
                 }
-
-
-
 
                 if ($data['work_id']) {
                     for ($i = 0; $i < count($data['work_id']); $i++) {

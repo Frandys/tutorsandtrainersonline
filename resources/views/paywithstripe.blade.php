@@ -9,17 +9,25 @@
 </section>
 <section class="inner-cotent">
     <div class="container">
-		
+
 		<div class="form-wrap">
 			@include('message.message')
 			<form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!!route('addmoney.stripe')!!}" >
 				{{ csrf_field() }}
-				
+
 				<div class='form-group  required'>
 					<label class='control-label'>Card Number</label>
-					<input autocomplete='off' required  value="4242424242424242" class='form-control card-number' size='20' type='number' name="card_no">
+
+					<div class="input-group">
+						<input autocomplete='off' required  value="4242424242424242" class='form-control card-number' size='20' type='number' name="card_no">
+						<div class="input-group-append">
+							<span class="input-group-text" id="image-strip"><img src="{{asset('images/logo-stripe.png')}}" class="img-fluid"></span>
+						</div>
+					</div>
+
+
 				</div>
-				
+
 				<div class='form-row'>
 					<div class='col-12 col-md-4 form-group cvc required'>
 						<label class='control-label'>CVV</label>
@@ -35,10 +43,20 @@
 						<input  required   type='hidden' value="{{Request::segment(2)}}" name="user_id">
 					</div>
 				</div>
-				<div class=''>
-					<button class='form-control btn btn-primary submit-button' type='submit'>Pay »</button>
-				</div>
-				
+
+
+                <div class='form-row'>
+                    <div class='col-md-12'>
+                        <div class='form-group total btn btn-info w-100 text-center'>
+                            Total: <span class='amount'>{{$plan}}</span>
+                        </div>
+                    </div>
+                </div>
+				<div class='form-row'>
+                    <div class='col-md-12'>
+					<button class='form-control w-100 text-center btn btn-primary submit-button' type='submit'>Pay »</button>
+				    </div>
+                </div>
 			</form>
 		</div>
     </div>

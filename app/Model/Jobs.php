@@ -18,7 +18,9 @@ class Jobs extends Model
 
     public function Categories()
     {
-        return $this->hasOne('App\Model\Category','id','categories_id');
+       return $this->hasOne('App\Model\Category','id','category_id');
+      //  return $this->belongsToMany('App\Model\Category','category_user', 'category_id', 'id');
+
     }
 
     public function QualifiedLevels()
@@ -28,7 +30,9 @@ class Jobs extends Model
 
     public function Disciplines()
     {
-        return $this->belongsToMany('App\Model\Disciplines','discipline_users', 'user_id', 'disciplines_id');
+//        return $this->belongsToMany('App\Model\Disciplines','discipline_users', 'user_id', 'disciplines_id');
+         return $this->hasOne('App\Model\Disciplines','id','sub_disciplines_id');
+
     }
 
     public function userJobs()

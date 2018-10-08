@@ -64,6 +64,7 @@ Route::get('/dashboard', 'UserController@index');
 
 Route::resource('tutors', 'TutorsController');
 
+Route::post('tutors/get_option', 'TutorsController@getOption');
 
  Route::post('change_password', 'UserController@changePassword');
 
@@ -79,11 +80,14 @@ Route::group(['middleware' => 'tutor'], function () {
 
 
 Route::group(['middleware' => 'employer' ], function () {
+
     Route::get('employer/change_password', function () {
         return View::make('web.change_password');
     });
+
     Route::resource('/employer', 'EmployerController');
     Route::match(['put', 'patch'], 'employer_update/{tutor}', 'Admin\EmployerController@update');
+
 
 });
 

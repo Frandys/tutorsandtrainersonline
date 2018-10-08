@@ -170,7 +170,8 @@
                 <div class="radio">
                     <label>
                         <input type="radio" name="driving_license" id="driving_license"
-                               value="0" checked {{ $usersMeta->tutor_profile->driving_license == '0' ?  "checked" : '' }} >No
+                               value="0"
+                               checked {{ $usersMeta->tutor_profile->driving_license == '0' ?  "checked" : '' }} >No
                     </label>
                     <label>
                         <input type="radio" name="driving_license" id="driving_license"
@@ -188,7 +189,8 @@
                     <label>
                         <input type="radio" name="internet_update_service"
                                id="internet_update_service"
-                               value="0" checked {{ $usersMeta->tutor_profile->internet_update_service == '0' ?  "checked" : '' }} >No
+                               value="0"
+                               checked {{ $usersMeta->tutor_profile->internet_update_service == '0' ?  "checked" : '' }} >No
                     </label> <label>
                         <input type="radio" name="internet_update_service"
                                id="internet_update_service"
@@ -225,7 +227,8 @@
                 <div class="radio">
                     <label>
                         <input type="radio" name="speak_languages" id="speak_languages"
-                               value="0" checked {{ $usersMeta->tutor_profile->speak_languages == '0' ?  "checked" : '' }} >No
+                               value="0"
+                               checked {{ $usersMeta->tutor_profile->speak_languages == '0' ?  "checked" : '' }} >No
                     </label> <label>
                         <input type="radio" name="speak_languages" id="speak_languages"
                                value="1" {{ $usersMeta->tutor_profile->speak_languages == '1' ?  "checked" : '' }} >Yes
@@ -281,7 +284,7 @@
                 <div class="radio">
                     <label>
                         <input type="radio" checked name="certificates" id="certificates"
-                               value="0"  {{ $usersMeta->tutor_profile->certificates == '0' ?  "checked" : '' }} >No
+                               value="0" {{ $usersMeta->tutor_profile->certificates == '0' ?  "checked" : '' }} >No
                     </label> <label>
                         <input type="radio" name="certificates" id="certificates"
                                value="1" {{ $usersMeta->tutor_profile->certificates == '1' ?  "checked" : '' }} >Yes
@@ -324,25 +327,7 @@
                     </label></div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6">
-            <div class="form-group ">
-                <label>
-                    Select type
-                </label>
-                <select class="form-control" name="disciplines[]" id="disciplines" multiple="">
-                    @foreach($disciplines as  $disciplineItem)
-                        @if(isset($disciplineItem->childrenDisciplines['0']))
-                            <optgroup label="{{$disciplineItem->name}}"
-                                      data-max-options="1">
-                                @foreach($disciplineItem->childrenDisciplines as  $disciplineChild)
-                                    <option value="{{$disciplineChild->id}}" {{in_array( $disciplineChild->id, $disciplineArray ) ? ' selected="selected" ' : ''}} >{{$disciplineChild->name}}</option>
-                                @endforeach
-                                @endif
-                                @endforeach
-                            </optgroup>
-                </select>
-            </div>
-        </div>
+
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6">
@@ -399,14 +384,13 @@
                     Please select the locations willing to travel to below...
                 </label>
 
-
                 <select class="form-control" name="travel_location[]" id="travel_location" multiple="">
                     @foreach($countries as  $keyCun=>$country)
                         @if(isset($country->children['0']))
                             <optgroup label="{{$country->name}}"
                                       data-max-options="1">
                                 @foreach($country->children as  $categorieChild)
-                                    <option value="{{$categorieChild->id}}" {{( isset($usersMeta->country[$keyCun]) && $usersMeta->country[$keyCun]->id == $categorieChild->id) ? 'selected' : '' }} >{{$categorieChild->name}}</option>
+                                    <option value="{{$categorieChild->id}}" {{in_array( $categorieChild->id, $countryUser ) ? ' selected="selected" ' : ''}} >{{$categorieChild->name}}</option>
                                 @endforeach
                                 @endif
                                 @endforeach
@@ -467,7 +451,32 @@
                         <div class="recordsetParent" id="parntDiv{{$keyCerti}}">
                             <div class="fieldRow clearfix">
                                 <div class="row">
-                                    <div class="col-md-5">
+
+                                    <div class="col-md-3">
+                                        <div id="div_disciplines_level" class="form-group">
+                                            <label for="disciplines_{{$keyCerti}}_level"
+                                                   class="control-label  requiredField">
+                                                Type<span class="asteriskField">*</span>
+                                            </label>
+                                            <div class="controls disciplines_level">
+
+                                                <select name="disciplines_level[{{$keyCerti}}]"
+                                                        id="disciplines_{{$keyCerti}}_level"
+                                                        class="length form-control">
+                                                    @foreach($disciplines as  $discipline)
+                                                        @if(isset($discipline->childrenDisciplines['0']))
+                                                            <optgroup label="{{$discipline->name}}"
+                                                                      data-max-options="1">
+                                                                @foreach($discipline->childrenDisciplines as $disciplineChild)
+                                                                    <option value="{{$disciplineChild->id}}" {{isset($usersMeta->disciplines[$keyCerti]) && $usersMeta->disciplines[$keyCerti]->id == $disciplineChild->id ? 'selected="selected"' : ''}} >{{$disciplineChild->name}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <input type="text"
                                                value="{{isset($categorie->id) ? encrypt($categorie->id) : ''}}"
                                                hidden name="certificates_id[{{$keyCerti}}]">
@@ -513,7 +522,8 @@
                                                                       data-max-options="1">
                                                                 @foreach($level->childrenLevels as  $levelChild)
                                                                     <option value="{{$levelChild->id}}" {{( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $levelChild->id) ? 'selected' : '' }} >{{$levelChild->level}}</option>                                                                            @endforeach
-                                                        @endif
+
+                                                       @endif
                                                     @endforeach
                                                     {{--@foreach(\App\Model\QualifiedLevel::all() as   $qualified)--}}
                                                     {{--<option value="{{$qualified->id}}" {{( isset($usersMeta->qualified_level[$keyCerti]) && $usersMeta->qualified_level[$keyCerti]->id == $qualified->id) ? 'selected' : '' }}  >{{$qualified->level}}</option>--}}
@@ -523,7 +533,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-sm-3">
+                                    <div class="col-md-2 col-sm-2">
                                         <div class="form-group ">
                                             <div id="div_certificates_rate" class="form-group certificates_rate">
                                                 <label for="certificates_{{$keyCerti}}_rate"
@@ -531,10 +541,10 @@
                                                     Rate<span class="asteriskField">*</span>
                                                 </label>
 
-                                                <input  type="text" name="certificates_rate[{{$keyCerti}}]"
-                                                        id="certificates_{{$keyCerti}}_rate"
-                                                        class="length form-control"
-                                                        value="{{isset($usersMeta->categories[$keyCerti]->pivot->rate) ? $usersMeta->categories[$keyCerti]->pivot->rate : ''}}">
+                                                <input type="text" name="certificates_rate[{{$keyCerti}}]"
+                                                       id="certificates_{{$keyCerti}}_rate"
+                                                       class="length form-control"
+                                                       value="{{isset($usersMeta->categories[$keyCerti]->pivot->rate) ? $usersMeta->categories[$keyCerti]->pivot->rate : ''}}">
 
 
                                             </div>
@@ -557,7 +567,42 @@
                                     <div class="row">
                                         <input type="text" value="" hidden
                                                name="certificates_id[{{'2'}}]">
-                                        <div class="col-md-5">
+
+                                        <div class="col-md-3">
+                                            <div id="div_disciplines_level" class="form-group">
+                                                <label for="disciplines_1_level"
+                                                       class="control-label  requiredField">
+                                                    Level<span
+                                                            class="asteriskField">*</span>
+                                                </label>
+                                                <div class="controls disciplines_level">
+                                                    <div class="controls disciplines_level">
+                                                        <select name="disciplines_level[{{'2'}}]"
+                                                                id="disciplines_1_level"
+                                                                class="length form-control">
+
+                                                            @foreach($disciplines as  $discipline)
+                                                                @if(isset($discipline->childrenDisciplines['0']) && $discipline->childrenDisciplines != '')
+                                                                    <optgroup
+                                                                            label="{{$discipline->name}}"
+                                                                            data-max-options="1">
+                                                                        @foreach($discipline->childrenDisciplines as  $disciplineChild)
+                                                                            <option value="{{$disciplineChild->id}}">{{$disciplineChild->name}}</option>
+                                                                        @endforeach
+
+                                                                    </optgroup>
+                                                                @endif
+                                                            @endforeach
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-3">
                                             <div id="div_certificates_categorie"
                                                  class="form-group">
                                                 <label for="certificates_1_categorie"
@@ -620,7 +665,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div id="div_organization_registration"
                                                  class="form-group certificates_rate">
                                                 <label for="certificates_1_rate"
@@ -768,7 +813,8 @@
                             Start Date: <span class="asteriskField">*</span>
                         </label>
 
-                        <div data-date-format="yyyy-mm-dd" class="input-group  date  passStartDates" data-provide="datepicker">
+                        <div data-date-format="yyyy-mm-dd" class="input-group  date  passStartDates"
+                             data-provide="datepicker">
                             <input readonly type="text" class="form-control valid"
                                    name="pass_start_date"
                                    value="{{$usersMeta->tutor_profile->pass_start_date}}"

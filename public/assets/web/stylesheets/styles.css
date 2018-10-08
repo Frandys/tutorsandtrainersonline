@@ -10225,6 +10225,13 @@ body {
 #tutor-view .persnl-info .img-wrap {
     overflow: hidden;
 }
+.inner-cotent .form-wrap #image-strip {
+    padding: 3px 0px 0 9px;
+    display: inline-block;
+}
+.inner-cotent .form-wrap #image-strip img.img-fluid {
+    width: 100px;
+}
 /**
  * All v1.1.0
  * Copyright 2013-2018 Gurinder Singh

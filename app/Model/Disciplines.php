@@ -8,13 +8,15 @@ class Disciplines extends Model
 {
     protected $table = 'disciplines';
     public $timestamps = false;
+     protected $fillable = ['name','sub_disciplines_id'];
 
     /**
      * {@inheritDoc}
      */
-    protected $fillable = array(
-        'name',
-    );
+    public function user()
+    {
+        return $this->belongsToMany('App\User');
+    }
 
     public function parentDisciplines()
     {

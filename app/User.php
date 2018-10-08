@@ -74,18 +74,18 @@ class User extends Authenticatable
 
     public function Categories()
     {
-        return $this->belongsToMany('App\Model\Category')->withPivot(['qualified_levels_id','rate']);
+        return $this->belongsToMany('App\Model\Category')->withPivot(['id','qualified_levels_id','rate','disciplines_id']);
     }
 
     public function QualifiedLevel()
     {
 //        return $this->belongsToMany('App\Model\QualifiedLevel');
-        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id')->withPivot(['category_id']);
+        return $this->belongsToMany('App\Model\QualifiedLevel', 'category_user', 'user_id', 'qualified_levels_id')->withPivot(['id','category_id']);
     }
 
     public function Disciplines()
     {
-         return $this->belongsToMany('App\Model\Disciplines', 'discipline_users', 'user_id', 'disciplines_id');
+         return $this->belongsToMany('App\Model\Disciplines', 'category_user', 'user_id', 'disciplines_id')->withPivot(['id']);;
     }
 
 
@@ -107,5 +107,15 @@ class User extends Authenticatable
     public function childrenLevels()
     {
         return $this->hasMany('App\Model\QualifiedLevel', 'sub_level_id');
+    }
+
+    public function parentDisciplines()
+    {
+        return $this->belongsTo('App\Model\Disciplines','sub_disciplines_id');
+    }
+
+    public function childrenDisciplines()
+    {
+        return $this->hasMany('App\Model\Disciplines','sub_disciplines_id');
     }
 }
