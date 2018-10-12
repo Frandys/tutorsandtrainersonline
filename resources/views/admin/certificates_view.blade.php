@@ -73,15 +73,15 @@
                 </div>
                 <div class="modal-body">
                     <form class="row language-modal" action="" method="post">
-                        
+
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group ">
                                 <label class="control-label " for="nameCat">
                                     Category Name
                                 </label>
 								<input class="form-control" placeholder="Category Name" id="nameCat" name="nameCat" type="text">
-                                
-                                
+
+
                             </div>
                         </div>
 						<div class="col-md-12 col-sm-12">

@@ -101,6 +101,7 @@ class CertificatesController extends Controller
     {
         try {
             $data = $request->input();
+
             $validation = \Validator::make($data, ValidationRequest::$cate);
             if ($validation->fails()) {
                 $errors = $validation->messages()->all();
@@ -109,7 +110,8 @@ class CertificatesController extends Controller
             if ($id == $data['nameCat']) {
                 return Response(array('success' => '0', 'data' => null, 'errors' => Config::get('message.options.NAME_EXIT')));
             }
-            Category::with('children')->where('id', $id)->update(['name' => $data['nameCat']]);
+
+            Category::with('children')->where('name', $id)->update(['name' => $data['nameCat']]);
             return Response(array('success' => '1', 'data' => null, 'errors' => null));
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());

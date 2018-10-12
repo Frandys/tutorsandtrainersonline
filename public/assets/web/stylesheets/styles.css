@@ -9813,7 +9813,7 @@ body {
     width: 100%;
     overflow: hidden;
 }
-#tutors-listing .listing-wrap .list-items .img-wrap img {
+#tutors-listing .listing-wrap .list-items .img-wrap .blurr  {
     -webkit-filter: blur(9px);
     filter: blur(9px);
 }

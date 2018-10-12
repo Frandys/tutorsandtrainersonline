@@ -11,15 +11,18 @@ use App\Model\Course;
 use App\Model\Discipline;
 use App\Model\Disciplines;
 use App\model\Educations;
+use App\model\Jobs;
 use App\Model\Language;
 use App\Model\Organisations;
 use App\Model\QualifiedLevel;
 use App\Model\Skill;
 use App\Model\Specialization;
+use App\model\TutorProfile;
 use App\Model\UserJobs;
 use App\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,6 +55,16 @@ class TutorController extends Controller
         return Redirect::back();
     }
 
+    public function SwapUser(Request $request)
+    {
+        $data = $request->input();
+        if(empty($data['tutor_assign'])) {
+            return Response::json(['errors' => 'Please select tutor']);
+        }
+        $job = Jobs::find(decrypt($data['tutor_id']));
+        $job->userJobs()->sync($data['tutor_assign']);
+        return Response::json(['success' => '1', 'message' => 'Swap Successfully']);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -61,6 +74,48 @@ class TutorController extends Controller
     public function create()
     {
         //
+    }
+
+    public function GetSwap($id)
+    {
+        $jobs = Jobs::find(decrypt($id));
+        $qualifiedLevels[] = QualifiedLevel::find($jobs['qualified_levels_id'])->level;
+        $categoriesGet[] = Category::find($jobs['category_id'])->name;
+        $disciplinesGet[] = Disciplines::find($jobs['sub_disciplines_id'])->name;
+
+        $usersMeta = TutorProfile::with(array('User' => function ($query) {
+            $query->select('id', 'email', 'first_name', 'last_name', 'photo');
+        }, 'Disciplines','Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
+
+        if (!empty($disciplinesGet)) {
+            $usersMeta = $usersMeta->OrWhereHas('Disciplines', function ($query) use ($disciplinesGet) {
+                $query->whereIn('name', $disciplinesGet);
+            });
+        }
+
+        if (!empty($categoriesGet)) {
+            $usersMeta = $usersMeta->OrWhereHas('Categories', function ($query) use ($categoriesGet) {
+                $query->whereIn('name', $categoriesGet);
+            });
+        }
+
+        if (!empty($qualifiedLevels)) {
+            $usersMeta = $usersMeta->OrWhereHas('QualifiedLevel', function ($query) use ($qualifiedLevels) {
+                $query->whereIn('level', $qualifiedLevels);
+            });
+        }
+        $usersMetas = $usersMeta->get();
+
+        foreach ($usersMetas as $usersMeta) {
+            if($usersMeta['user']->id != \Sentinel::check()->id) {
+           $data[] = [
+               "label"=>$usersMeta["user"]->first_name,
+               "value"=>$usersMeta["user"]->id,
+           ];
+
+            }
+        }
+        return  json_encode($data);
     }
 
     /**
@@ -82,7 +137,7 @@ class TutorController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -93,7 +148,7 @@ class TutorController extends Controller
      */
     public function edit($id)
     {
-        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
+        $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel', 'Disciplines'])->find(decrypt($id))));
         $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
         $categories = Category::with('children')->get();
         $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
@@ -101,12 +156,12 @@ class TutorController extends Controller
         $disciplines = Disciplines::with('childrenDisciplines')->get();
         $countries = Country::with('children')->get();
         $countryUser[] = '';
-        if(isset($usersMeta->country['0'])){
-            foreach ($usersMeta->country as $countryUse){
+        if (isset($usersMeta->country['0'])) {
+            foreach ($usersMeta->country as $countryUse) {
                 $countryUser[] = $countryUse->id;
             }
         }
-        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','countries','countryUser'));
+        return View('web.tutor_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations', 'levels', 'disciplines', 'countries', 'countryUser'));
 
     }
 

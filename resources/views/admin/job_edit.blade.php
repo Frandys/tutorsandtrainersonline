@@ -29,14 +29,15 @@
                         <div id='progress-complete'></div>
                     </div>
 
-                    {{ Form::model($jobs, array('route' => array('job.update', \encrypt($jobs->id)),'id' => 'jobForm' ,'method' => 'PUT') ) }}
+                    {{ Form::model($jobs, array('route' => array('job.update', \encrypt($jobs->id)),'id' => 'jobForm' ,'method' => 'PUT','enctype'=>'multipart/form-data') ) }}
 
                     @include('message.message')
                     <fieldset>
                         <legend>Informazioni Generali</legend>
                         <div class="row">
-                            <input class="form-control" name="tutor_id"
-                                   value="{{ isset($jobs->tutor->first_name) ? $jobs->tutor->first_name :'' }}"
+
+                            <input class="form-control" id="tutor_id" name="tutor_id"
+                                   value="{{ isset($jobs->tutor->id) ? encrypt($jobs->tutor->id) :'' }}"
                                    type="hidden"/>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
@@ -125,7 +126,7 @@
                                         Specialist
                                     </label>
                                     @if(isset($jobs->tutor_id))
-                                        <select class="form-control" id="specialist"
+                                        <select class="form-control"  onchange="fetch_select_cat(this.value);" id="specialist"
                                                  name="specialist">
                                             <option value="">Specialist</option>
                                             {{--<option value="{{$discipline->disciplines->id}}">{{$discipline->disciplines->name}}</option>--}}
@@ -162,7 +163,7 @@
                                         onchange="fetch_select(this.value);" name="qualified_levels">
                                         <option value="">Level</option>
                                         </select>
-                                        @else 
+                                        @else
                                         <select class="form-control" id="qualified_levels"
                                                 name="qualified_levels">
                                             @foreach($levels as  $level)
@@ -224,7 +225,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12 col-sm-12">
+
+                            <div class="col-md-6 col-sm-6">
                                 <div class="form-group ">
                                     <label class="control-label" for="description">
                                         Description
@@ -237,7 +239,37 @@
                                     @endif
                                 </div>
                             </div>
+                            @if(!isset($jobs->tutor_id))
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group ">
+                                    <label class="control-label" for="description">
+                                        File
+                                    </label>
+                                    <input type="file" class="form-control" id="file" name="file">
+                                    @if($jobs->file)
+                                    <a href="{{asset('/images/job_files/').'/'.$jobs->file}}" download>Download</a>
+                                    @endif
+                                    @if ($errors->has('file'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('file') }}</strong>
+                                    </span>
 
+                                    @endif
+                                </div>
+                            </div>
+
+                                @else
+                                    <div class="col-md-6 col-sm-6">
+
+                                        <div class="form-group ">
+                                            <label class="control-label" for="Rate">
+                                                Rate
+                                            </label>
+                                            <input class="form-control"  readonly="" type="text" id="rate">
+
+                                        </div>
+                                    </div>
+                            @endif
                         </div>
 
 
@@ -392,6 +424,7 @@
                                             url: "{{url('/tutors/get_option')}}",
                                             data: {
                                                 get_option: val,
+                                                tutor_id:  $('#tutor_id').val(),
                                                 "_token": "{{ csrf_token() }}"
                                             },
                                             success: function (response) {
@@ -400,7 +433,38 @@
                                                     document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
                                                 } else {
                                                     document.getElementById("specialist").innerHTML = response.categories;
+                                                    getLevels($('#specialist').val());
+                                                    //    document.getElementById("qualified_levels").innerHTML = response.qualifiedlevel;
+                                                }
+                                            }
+
+                                        });
+                                    }
+                                    function fetch_select_cat(val) {
+
+                                        getLevels(val);
+                                    }
+
+                                    function getLevels(val){
+
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "{{url('/tutors/get_level_by_cat')}}",
+                                            data: {
+                                                get_option: val,
+                                                tutor_id:  $('#tutor_id').val(),
+                                                "_token": "{{ csrf_token() }}"
+                                            },
+                                            success: function (response) {
+                                                if (response.status == '0') {
+                                                    //    document.getElementById("specialist").innerHTML = '<option value="">Specialist</option>';
+                                                    document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
+                                                    $('#rate').val('');
+                                                } else {
+                                                    //   document.getElementById("specialist").innerHTML = response.categories;
                                                     document.getElementById("qualified_levels").innerHTML = response.qualifiedlevel;
+                                                    $('#rate').val(response.rate);
+
                                                 }
                                             }
 

@@ -89,9 +89,8 @@
         </div>
         <div class="row book-list">
             @php $i = '1'  @endphp
-            @foreach($categories as  $key=>$categorieItem)
-                @if(isset($categorieItem->children['0']))
-                    <div class="col-md-4 health">
+            @foreach($categoriesSubs as  $key=>$categorieItem)
+                 <div class="col-md-4 health">
                         <a href="{{url('tutors')."?subcat=".encrypt($categorieItem->id)}}"
                            class="text-wrap text-center">
                             <img src="web/images/special-{{$i}}.png" class="img-fluid">
@@ -99,7 +98,7 @@
                         </a>
                     </div>
                     @php $i++;  @endphp
-                @endif
+
             @endforeach
         </div>
     </div>

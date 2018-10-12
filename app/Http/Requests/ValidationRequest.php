@@ -41,10 +41,10 @@ class ValidationRequest extends FormRequest
     );
 
     public static $contct = array(
-        'name' => 'required|min:2|max:50',
+        'name' => 'required|min:2|max:255',
         'email' => 'required|email',
-        'subject' => 'required|min:2|max:50',
-        'body' => 'required|min:2|max:500',
+        'subject' => 'required|min:2|max:255',
+        'body' => 'required|min:2|max:50000',
     );
 
     public static $userValid = array(
@@ -52,13 +52,13 @@ class ValidationRequest extends FormRequest
         'last_name' => 'required|min:2|max:32',
         'phone' => 'required',
         'photo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
-        'city' => 'required|min:2|max:32',
-        'state' => 'required|min:2|max:32',
+        'city' => 'required|min:2|max:255',
+        'state' => 'required|min:2|max:255',
         'country' => 'required',
-        'address' => 'min:2|max:32',
+        'address' => 'min:2|max:5000',
         'zip' => 'required|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
-        'about ' => 'min:2|max:500',
-        'certification_id ' => 'min:2|max:32',
+        'about ' => 'min:2|max:5000',
+        'certification_id ' => 'min:2|max:255',
         'cv' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
         'dbs_cert_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
         'certificates_upload' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
@@ -69,60 +69,60 @@ class ValidationRequest extends FormRequest
         'birth_certificate' => 'mimes:jpeg,png,jpg,gif,svg,doc,pdf,docx|max:5000',
         'pass_start_date' => 'required',
 //    'pass_expiry_date' => 'required',
-        'passport_no' => 'required|min:2|max:32',
+        'passport_no' => 'required|min:2|max:255',
         'permit_start_date' => 'required',
         'permit_expiry_date' => 'required',
-        'permit_no' => 'required|min:2|max:32',
+        'permit_no' => 'required|min:2|max:255',
     );
 
     public static $EmpValid = array(
         'first_name' => 'required|min:2|max:32',
         'last_name' => 'required|min:2|max:32',
-        'company_name' => 'required|min:2|max:100',
-        'company_address' => 'required|min:2|max:300',
+        'company_name' => 'required|min:2|max:255',
+        'company_address' => 'required|min:2|max:500',
         'contact_tel' => 'required',
-        'head_office_address' => 'required|min:2|max:300',
-        'authorised_user' => 'required|min:2|max:100',
-        'authorised_user_second' => 'required|min:2|max:100',
-        'contact_person' => 'required|min:2|max:32',
+        'head_office_address' => 'required|min:2|max:500',
+        'authorised_user' => 'required|min:2|max:255',
+        'authorised_user_second' => 'required|min:2|max:255',
+        'contact_person' => 'required|min:2|max:255',
         'head_office_contact_person' => 'required|min:2|max:300',
-        'contact_person_second' => 'required|min:2|max:100',
+        'contact_person_second' => 'required|min:2|max:255',
         'head_office_contact_person_second' => 'required|min:2|max:300',
         'dept' => 'min:2|max:300',
         'dept_second' => 'min:2|max:300',
         'contact_no' => 'required',
         'contact_no_second' => 'required',
-        'email' => 'required|email|min:2|max:100',
-        'email_second' => 'required|email|min:2|max:100',
+        'email' => 'required|email|min:2|max:255',
+        'email_second' => 'required|email|min:2|max:255',
 
         'company_logo' => 'mimes:jpeg,png,jpg,gif,svg|max:5000',
-        'city' => 'nullable|min:2|max:100',
-        'state' => 'nullable|min:2|max:100',
+        'city' => 'nullable|min:2|max:255',
+        'state' => 'nullable|min:2|max:255',
 
-        'address' => 'nullable|min:2|max:500',
+        'address' => 'nullable|min:2|max:5000',
         'zip' => 'nullable|regex:/[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}/i',
-        'company_vat_reg_no' => 'required|min:2|max:50',
-        'company_reg_no' => 'required|min:2|max:50',
+        'company_vat_reg_no' => 'required|min:2|max:255',
+        'company_reg_no' => 'required|min:2|max:255',
         'contact_no' => 'required',
         'photo' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5000',
-        'report_name' => 'nullable|min:2|max:100',
-        'report_department' => 'nullable|min:2|max:100',
+        'report_name' => 'nullable|min:2|max:255',
+        'report_department' => 'nullable|min:2|max:255',
         'dept' => 'nullable|min:2|max:32',
-        'additional_information' => 'nullable|min:2|max:100',
+        'additional_information' => 'nullable|min:2|max:255',
         'additional_details' => 'nullable|min:2|max:255',
 
     );
 
     public static $lang = array(
-        'nameLang' => 'required|min:2|max:50',
+        'nameLang' => 'required|min:2|max:255',
     );
 
     public static $cate = array(
-        'nameCat' => 'required|min:2|max:50',
+        'nameCat' => 'required|min:2|max:255',
     );
 
     public static $jobPost = array(
-        'title' => 'required|min:2|max:50',
+        'title' => 'required|min:2|max:255',
         'date' => 'required',
         'specialist' => 'required',
         'qualified_levels' => 'required',

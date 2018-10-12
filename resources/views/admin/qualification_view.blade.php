@@ -204,7 +204,8 @@
                         '_token': $('input[name=_token]').val(),
                         'nameCat': $('#nameCat').val(),
                         'nameCatId': nameCatId,
-                        'radioVal': radioVal,
+                        'radioVal':
+                        ,
                     },
                     success: function (data) {
                         if (data.success == '0') {

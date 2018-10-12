@@ -22,11 +22,12 @@ class UserController extends Controller
     {
         //\Sentinel::logout();
         $categories = Category::with('children')->get();
+        $categoriesSubs = Category::where('status','1')->get();
         $levels = QualifiedLevel::with('childrenLevels')->get();
         $disciplines = Disciplines::all();
         $countrys = Country::all();
         $about = About::select('id','shot')->first();
-        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels','about'));
+        return View::make('web.index', compact('categories', 'disciplines', 'countrys', 'levels','about','categoriesSubs'));
     }
 
 

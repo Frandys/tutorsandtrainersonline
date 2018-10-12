@@ -4,8 +4,17 @@
     @include('message.message')
     <div class="view-page">
         <div class="text-wrap  mb2">
-            <div class="img-wrap text-center"><img class="img-responsive"
-                                                   src="{{asset('images/photo/'.$usersMeta->photo)}}"></div>
+
+            <div class="img-wrap text-center">
+                @if (empty(\Sentinel::check()))
+
+                    <img class="img-responsive blurr" src="{{asset('images/photo/'.$usersMeta->photo)}}">
+
+                @else
+                    <img class="img-responsive" src="{{asset('images/photo/'.$usersMeta->photo)}}">
+                @endif
+            </div>
+
             <div class="heading"><h2>Personal Information</h2></div>
             <div class="row mb1">
                 <div class="col-sm-6">
@@ -168,7 +177,7 @@
                         <a download="{{$usersMeta->tutor_profile->passport}}"
                            href="{{asset('images/passport').'/'.$usersMeta->tutor_profile->passport}}"
                            title="ImageName">
-                            {!!($usersMeta->tutor_profile->passport != '') ?  "<i class='fa fa-download' aria-hidden='true'></i>" : ''!!}
+                        {!!($usersMeta->tutor_profile->passport != '') ?  "<i class='fa fa-download' aria-hidden='true'></i>" : ''!!}
 
                     </div>
                 </div>

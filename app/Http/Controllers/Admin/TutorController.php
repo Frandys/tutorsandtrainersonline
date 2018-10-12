@@ -17,6 +17,7 @@ namespace App\Http\Controllers\Admin {
     use App\Model\QualifiedLevel;
     use App\Model\Skill;
     use App\Model\Specialization;
+    use App\model\TutorProfile;
     use App\User;
     use Illuminate\Support\Facades\Config;
     use Illuminate\Support\Facades\Redirect;
@@ -87,6 +88,24 @@ namespace App\Http\Controllers\Admin {
             //
         }
 
+        public function tutorApproved(Request $request)
+        {
+            $data = $request->input();
+
+            if($data['checkVal'] == 'true'){
+              $staus = '1';
+              $message = 'Tutor Approved';
+            }else{
+              $staus = '0';
+                $message = 'Tutor Not Approved';
+            }
+
+            $tuPro = TutorProfile::whereUserId($data['tutor_id'])->first();
+            $tuPro->status = $staus;
+            $tuPro->save();
+            echo $message;
+        }
+
         /**
          * Display the specified resource.
          *
@@ -95,7 +114,7 @@ namespace App\Http\Controllers\Admin {
          */
         public function show($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel'])->find(decrypt($id))));
             $array = array();
             $ttrLan = json_decode(json_encode(Language::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->language_id) : $array)->get()));
             $ttrLocaWill = json_decode(json_encode(Country::whereIn('id', $usersMeta->tutor_profile->language_id != '' ? unserialize($usersMeta->tutor_profile->travel_location) : $array)->get()));
@@ -111,7 +130,7 @@ namespace App\Http\Controllers\Admin {
          */
         public function edit($id)
         {
-            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork','QualifiedLevel','Disciplines'])->find(decrypt($id))));
+            $usersMeta = json_decode(json_encode(User::with(['Country', 'TutorProfile', 'Categories', 'OrganisationsWork', 'QualifiedLevel', 'Disciplines'])->find(decrypt($id))));
             $categorieUser = empty($usersMeta->categories) ? json_decode(json_encode(array(array('id' => '0', 'name' => '', 'pivot' => array('level' => '')))), false) : $usersMeta->categories;
             $categories = Category::with('children')->get();
             $organisations = empty($usersMeta->organisations_work) ? json_decode(json_encode(array(array('id' => '0', 'registration' => '', 'company_name' => ''))), false) : $usersMeta->organisations_work;
@@ -119,12 +138,12 @@ namespace App\Http\Controllers\Admin {
             $disciplines = Disciplines::with('childrenDisciplines')->get();
             $countries = Country::with('children')->get();
             $countryUser[] = '';
-            if(isset($usersMeta->country['0'])){
-                foreach ($usersMeta->country as $countryUse){
+            if (isset($usersMeta->country['0'])) {
+                foreach ($usersMeta->country as $countryUse) {
                     $countryUser[] = $countryUse->id;
                 }
             }
-            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations','levels','disciplines','countries','countryUser'));
+            return View('admin.tutors_edit', compact('usersMeta', 'categories', 'categorieUser', 'organisations', 'levels', 'disciplines', 'countries', 'countryUser'));
 
         }
 
@@ -180,7 +199,7 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->certificate_issued = $data['certificate_issued'];
                     $tutrPro->cert_issued = $data['cert_issued'];
                     $tutrPro->pass_start_date = $data['pass_start_date'];
-                   // $tutrPro->pass_expiry_date = $data['pass_expiry_date'];
+                    // $tutrPro->pass_expiry_date = $data['pass_expiry_date'];
                     $tutrPro->passport_no = $data['passport_no'];
                     $tutrPro->permit_start_date = $data['permit_start_date'];
                     $tutrPro->permit_expiry_date = $data['permit_expiry_date'];
@@ -226,19 +245,19 @@ namespace App\Http\Controllers\Admin {
                     $tutrPro->save();
                 }
 
-           //     $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
+                //     $user->Disciplines()->sync(isset($data['disciplines']) ? $data['disciplines'] : []);
 
                 if ($data['certificates_id']) {
                     CategoryUser::whereUserId(decrypt($id))->delete();
                     $sync_data = array();
                     for ($i = 0; $i < count($data['certificates_id']); $i++) {
-                        $sync_data[$data['certificates_categorie'][$i]] = array('disciplines_id' => $data['disciplines_level'][$i],'qualified_levels_id' => $data['certificates_level'][$i],'rate' => $data['certificates_rate'][$i]);
+                        $sync_data[$data['certificates_categorie'][$i]] = array('disciplines_id' => $data['disciplines_level'][$i], 'qualified_levels_id' => $data['certificates_level'][$i], 'rate' => $data['certificates_rate'][$i]);
                     }
                     $user->Categories()->attach($sync_data);
                 }
 
                 if ($data['travel_location']) {
-                 $user->Country()->sync($data['travel_location']);
+                    $user->Country()->sync($data['travel_location']);
                 }
 
                 if ($data['work_id']) {
@@ -284,8 +303,7 @@ namespace App\Http\Controllers\Admin {
          * @param  int $id
          * @return \Illuminate\Http\Response
          */
-        public
-        function destroy($id)
+        public function destroy($id)
         {
             //
         }

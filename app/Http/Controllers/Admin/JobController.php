@@ -12,6 +12,7 @@ use App\Model\QualifiedLevel;
 use App\model\TutorProfile;
 use App\User;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -86,15 +87,20 @@ class JobController extends Controller
         if ($jobs['tutor'] != '') {
             $disciplines = CategoryUser::with('Disciplines')->select('disciplines_id')->where('user_id', $jobs['tutor']->id)->groupBy('disciplines_id')->get();
 
+            $qualifiedLevels[] = QualifiedLevel::find($jobs['qualified_levels_id'])->level;
+            $categoriesGet[] = Category::find($jobs['category_id'])->name;
+            $disciplinesGet[] = Disciplines::find($jobs['sub_disciplines_id'])->name;
+
         } else {
             $categories = Category::with('children')->get();
             $levels = QualifiedLevel::with('childrenLevels')->get();
             $disciplines = Disciplines::with('childrenDisciplines')->get();
 
-            $qualifiedLevels[] = QualifiedLevel::find($jobs['qualified_levels_id'])->level;
-            $categoriesGet[] = Category::find($jobs['category_id'])->name;
-            $disciplinesGet[] = Disciplines::find($jobs['sub_disciplines_id'])->name;
+            $qualifiedLevels[] = '';
+            $categoriesGet[] = '';
+            $disciplinesGet[] = '';
         }
+
 
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
@@ -149,6 +155,12 @@ class JobController extends Controller
             $jobs->date = $data['date'];
             $jobs->type = $data['type'];
             $jobs->status = '0';
+            if (Input::hasFile('file'))
+            {
+                $file = $request->file();
+                $name =  $jobs->file;
+                $jobs->file = $this->UploadFile($file, $name);
+            }
             $jobs->save();
 
             Session::flash('success', Config::get('message.options.UPDATE_SUCCESS'));
@@ -158,6 +170,17 @@ class JobController extends Controller
         }
     }
 
+    private function UploadFile($file,$name)
+    {
+        $file = $file['file'];
+        $filename = time(). '.' . $file->getClientOriginalExtension();
+        $file->move(public_path().'/images/job_files/', $filename);
+        $profileImg =  '/images/job_files/' . $name;
+        if (\File::exists(public_path($profileImg))) {
+            \File::delete(public_path($profileImg));
+        }
+        return $filename;
+    }
     public function assignJob(Request $request)
     {
         try {

@@ -37,7 +37,7 @@ class Jobs extends Model
 
     public function userJobs()
     {
-        return $this->belongsToMany('App\User','user_jobs', 'job_id', 'user_id')->withPivot(['status']);
+        return $this->belongsToMany('App\User','user_jobs', 'job_id', 'user_id')->withPivot(['status'])->withTimestamps();
      }
 
     public function userJobsMeta()

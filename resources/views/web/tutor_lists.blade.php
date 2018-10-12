@@ -19,29 +19,40 @@
                       <strong>!</strong> No data find.
                 </div>
             @endif
+
             @foreach($usersMeta['data'] as $user)
                 <div class="row no-gutters list-items">
+                    <div class="col-md-12 text-right">
+                        @if($user['status'] == '0')
+                            <p>Not Approved</p>
+                        @else
+                            <p>Approved</p>
+                        @endif
+                    </div>
                     <div class="col-sm-3">
                         <div class="img-wrap">
                             <img class="img-fluid"
                                  src="{{$user['user']['photo'] ? asset('images/photo/').'/'.$user['user']['photo'] : asset('images/photo/dummy.png')}}">
                         </div>
                     </div>
+
+
+
                     <div class="col-sm-9">
                         <div class="text-wrap">
                             <a class="tutor-name" href="{{url('tutors/').'/'.encrypt($user['user']['id'])}}">
                                 {{--<h4 class="media-heading">{{substr($user['user']['first_name'],'0',1  ) . str_repeat("*", strlen($user['user']['first_name'])-1)}} {{substr($user['user']['last_name'],'0',1  ) . str_repeat("*", strlen($user['user']['last_name'])-1)}} </h4>--}}
-                            <h4>{{$user['uuid']}}</h4>
+                                <h4>{{$user['uuid']}}</h4>
                             </a>
                             <p class="sub-str">{{str_limit($user['about'], 100).'...'}}</p>
                             <div class="skills">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                            <p><strong>Country:</strong>
-                                                @foreach($user['country']  as $country_level)
+                                        <p><strong>Country:</strong>
+                                            @foreach($user['country']  as $country_level)
                                                 <span class="country">{{$country_level['name']}}</span>
-                                                @endforeach
-                                            </p>
+                                            @endforeach
+                                        </p>
                                         {{--<p><strong>Country:</strong><span>{{$user['country']['name']}}</span></p>--}}
                                     </div>
 
@@ -74,19 +85,23 @@
         </div>
 
         @if ($usersMeta['last_page'] > '1')
-        <ul class="pagination">
-            @if ($usersMeta['prev_page_url'] != '')
-                <li class="page-item "><a class="page-link" href="{{$usersMeta['prev_page_url'] . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist')}}">Previous</a></li>
-            @endif
-            @for($i = 1; $i <= $usersMeta['last_page']; $i++)
-                <li class="page-item {{$usersMeta['current_page'] == $i ? 'active' : ''}} "><a class="page-link"
-                 href="{{$usersMeta['path']. '?page=' . $i . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist') }}">{{$i}}</a>
-                </li>
-            @endfor
-            @if ($usersMeta['next_page_url'] != '')
-                <li class="page-item"><a class="page-link" href="{{$usersMeta['next_page_url'] . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist')}}">Next</a></li>
-            @endif
-        </ul>
+            <ul class="pagination">
+                @if ($usersMeta['prev_page_url'] != '')
+                    <li class="page-item "><a class="page-link"
+                                              href="{{$usersMeta['prev_page_url'] . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist')}}">Previous</a>
+                    </li>
+                @endif
+                @for($i = 1; $i <= $usersMeta['last_page']; $i++)
+                    <li class="page-item {{$usersMeta['current_page'] == $i ? 'active' : ''}} "><a class="page-link"
+                                                                                                   href="{{$usersMeta['path']. '?page=' . $i . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist') }}">{{$i}}</a>
+                    </li>
+                @endfor
+                @if ($usersMeta['next_page_url'] != '')
+                    <li class="page-item"><a class="page-link"
+                                             href="{{$usersMeta['next_page_url'] . '&'. strstr($_SERVER['QUERY_STRING'], 'specialist')}}">Next</a>
+                    </li>
+                @endif
+            </ul>
         @endif
     </div>
 

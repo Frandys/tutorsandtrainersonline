@@ -11,9 +11,13 @@
         <div class="persnl-info">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="img-wrap">
+                    @if (empty(\Sentinel::check()))
+
+                        <img class="img-fluid blurr" src="{{asset('images/photo/'.$usersMeta->photo)}}">
+
+                    @else
                         <img class="img-fluid" src="{{asset('images/photo/'.$usersMeta->photo)}}">
-                    </div>
+                    @endif
                 </div>
                 <div class="col-sm-8">
                     <div class="text-wrap">
@@ -502,7 +506,7 @@
                                     Specialist
                                 </label>
 
-                                <select class="form-control" id="specialist" name="specialist">
+                                <select class="form-control" id="specialist" onchange="fetch_select_cat(this.value);" name="specialist">
                                     <option value="">Specialist</option>
 
                                 </select>
@@ -532,7 +536,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group ">
                                 <label class="control-label " for="description">
                                     Description
@@ -544,6 +548,16 @@
                             </span>
                             </div>
 
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+
+                            <div class="form-group ">
+                                <label class="control-label" for="Rate">
+                                    Rate
+                                </label>
+                                <input class="form-control"  readonly="" type="text" id="rate">
+
+                            </div>
                         </div>
                     </div>
 
@@ -574,21 +588,55 @@
                 url: "{{url('/tutors/get_option')}}",
                 data: {
                     get_option: val,
+                    tutor_id: '{{\Request::segment('2')}}',
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function (response) {
                     if (response.status == '0') {
                         document.getElementById("specialist").innerHTML = '<option value="">Specialist</option>';
-                        document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
+                       document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
                     } else {
                         document.getElementById("specialist").innerHTML = response.categories;
+                        getLevels($('#specialist').val());
+                    //    document.getElementById("qualified_levels").innerHTML = response.qualifiedlevel;
+                    }
+                }
+
+            });
+
+
+        }
+
+
+        function fetch_select_cat(val) {
+
+            getLevels(val);
+        }
+
+        function getLevels(val){
+
+            $.ajax({
+                type: 'POST',
+                url: "{{url('/tutors/get_level_by_cat')}}",
+                data: {
+                    get_option: val,
+                    tutor_id: '{{\Request::segment('2')}}',
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    if (response.status == '0') {
+                        //    document.getElementById("specialist").innerHTML = '<option value="">Specialist</option>';
+                        document.getElementById("qualified_levels").innerHTML = '<option value="">Level</option>';
+                        $('#rate').val('');
+                    } else {
+                        //   document.getElementById("specialist").innerHTML = response.categories;
                         document.getElementById("qualified_levels").innerHTML = response.qualifiedlevel;
+                        $('#rate').val(response.rate);
                     }
                 }
 
             });
         }
-
 
         var disabledArr = @php echo json_encode($dates); @endphp
             // var disabledArr = ["09/21/2018","09/23/2018","12/02/2016","12/23/2016"];

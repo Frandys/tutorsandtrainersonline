@@ -66,7 +66,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="insert_form">
+                <form method="post"  enctype="multipart/form-data" id="insert_form">
                     {{ csrf_field() }}
 
                     <div class="row">
@@ -216,7 +216,7 @@
 
                         </div>
                     </div>
-                    <input type="submit" name="insert" id="insert" value="Book a Session" class="btn btn-success"/>
+                    <input type="button" name="insert" id="insert" value="Book a Session" class="btn btn-success"/>
                 </form>
             </div>
             <div class="modal-footer">
@@ -238,10 +238,7 @@
             $('#example').DataTable();
         });
 
-
             var disabledArr = [""];
-
-
         $("#date").daterangepicker({
             minDate: new Date(),
             timePicker: true,
@@ -282,7 +279,8 @@
             $('#file-error').html("");
         });
 
-        $('#insert_form').on("submit", function (event) {
+        $("#insert").click(function(){
+        // $('#insert').on("submit", function (event) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -297,8 +295,11 @@
             $('#file-error').html("");
             $.ajax({
                 type: "POST",
+                processData: false,
+                contentType: false,
                 url: "{{url('/tutors')}}",
-                data: $('#insert_form').serialize(),
+                // data: $('#insert_form').serialize(),
+                data : new FormData($("#insert_form")[0]),
                 success: function (data) {
                     if (data.errors) {
                         $('#title-error').html(data.errors.title);
@@ -316,6 +317,7 @@
                             message: data.message
                         });
                         $('#myModal').modal('toggle');
+                        location.reload();
                     }
                 }
             });

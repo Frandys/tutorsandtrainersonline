@@ -23,7 +23,7 @@ class TutorsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('employer', ['except' => ['index', 'show', 'getOption']]);
+        $this->middleware('employer', ['except' => ['index', 'show', 'getOption','getLevelByCat']]);
 
     }
 
@@ -41,7 +41,7 @@ class TutorsController extends Controller
 
         $usersMeta = TutorProfile::with(array('User' => function ($query) {
             $query->select('id', 'email', 'first_name', 'last_name', 'photo');
-        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about');
+        }, 'Disciplines', 'Country', 'Categories', 'QualifiedLevel'))->select('id', 'user_id', 'uuid', 'country_id', 'about', 'status');
 
         if (!empty(input::get('disciplines'))) {
             $usersMeta = $usersMeta->WhereHas('Disciplines', function ($query) {
@@ -100,7 +100,6 @@ class TutorsController extends Controller
     public function store(Request $request)
     {
         try {
-
             $data = $request->input();
             $validation = \Validator::make($request->all(), ValidationRequest::$jobPost);
             if ($validation->fails()) {
@@ -114,8 +113,10 @@ class TutorsController extends Controller
                     return Response::json(['success' => '2', 'message' => Config::get('message.options.JOBSUBMTD')]);
                 }
             }
+
+
             $jobs = new Jobs;
-            $jobs->tutor_id = $data['tutor_id'] == '' ? '' : $data['tutor_id'];
+            $jobs->tutor_id = $data['tutor_id'] == NULL ? NULL : $data['tutor_id'];
             $jobs->category_id = $data['specialist'];
             $jobs->qualified_levels_id = $data['qualified_levels'];
             $jobs->sub_disciplines_id = $data['type_levels'];
@@ -125,6 +126,13 @@ class TutorsController extends Controller
             $jobs->date = $data['date'];
             $jobs->type = $data['type'];
             $jobs->status = '0';
+
+            if (Input::hasFile('file'))
+            {
+                $file = $request->file();
+                $jobs->file = $this->UploadFile($file, 'job_files');
+            }
+
             $jobs->save();
 
             return Response::json(['success' => '1', 'message' => Config::get('message.options.JOB_SUBMITED')]);
@@ -132,6 +140,14 @@ class TutorsController extends Controller
         } catch (Exception $ex) {
             return View::make('errors.exception')->with('Message', $ex->getMessage());
         }
+    }
+
+    private function UploadFile($file)
+    {
+       $file = $file['file'];
+        $filename = time(). '.' . $file->getClientOriginalExtension();
+        $file->move(public_path().'/images/job_files/', $filename);
+        return $filename;
     }
 
     /**
@@ -198,18 +214,38 @@ class TutorsController extends Controller
     public function getOption(Request $request)
     {
         $data = $request->input();
+
        if($data['get_option'] == ''){
            return Response::json(['status' => '0']);
        }
-        $disIds = CategoryUser::with('Categories', 'QualifiedLevel')->where('disciplines_id', $data['get_option'])->get();
+        $disIds = CategoryUser::with('Categories')->where('user_id',decrypt($data['tutor_id']))->where('disciplines_id', $data['get_option'])->get();
         foreach ($disIds as $disId) {
             $categories[] = "<option value='" . $disId['categories']->id . "'>" . $disId['categories']->name . "</option>";
-            $qualifiedlevel[] = "<option value='" . $disId['qualifiedlevel']->id . "'> " . $disId['qualifiedlevel']->level . "</option>";
+//            $qualifiedlevel[] = "<option value='" . $disId['qualifiedlevel']->id . "'> " . $disId['qualifiedlevel']->level . "</option>";
         }
-
-        return Response::json(['categories' => $categories, 'qualifiedlevel' => $qualifiedlevel]);
+//        , 'qualifiedlevel' => $qualifiedlevel
+        return Response::json(['categories' => $categories]);
 
     }
+
+
+
+    public function getLevelByCat(Request $request)
+    {
+        $data = $request->input();
+
+        if($data['get_option'] == ''){
+            return Response::json(['status' => '0']);
+        }
+        $disIds = CategoryUser::with('QualifiedLevel')->where('user_id',decrypt($data['tutor_id']))->where('category_id', $data['get_option'])->first();
+
+//            $categories[] = "<option value='" . $disId['categories']->id . "'>" . $disId['categories']->name . "</option>";
+            $qualifiedlevel = "<option value='" . $disIds['qualifiedlevel']->id . "'> " . $disIds['qualifiedlevel']->level . "</option>";
+           $rate = $disIds->rate;
+        return Response::json(['qualifiedlevel' => $qualifiedlevel,'rate' => $rate]);
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.

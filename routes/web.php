@@ -60,13 +60,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'UserController@index');
-
-
 Route::resource('tutors', 'TutorsController');
-
 Route::post('tutors/get_option', 'TutorsController@getOption');
-
- Route::post('change_password', 'UserController@changePassword');
+Route::post('tutors/get_level_by_cat', 'TutorsController@getLevelByCat');
+Route::post('change_password', 'UserController@changePassword');
 
 
 Route::group(['middleware' => 'tutor'], function () {
@@ -76,6 +73,8 @@ Route::group(['middleware' => 'tutor'], function () {
     Route::resource('/tutor', 'TutorController');
     Route::match(['put', 'patch'], 'tutor_update/{tutor}', 'Admin\TutorController@update');
     Route::post('tutor/change_job_status', 'TutorController@ChangeJobStatus');
+    Route::get('tutor/get_swap/{id}', 'TutorController@GetSwap');
+    Route::post('tutor/swap_user', 'TutorController@SwapUser');
 });
 
 
@@ -99,6 +98,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::post('change_password', 'UserController@changePassword');
     Route::post('activate_users', 'UserController@activateUsers');
     Route::resource('tutor', 'Admin\TutorController');
+    Route::post('/tutor_approved', 'Admin\TutorController@tutorApproved');
     Route::get('view_tutors', 'Admin\TutorController@viewTutors');
     Route::resource('employer', 'Admin\EmployerController');
     Route::get('view_employer', 'Admin\EmployerController@viewEmployer');
